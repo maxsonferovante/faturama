@@ -18,20 +18,22 @@ Validar localmente que um upload de PDF por URL assinada dispara o fluxo assínc
 Suba o ambiente local:
 
 ```bash
-docker compose up -d
+bash scripts/bootstrap_local_runtime.sh
 ```
 
-Provisione a infraestrutura local:
+O script executa, em ordem:
 
 ```bash
+docker compose up -d postgres ministack
+docker compose build worker
 terraform -chdir=infra/terraform/environments/local init -backend=false
-terraform -chdir=infra/terraform/environments/local apply
+terraform -chdir=infra/terraform/environments/local apply -auto-approve
 ```
 
-Construa a imagem do worker:
+Se a porta local `4566` ja estiver em uso:
 
 ```bash
-docker build -f docker/worker/Dockerfile -t faturama-worker:local .
+MINISTACK_PORT=4567 bash scripts/bootstrap_local_runtime.sh
 ```
 
 ## Validation Scenario 1: Provisionamento e paridade básica
@@ -45,6 +47,7 @@ terraform -chdir=infra/terraform/environments/local output
 **Expected outcome**:
 
 - containers `postgres` e `ministack` disponíveis na composição local;
+- imagem Docker local `faturama-worker:local` disponível no mesmo daemon Docker usado pelo MiniStack;
 - bucket `pre-processamento-faturama` disponível;
 - fila principal e DLQ configuradas;
 - pipe e state machine provisionados;

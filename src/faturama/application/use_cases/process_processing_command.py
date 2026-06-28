@@ -38,7 +38,7 @@ def process_processing_command(
     status_repository = ProcessingStatusRepository(connection)
     manifest_repository = ArtifactManifestRepository(connection)
     status_service = ProcessingStatusService(job_repository=job_repository, status_repository=status_repository)
-    object_storage = S3StorageAdapter(root_dir=settings.artifact_cache_dir.parent / "object-store")
+    object_storage = S3StorageAdapter(endpoint_url=settings.aws_endpoint_url, region=settings.aws_region)
 
     job_repository.create_job(
         {

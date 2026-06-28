@@ -1,43 +1,43 @@
-"""Local-friendly S3-style storage adapter."""
+"""AWS S3 object storage adapter."""
 
 from __future__ import annotations
 
 from pathlib import Path
-import shutil
+import os
+
+from boto3 import client
+from botocore.config import Config
 
 from faturama.application.ports.object_storage import ObjectStorage
 
 
 class S3StorageAdapter(ObjectStorage):
-    def __init__(self, *, root_dir: Path) -> None:
-        self.root_dir = root_dir
-        self.root_dir.mkdir(parents=True, exist_ok=True)
-
-    def _object_path(self, bucket: str, object_key: str) -> Path:
-        return self.root_dir / bucket / object_key
+    def __init__(
+        self,
+        *,
+        endpoint_url: str | None = None,
+        region: str = "us-east-1",
+    ) -> None:
+        access_key = os.getenv("AWS_ACCESS_KEY_ID") or "ministack"
+        secret_key = os.getenv("AWS_SECRET_ACCESS_KEY") or "ministack"
+        session_token = os.getenv("AWS_SESSION_TOKEN")
+        self.s3 = client(
+            "s3",
+            endpoint_url=endpoint_url,
+            region_name=region,
+            aws_access_key_id=access_key,
+            aws_secret_access_key=secret_key,
+            aws_session_token=session_token,
+            config=Config(signature_version="s3v4", s3={"addressing_style": "path"}),
+        )
 
     def download_to_path(self, bucket: str, object_key: str, destination: Path) -> Path:
-        source = self._object_path(bucket, object_key)
-        if not source.exists():
-            raise FileNotFoundError(f"Object not found: s3://{bucket}/{object_key}")
         destination.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(source, destination)
-        for suffix in (".md", ".json"):
-            sidecar = source.with_suffix(suffix)
-            if sidecar.exists():
-                shutil.copy2(sidecar, destination.with_suffix(suffix))
-        output_dir = source.parent / "output" / source.stem
-        if output_dir.exists():
-            target_output = destination.parent / "output" / destination.stem
-            if target_output.exists():
-                shutil.rmtree(target_output)
-            shutil.copytree(output_dir, target_output)
+        self.s3.download_file(bucket, object_key, str(destination))
         return destination
 
     def upload_file(self, source: Path, bucket: str, object_key: str) -> str:
-        destination = self._object_path(bucket, object_key)
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(source, destination)
+        self.s3.upload_file(str(source), bucket, object_key)
         return self.uri_for(bucket, object_key)
 
     def uri_for(self, bucket: str, object_key: str) -> str:

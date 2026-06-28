@@ -53,9 +53,25 @@ faturama-worker --help-message
 ## Validacao
 
 ```bash
-docker compose up -d
+bash scripts/bootstrap_local_runtime.sh
 python3 -m pytest -q
 python3 -m pytest tests/e2e/test_async_sla.py tests/e2e/test_async_concurrency_burst.py
+```
+
+## Runtime local assincrono
+
+No ambiente local, o MiniStack recebe acesso ao mesmo daemon Docker do host via `/var/run/docker.sock`. Isso significa que a task ECS emulada consegue iniciar a imagem `faturama-worker:local` desde que ela tenha sido buildada localmente com essa mesma tag.
+
+O fluxo recomendado de bootstrap e:
+
+```bash
+bash scripts/bootstrap_local_runtime.sh
+```
+
+Se a porta `4566` ja estiver ocupada no host:
+
+```bash
+MINISTACK_PORT=4567 bash scripts/bootstrap_local_runtime.sh
 ```
 
 Validacao local mais recente do checkout em `2026-06-28`: `46 passed`.

@@ -5,8 +5,6 @@ services:
       POSTGRES_DB: faturama
       POSTGRES_USER: faturama
       POSTGRES_PASSWORD: faturama
-    ports:
-      - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
@@ -16,11 +14,12 @@ services:
       AWS_REGION: us-east-1
       DOCKER_NETWORK: "${COMPOSE_PROJECT_NAME:-faturama}_default"
     ports:
-      - "4566:4566"
+      - "${MINISTACK_PORT:-4566}:4566"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
   worker:
+    image: faturama-worker:local
     build:
       context: .
       dockerfile: docker/worker/Dockerfile

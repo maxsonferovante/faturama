@@ -5,10 +5,11 @@ description = "Pipeline auditavel para extracao e consulta de faturas de cartao.
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "boto3==1.39.3",
     "pydantic==2.13.4",
     "langgraph==1.2.6",
     "langgraph-checkpoint-sqlite==3.1.0",
-    "opendataloader-pdf[hybrid]==2.4.7",
+    "opendataloader-pdf==2.4.7",
     "langchain-opendataloader-pdf==2.0.0",
 ]
 

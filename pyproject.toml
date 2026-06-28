@@ -5,19 +5,19 @@ description = "Pipeline auditavel para extracao e consulta de faturas de cartao.
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "pydantic>=2.8,<3",
-    "langgraph>=0.2,<1",
-    "langgraph-checkpoint-sqlite>=3.1,<4",
-    "opendataloader-pdf[hybrid]>=0.1",
-    "langchain-opendataloader-pdf>=2.0,<3",
+    "pydantic==2.13.4",
+    "langgraph==1.2.6",
+    "langgraph-checkpoint-sqlite==3.1.0",
+    "opendataloader-pdf[hybrid]==2.4.7",
+    "langchain-opendataloader-pdf==2.0.0",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=8.3,<9",
-    "pytest-cov>=5,<6",
-    "ruff>=0.5,<1",
-    "mypy>=1.11,<2",
+    "pytest==9.1.1",
+    "pytest-cov==7.1.0",
+    "ruff==0.15.20",
+    "mypy==2.1.0",
 ]
 
 [build-system]

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from sqlite3 import Connection
+from typing import Any
 
 
 SCHEMA_STATEMENTS = [
@@ -191,17 +192,108 @@ SCHEMA_STATEMENTS = [
         restored_at TEXT
     )
     """,
+    """
+    CREATE TABLE IF NOT EXISTS upload_authorization_grants (
+        upload_grant_id TEXT PRIMARY KEY,
+        authorized_bucket TEXT NOT NULL,
+        authorized_object_key TEXT NOT NULL,
+        granted_to TEXT,
+        granted_by TEXT,
+        granted_at TEXT NOT NULL,
+        expires_at TEXT NOT NULL,
+        upload_completed_at TEXT,
+        grant_status TEXT NOT NULL,
+        trace_context TEXT
+    )
+    """,
+    """
+    CREATE TABLE IF NOT EXISTS source_object_events (
+        source_event_id TEXT PRIMARY KEY,
+        bucket_name TEXT NOT NULL,
+        object_key TEXT NOT NULL,
+        object_version TEXT,
+        event_time TEXT NOT NULL,
+        event_name TEXT NOT NULL,
+        object_etag TEXT,
+        upload_grant_id TEXT,
+        source_system TEXT NOT NULL,
+        received_at TEXT NOT NULL,
+        dedupe_key TEXT NOT NULL UNIQUE
+    )
+    """,
+    """
+    CREATE TABLE IF NOT EXISTS processing_jobs (
+        processing_id TEXT PRIMARY KEY,
+        source_event_id TEXT,
+        execution_arn TEXT,
+        dispatch_attempt INTEGER NOT NULL DEFAULT 1,
+        current_status TEXT NOT NULL,
+        status_detail TEXT,
+        bucket_name TEXT NOT NULL,
+        object_key TEXT NOT NULL,
+        document_id TEXT,
+        file_hash TEXT,
+        requested_at TEXT NOT NULL,
+        started_at TEXT,
+        finished_at TEXT,
+        failure_code TEXT,
+        failure_message TEXT,
+        runtime_environment TEXT
+    )
+    """,
+    """
+    CREATE TABLE IF NOT EXISTS processing_lifecycle_events (
+        event_id TEXT PRIMARY KEY,
+        processing_id TEXT NOT NULL,
+        event_name TEXT NOT NULL,
+        status TEXT NOT NULL,
+        status_detail TEXT,
+        payload_json TEXT,
+        created_at TEXT NOT NULL
+    )
+    """,
+    """
+    CREATE TABLE IF NOT EXISTS artifact_manifests (
+        artifact_manifest_id TEXT PRIMARY KEY,
+        processing_id TEXT NOT NULL UNIQUE,
+        artifact_bucket TEXT NOT NULL,
+        source_pdf_uri TEXT NOT NULL,
+        markdown_uri TEXT,
+        json_uri TEXT,
+        result_uri TEXT,
+        artifact_key_prefix TEXT NOT NULL,
+        artifact_status TEXT NOT NULL,
+        checksum TEXT,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL
+    )
+    """,
+    """
+    CREATE TABLE IF NOT EXISTS processing_status_read_model (
+        processing_id TEXT PRIMARY KEY,
+        document_id TEXT,
+        file_hash TEXT,
+        current_status TEXT NOT NULL,
+        is_terminal INTEGER NOT NULL,
+        status_detail TEXT,
+        result_reference TEXT,
+        artifact_manifest_id TEXT,
+        review_required INTEGER NOT NULL,
+        last_transition_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL
+    )
+    """,
 ]
 
 
-def initialize_schema(connection: Connection) -> None:
+def initialize_schema(connection: Any) -> None:
     for statement in SCHEMA_STATEMENTS:
         connection.execute(statement)
     _apply_compatibility_migrations(connection)
     connection.commit()
 
 
-def _apply_compatibility_migrations(connection: Connection) -> None:
+def _apply_compatibility_migrations(connection: Any) -> None:
     _ensure_columns(
         connection,
         "documents",
@@ -254,17 +346,18 @@ def _apply_compatibility_migrations(connection: Connection) -> None:
     _mark_legacy_rows(connection)
 
 
-def _ensure_columns(connection: Connection, table_name: str, columns: dict[str, str]) -> None:
-    existing = {
-        row[1]
-        for row in connection.execute(f"PRAGMA table_info({table_name})").fetchall()
-    }
+def _ensure_columns(connection: Any, table_name: str, columns: dict[str, str]) -> None:
+    try:
+        rows = connection.execute(f"PRAGMA table_info({table_name})").fetchall()
+    except Exception:
+        return
+    existing = {row[1] for row in rows}
     for name, definition in columns.items():
         if name not in existing:
             connection.execute(f"ALTER TABLE {table_name} ADD COLUMN {name} {definition}")
 
 
-def _mark_legacy_rows(connection: Connection) -> None:
+def _mark_legacy_rows(connection: Any) -> None:
     connection.execute(
         """
         UPDATE documents

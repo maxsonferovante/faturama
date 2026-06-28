@@ -112,3 +112,7 @@ class LangGraphSqliteRuntime:
             self._context_manager.__exit__(None, None, None)
             self._context_manager = None
             self.checkpointer = None
+
+
+class LangGraphPostgresRuntime(LangGraphSqliteRuntime):
+    """Compatibility wrapper used by the async runtime."""

@@ -10,7 +10,7 @@ Validar localmente que um upload de PDF por URL assinada dispara o fluxo assínc
 - Terraform disponível no `PATH`
 - Python 3.12+ para comandos auxiliares e testes do repositório
 - imagem Docker do worker construída localmente
-- um PostgreSQL compatível disponível na composição local
+- PostgreSQL e MiniStack disponíveis na composição local
 - PDF de amostra acessível no repositório
 
 ## Suggested Local Setup
@@ -44,6 +44,7 @@ terraform -chdir=infra/terraform/environments/local output
 
 **Expected outcome**:
 
+- containers `postgres` e `ministack` disponíveis na composição local;
 - bucket `pre-processamento-faturama` disponível;
 - fila principal e DLQ configuradas;
 - pipe e state machine provisionados;
@@ -95,6 +96,36 @@ Para cobertura automatizada:
 ```bash
 python3 -m pytest tests/e2e -q
 ```
+
+## Validation Scenario 4: SLA e burst concorrente
+
+```bash
+python3 -m pytest \
+  tests/e2e/test_async_sla.py \
+  tests/e2e/test_async_concurrency_burst.py \
+  tests/integration/test_status_propagation_latency.py
+```
+
+**Expected outcome**:
+
+- a execução local mantém propagação de status abaixo de 30 segundos;
+- a conclusão de uma fatura elegível fica abaixo de 5 minutos no ambiente local;
+- um burst de 20 uploads elegíveis conclui com pelo menos 90% das tentativas em `SUCCESS`, `PARTIAL` ou `REVIEW_REQUIRED`.
+
+## Validation Scenario 5: Ordering, deduplicação e diagnóstico
+
+```bash
+python3 -m pytest \
+  tests/integration/test_source_event_deduplication.py \
+  tests/integration/test_source_event_ordering.py \
+  tests/e2e/test_operational_diagnostics.py
+```
+
+**Expected outcome**:
+
+- eventos duplicados compartilham a mesma dedupe key;
+- entregas fora de ordem mantêm separação segura entre tentativas;
+- o ledger e o read model preservam trilha suficiente para diagnóstico operacional.
 
 ## Observability Checks
 

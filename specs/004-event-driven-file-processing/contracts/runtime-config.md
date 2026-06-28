@@ -64,6 +64,18 @@ log_group_name
 ## Local Parity Notes
 
 - o ambiente local deve provisionar recursos AWS compatíveis via Terraform apontando para o endpoint local;
+- a composição local de referência sobe MiniStack em `http://ministack:4566` na network padrão do projeto;
 - o banco local pode ser PostgreSQL em container dedicado, desde que o DSN preserve o contrato esperado pelo worker;
 - qualquer lacuna de emulação para CloudWatch Logs deve ter fallback operacional explícito para validação local por stdout e inspeção de container;
 - diferenças inevitáveis entre local e AWS real devem ser tratadas como documentação de paridade, não como contratos divergentes de payload ou nomes de recursos.
+
+## Validation Commands
+
+```text
+python3 -m pytest
+python3 -m pytest tests/e2e/test_async_sla.py
+python3 -m pytest tests/e2e/test_async_concurrency_burst.py
+python3 -m pytest tests/integration/test_status_propagation_latency.py
+python3 -m pytest tests/integration/test_source_event_deduplication.py
+python3 -m pytest tests/integration/test_source_event_ordering.py
+```

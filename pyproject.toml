@@ -12,6 +12,10 @@ dependencies = [
     "langchain-opendataloader-pdf==2.0.0",
 ]
 
+[project.scripts]
+faturama = "faturama.cli:main"
+faturama-worker = "faturama.interface.worker.entrypoint:main"
+
 [project.optional-dependencies]
 dev = [
     "pytest==9.1.1",

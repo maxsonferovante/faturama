@@ -15,15 +15,20 @@ class JsonFormatter(logging.Formatter):
         }
         for key in (
             "event",
+            "processing_id",
             "report_id",
             "repository_root",
             "metrics",
             "markdown_output_path",
             "error_code",
+            "bucket",
+            "object_key",
             "job_id",
             "user_id",
             "pdf_path",
             "status",
+            "status_detail",
+            "artifact_manifest_id",
             "review_items_opened",
             "transactions_persisted",
         ):
@@ -42,3 +47,7 @@ def get_logger(name: str = "faturama") -> logging.Logger:
     logger.setLevel(logging.INFO)
     logger.propagate = False
     return logger
+
+
+def build_log_extra(**extra: object) -> dict[str, object]:
+    return {key: value for key, value in extra.items() if value is not None}

@@ -1,6 +1,6 @@
 # Faturama
 
-Pipeline local para extracao auditavel de faturas de cartao, persistencia em SQLite e consultas por CLI sobre gasto mensal, parcelas observadas, saldo parcelado e fila de revisao.
+Pipeline local para extracao auditavel de faturas de cartao, persistencia em SQLite e consultas por CLI, agora com runtime assíncrono orientado a eventos para upload, dispatch e processamento em worker.
 
 ## Stack
 
@@ -19,13 +19,18 @@ python3 -m faturama.cli process-invoice --pdf-path samples/invoice-2026-04.pdf -
 python3 -m faturama.cli monthly-spend --user-id demo-user --month 2026-04
 python3 -m faturama.cli future-installments --user-id demo-user --month 2026-05
 python3 -m faturama.cli review-queue --user-id demo-user
+faturama-worker --help-message
 ```
 
 ## Variaveis uteis
 
 - `FATURAMA_DB_PATH`: base canonica SQLite
+- `FATURAMA_DB_DSN`: DSN operacional do runtime assíncrono
 - `FATURAMA_CHECKPOINT_DB_PATH`: base SQLite dos checkpoints
 - `FATURAMA_ARTIFACT_CACHE_DIR`: cache de artefatos `markdown/json` gerados em runtime
+- `FATURAMA_INPUT_BUCKET`: bucket lógico de entrada do fluxo assíncrono
+- `FATURAMA_ARTIFACT_BUCKET`: bucket lógico dos artefatos persistidos
+- `FATURAMA_PROCESSING_MESSAGE`: payload JSON consumido pelo worker assíncrono
 - `FATURAMA_OPENDATALOADER_HYBRID_URL`: endpoint opcional do modo hibrido
 - `FATURAMA_AGENT_AUTO_APPLY_THRESHOLD`: limiar alto para autoaplicacao pelo agente
 - `FATURAMA_OPENDATALOADER_STUB_MODE=1`: modo de teste com fixtures locais
@@ -48,7 +53,9 @@ python3 -m faturama.cli review-queue --user-id demo-user
 ## Validacao
 
 ```bash
+docker compose up -d
 python3 -m pytest -q
+python3 -m pytest tests/e2e/test_async_sla.py tests/e2e/test_async_concurrency_burst.py
 ```
 
-Validacao local mais recente do checkout em `2026-06-27`: `49 passed`.
+Validacao local mais recente do checkout em `2026-06-28`: `46 passed`.

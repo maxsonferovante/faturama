@@ -1,0 +1,15 @@
+{
+  "Records": [
+    {
+      "eventTime": "2026-06-28T12:00:00Z",
+      "s3": {
+        "bucket": { "name": "pre-processamento-faturama" },
+        "object": {
+          "key": "incoming/invoice-2026-04.pdf",
+          "versionId": "v1",
+          "eTag": "etag-1"
+        }
+      }
+    }
+  ]
+}

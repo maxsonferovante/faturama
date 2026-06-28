@@ -15,3 +15,8 @@ build/
 .env
 .env.*
 data/
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+coverage/

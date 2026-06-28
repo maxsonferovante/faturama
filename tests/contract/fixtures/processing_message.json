@@ -1,0 +1,12 @@
+{
+  "processing_id": "evt-20260628-0001",
+  "bucket": "pre-processamento-faturama",
+  "object_key": "incoming/invoice-2026-04.pdf",
+  "event_time": "2026-06-28T12:00:00Z",
+  "source": "s3",
+  "upload_grant_id": "grant-20260628-001",
+  "metadata": {
+    "object_version": "v1",
+    "etag": "etag-1"
+  }
+}

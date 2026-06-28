@@ -19,6 +19,7 @@ from faturama.domain.entities.invoice_statement import InvoiceStatement
 from faturama.domain.entities.raw_document import RawDocument
 from faturama.domain.services.document_identity import build_document_id, hash_file
 from faturama.infrastructure.config.settings import Settings
+from faturama.infrastructure.database.postgres import connect_from_dsn
 from faturama.infrastructure.database.langgraph_checkpoint import LangGraphSqliteRuntime, SQLiteCheckpointStore
 from faturama.infrastructure.database.sqlite import connect
 from faturama.infrastructure.repositories.decision_repository import DecisionRepository
@@ -60,7 +61,7 @@ def process_invoice(
     del timezone
     logger = get_logger("faturama.invoice_workflow")
     metrics = MetricsRegistry()
-    db = connect(settings.database_path)
+    db = connect_from_dsn(settings.database_dsn) if settings.database_dsn else connect(settings.database_path)
     statement_repo = StatementRepository(db)
     evidence_repo = EvidenceRepository(db)
     transaction_repo = TransactionRepository(db)
@@ -136,13 +137,21 @@ def process_invoice(
     payload = {
         "job_id": result["job_id"],
         "document_id": document_id,
+        "file_hash": file_hash,
         "statement_ids": [result["statement_id"]],
         "status": status,
+        "partial_status": "partial" if result["review_items"] else "complete",
         "transactions_persisted": result.get("transactions_persisted", 0),
         "installment_plans_updated": result.get("installment_plans_updated", 0),
         "projections_updated": result.get("projections_updated", 0),
         "review_items_opened": len(result["review_items"]),
         "source_pdf_path": str(Path(pdf_path)),
+        "result_reference": f"document:{document_id}",
+        "artifacts": {
+            "markdown_path": str(result["artifacts"].get("markdown_path", "")),
+            "json_path": str(result["artifacts"].get("json_path", "")),
+            "output_dir": str(result["artifacts"].get("output_dir", "")),
+        },
     }
     logger.info(
         "invoice_workflow_completed",

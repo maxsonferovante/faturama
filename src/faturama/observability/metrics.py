@@ -19,3 +19,6 @@ class MetricsRegistry:
         payload = self.dump()
         payload.update(extra)
         return payload
+
+    def set(self, key: str, value: int) -> None:
+        self._counter[key] = value

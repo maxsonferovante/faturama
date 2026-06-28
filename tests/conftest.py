@@ -6,6 +6,8 @@ from pathlib import Path
 
 import pytest
 
+from faturama.infrastructure.config.settings import Settings
+from tests.async_helpers import APRIL_MARKDOWN, write_async_source
 
 APRIL_MARKDOWN = """Inter Cartao final 1234
 Emissao 10/04/2026
@@ -75,3 +77,40 @@ def cli_env(temp_db: Path) -> dict[str, str]:
     env["FATURAMA_AGENT_AUTO_APPLY_THRESHOLD"] = "0.92"
     env["PYTHONPATH"] = str(Path.cwd() / "src")
     return env
+
+
+@pytest.fixture
+def async_storage_root(tmp_path: Path) -> Path:
+    root = tmp_path / "object-store"
+    root.mkdir(parents=True, exist_ok=True)
+    return root
+
+@pytest.fixture
+def async_settings(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, async_storage_root: Path) -> Settings:
+    db_path = tmp_path / "async.sqlite3"
+    checkpoint_path = tmp_path / "async-checkpoints.sqlite3"
+    artifact_cache_dir = tmp_path / "artifacts"
+    monkeypatch.setenv("FATURAMA_RUNTIME_ENV", "test")
+    monkeypatch.setenv("FATURAMA_DB_DSN", f"sqlite:///{db_path}")
+    monkeypatch.setenv("FATURAMA_DB_PATH", str(db_path))
+    monkeypatch.setenv("FATURAMA_CHECKPOINT_DB_PATH", str(checkpoint_path))
+    monkeypatch.setenv("FATURAMA_ARTIFACT_CACHE_DIR", str(artifact_cache_dir))
+    monkeypatch.setenv("FATURAMA_ARTIFACT_BUCKET", "processados-faturama")
+    monkeypatch.setenv("FATURAMA_INPUT_BUCKET", "pre-processamento-faturama")
+    monkeypatch.setenv("FATURAMA_ARTIFACT_PREFIX", "processed")
+    monkeypatch.setenv("FATURAMA_OPENDATALOADER_STUB_MODE", "1")
+    settings = Settings(
+        runtime_env="test",
+        aws_region="us-east-1",
+        aws_endpoint_url="http://localhost:4566",
+        input_bucket="pre-processamento-faturama",
+        artifact_bucket="processados-faturama",
+        artifact_prefix="processed",
+        database_dsn=f"sqlite:///{db_path}",
+        database_path=db_path,
+        checkpoint_database_path=checkpoint_path,
+        artifact_cache_dir=artifact_cache_dir,
+        opendataloader_stub_mode=True,
+    )
+    (settings.artifact_cache_dir.parent / "object-store").mkdir(parents=True, exist_ok=True)
+    return settings

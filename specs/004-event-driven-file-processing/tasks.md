@@ -18,11 +18,11 @@ description: "Task list for event-driven asynchronous invoice processing"
 
 **Purpose**: Criar a base estrutural do runtime assíncrono e do ambiente local.
 
-- [ ] T001 Create async runtime package skeleton in `src/faturama/interface/worker/__init__.py`, `src/faturama/infrastructure/aws/__init__.py`, and `src/faturama/infrastructure/messaging/__init__.py`
-- [ ] T002 Create local worker container bootstrap in `docker/worker/Dockerfile` and `docker-compose.yml`
-- [ ] T003 [P] Create Terraform skeleton for shared module and environments in `infra/terraform/modules/faturama_runtime/main.tf`, `infra/terraform/environments/local/main.tf`, and `infra/terraform/environments/aws/main.tf`
-- [ ] T004 [P] Extend packaging and developer commands for the async runtime in `pyproject.toml` and `README.md`
-- [ ] T005 [P] Create async test fixtures and sample payload assets in `tests/contract/fixtures/processing_message.json`, `tests/integration/fixtures/s3_event.json`, and `tests/e2e/fixtures/invoice-2026-04.pdf`
+- [X] T001 Create async runtime package skeleton in `src/faturama/interface/worker/__init__.py`, `src/faturama/infrastructure/aws/__init__.py`, and `src/faturama/infrastructure/messaging/__init__.py`
+- [X] T002 Create local worker container bootstrap in `docker/worker/Dockerfile` and `docker-compose.yml`
+- [X] T003 [P] Create Terraform skeleton for shared module and environments in `infra/terraform/modules/faturama_runtime/main.tf`, `infra/terraform/environments/local/main.tf`, and `infra/terraform/environments/aws/main.tf`
+- [X] T004 [P] Extend packaging and developer commands for the async runtime in `pyproject.toml` and `README.md`
+- [X] T005 [P] Create async test fixtures and sample payload assets in `tests/contract/fixtures/processing_message.json`, `tests/integration/fixtures/s3_event.json`, and `tests/e2e/fixtures/invoice-2026-04.pdf`
 
 ---
 
@@ -32,13 +32,13 @@ description: "Task list for event-driven asynchronous invoice processing"
 
 **⚠️ CRITICAL**: No user story work should start before this phase is complete.
 
-- [ ] T006 Extend async runtime settings and environment parsing in `src/faturama/infrastructure/config/settings.py`
-- [ ] T007 [P] Add PostgreSQL-capable schema bootstrap and connection adapter for operational tables in `src/faturama/infrastructure/database/schema.py` and `src/faturama/infrastructure/database/postgres.py`
-- [ ] T008 [P] Define async DTOs and value objects for processing commands, status, grants, and manifests in `src/faturama/application/dto/processing_command_dto.py`, `src/faturama/application/dto/processing_status_dto.py`, and `src/faturama/domain/value_objects/processing_status.py`
-- [ ] T009 [P] Define application ports for object storage, processing ledger, status projection, and artifact manifests in `src/faturama/application/ports/object_storage.py`, `src/faturama/application/ports/processing_job_repository.py`, `src/faturama/application/ports/processing_status_repository.py`, and `src/faturama/application/ports/artifact_manifest_repository.py`
-- [ ] T010 Implement SQL repositories for processing jobs, status read model, artifact manifests, and upload grants in `src/faturama/infrastructure/repositories/processing_job_repository.py`, `src/faturama/infrastructure/repositories/processing_status_repository.py`, `src/faturama/infrastructure/repositories/artifact_manifest_repository.py`, and `src/faturama/infrastructure/repositories/upload_grant_repository.py`
-- [ ] T011 [P] Add `processing_id` correlation logging and metrics helpers in `src/faturama/observability/logging.py` and `src/faturama/observability/metrics.py`
-- [ ] T012 Create Terraform variables and outputs shared by local and AWS runtimes in `infra/terraform/modules/faturama_runtime/variables.tf`, `infra/terraform/modules/faturama_runtime/outputs.tf`, `infra/terraform/environments/local/variables.tf`, and `infra/terraform/environments/aws/variables.tf`
+- [X] T006 Extend async runtime settings and environment parsing in `src/faturama/infrastructure/config/settings.py`
+- [X] T007 [P] Add PostgreSQL-capable schema bootstrap and connection adapter for operational tables in `src/faturama/infrastructure/database/schema.py` and `src/faturama/infrastructure/database/postgres.py`
+- [X] T008 [P] Define async DTOs and value objects for processing commands, status, grants, and manifests in `src/faturama/application/dto/processing_command_dto.py`, `src/faturama/application/dto/processing_status_dto.py`, and `src/faturama/domain/value_objects/processing_status.py`
+- [X] T009 [P] Define application ports for object storage, processing ledger, status projection, and artifact manifests in `src/faturama/application/ports/object_storage.py`, `src/faturama/application/ports/processing_job_repository.py`, `src/faturama/application/ports/processing_status_repository.py`, and `src/faturama/application/ports/artifact_manifest_repository.py`
+- [X] T010 Implement SQL repositories for processing jobs, status read model, artifact manifests, and upload grants in `src/faturama/infrastructure/repositories/processing_job_repository.py`, `src/faturama/infrastructure/repositories/processing_status_repository.py`, `src/faturama/infrastructure/repositories/artifact_manifest_repository.py`, and `src/faturama/infrastructure/repositories/upload_grant_repository.py`
+- [X] T011 [P] Add `processing_id` correlation logging and metrics helpers in `src/faturama/observability/logging.py` and `src/faturama/observability/metrics.py`
+- [X] T012 Create Terraform variables and outputs shared by local and AWS runtimes in `infra/terraform/modules/faturama_runtime/variables.tf`, `infra/terraform/modules/faturama_runtime/outputs.tf`, `infra/terraform/environments/local/variables.tf`, and `infra/terraform/environments/aws/variables.tf`
 
 **Checkpoint**: Foundation ready for independent story work.
 
@@ -52,17 +52,17 @@ description: "Task list for event-driven asynchronous invoice processing"
 
 ### Tests for User Story 1
 
-- [ ] T013 [P] [US1] Add contract tests for signed upload grants and processing message payloads in `tests/contract/test_signed_upload_contract.py` and `tests/contract/test_processing_message_contract.py`
-- [ ] T014 [P] [US1] Add integration test for S3 event normalization and initial ledger creation in `tests/integration/test_async_dispatch.py`
-- [ ] T015 [P] [US1] Add e2e test for `upload -> queue -> state machine -> ecs dispatch` in `tests/e2e/test_event_driven_dispatch_e2e.py`
+- [X] T013 [P] [US1] Add contract tests for signed upload grants and processing message payloads in `tests/contract/test_signed_upload_contract.py` and `tests/contract/test_processing_message_contract.py`
+- [X] T014 [P] [US1] Add integration test for S3 event normalization and initial ledger creation in `tests/integration/test_async_dispatch.py`
+- [X] T015 [P] [US1] Add e2e test for `upload -> queue -> state machine -> ecs dispatch` in `tests/e2e/test_event_driven_dispatch_e2e.py`
 
 ### Implementation for User Story 1
 
-- [ ] T016 [P] [US1] Implement source-event normalization and processing command builder with dedupe keys for duplicate/out-of-order deliveries in `src/faturama/application/services/source_event_normalizer.py` and `src/faturama/application/use_cases/build_processing_command.py`
-- [ ] T017 [P] [US1] Implement worker entrypoint and command runner that delegate to `process_invoice` in `src/faturama/interface/worker/entrypoint.py` and `src/faturama/interface/worker/runner.py`
-- [ ] T018 [P] [US1] Implement S3 object download/upload adapters and signed-upload grant correlation in `src/faturama/infrastructure/aws/s3_storage.py` and `src/faturama/infrastructure/repositories/upload_grant_repository.py`
-- [ ] T019 [US1] Implement async dispatch orchestration that records `PENDING` and `RUNNING` and ignores duplicate or stale source deliveries per idempotency policy in `src/faturama/application/use_cases/process_processing_command.py`
-- [ ] T020 [US1] Provision input bucket, SQS, DLQ, EventBridge Pipe, Step Function, and ECS task wiring sized for the v1 burst target in `infra/terraform/modules/faturama_runtime/main.tf`, `infra/terraform/environments/local/main.tf`, and `infra/terraform/environments/aws/main.tf`
+- [X] T016 [P] [US1] Implement source-event normalization and processing command builder with dedupe keys for duplicate/out-of-order deliveries in `src/faturama/application/services/source_event_normalizer.py` and `src/faturama/application/use_cases/build_processing_command.py`
+- [X] T017 [P] [US1] Implement worker entrypoint and command runner that delegate to `process_invoice` in `src/faturama/interface/worker/entrypoint.py` and `src/faturama/interface/worker/runner.py`
+- [X] T018 [P] [US1] Implement S3 object download/upload adapters and signed-upload grant correlation in `src/faturama/infrastructure/aws/s3_storage.py` and `src/faturama/infrastructure/repositories/upload_grant_repository.py`
+- [X] T019 [US1] Implement async dispatch orchestration that records `PENDING` and `RUNNING` and ignores duplicate or stale source deliveries per idempotency policy in `src/faturama/application/use_cases/process_processing_command.py`
+- [X] T020 [US1] Provision input bucket, SQS, DLQ, EventBridge Pipe, Step Function, and ECS task wiring sized for the v1 burst target in `infra/terraform/modules/faturama_runtime/main.tf`, `infra/terraform/environments/local/main.tf`, and `infra/terraform/environments/aws/main.tf`
 
 **Checkpoint**: User Story 1 is functional when asynchronous submission and initial tracking work without a synchronous CLI dependency.
 
@@ -76,16 +76,16 @@ description: "Task list for event-driven asynchronous invoice processing"
 
 ### Tests for User Story 2
 
-- [ ] T021 [P] [US2] Add contract and integration tests for status read model transitions and `REVIEW_REQUIRED` semantics in `tests/contract/test_processing_status_read_model.py` and `tests/integration/test_review_required_status_flow.py`
-- [ ] T022 [P] [US2] Add integration test for checkpoint restore and review resume in `tests/integration/test_async_review_resume.py`
+- [X] T021 [P] [US2] Add contract and integration tests for status read model transitions and `REVIEW_REQUIRED` semantics in `tests/contract/test_processing_status_read_model.py` and `tests/integration/test_review_required_status_flow.py`
+- [X] T022 [P] [US2] Add integration test for checkpoint restore and review resume in `tests/integration/test_async_review_resume.py`
 
 ### Implementation for User Story 2
 
-- [ ] T023 [P] [US2] Implement lifecycle transition service and status projection updater in `src/faturama/application/services/processing_lifecycle.py` and `src/faturama/application/use_cases/update_processing_status.py`
-- [ ] T024 [P] [US2] Implement PostgreSQL-backed checkpoint runtime for resumable async execution in `src/faturama/infrastructure/database/postgres_checkpoint.py` and `src/faturama/infrastructure/database/langgraph_checkpoint.py`
-- [ ] T025 [P] [US2] Extend review workflow nodes to keep `REVIEW_REQUIRED` non-terminal and reopenable in `src/faturama/application/services/workflow_nodes.py`, `src/faturama/application/services/workflow_state.py`, and `src/faturama/application/services/reprocessing.py`
-- [ ] T026 [P] [US2] Persist lifecycle events and status read-model updates from worker execution in `src/faturama/infrastructure/repositories/processing_job_repository.py` and `src/faturama/infrastructure/repositories/processing_status_repository.py`
-- [ ] T027 [US2] Configure dispatch failure handling, retries, observability metadata, and lifecycle-event persistence semantics in `infra/terraform/modules/faturama_runtime/main.tf` and `src/faturama/interface/worker/runner.py`
+- [X] T023 [P] [US2] Implement lifecycle transition service and status projection updater in `src/faturama/application/services/processing_lifecycle.py` and `src/faturama/application/use_cases/update_processing_status.py`
+- [X] T024 [P] [US2] Implement PostgreSQL-backed checkpoint runtime for resumable async execution in `src/faturama/infrastructure/database/postgres_checkpoint.py` and `src/faturama/infrastructure/database/langgraph_checkpoint.py`
+- [X] T025 [P] [US2] Extend review workflow nodes to keep `REVIEW_REQUIRED` non-terminal and reopenable in `src/faturama/application/services/workflow_nodes.py`, `src/faturama/application/services/workflow_state.py`, and `src/faturama/application/services/reprocessing.py`
+- [X] T026 [P] [US2] Persist lifecycle events and status read-model updates from worker execution in `src/faturama/infrastructure/repositories/processing_job_repository.py` and `src/faturama/infrastructure/repositories/processing_status_repository.py`
+- [X] T027 [US2] Configure dispatch failure handling, retries, observability metadata, and lifecycle-event persistence semantics in `infra/terraform/modules/faturama_runtime/main.tf` and `src/faturama/interface/worker/runner.py`
 
 **Checkpoint**: User Story 2 is functional when operators can inspect status transitions, see `REVIEW_REQUIRED` as non-terminal, and resume execution safely.
 
@@ -99,16 +99,16 @@ description: "Task list for event-driven asynchronous invoice processing"
 
 ### Tests for User Story 3
 
-- [ ] T028 [P] [US3] Add regression tests for idempotent reprocessing, artifact manifest persistence, and partial outcomes in `tests/unit/test_processing_idempotency.py`, `tests/integration/test_artifact_manifest_persistence.py`, and `tests/e2e/test_async_pipeline_regression.py`
+- [X] T028 [P] [US3] Add regression tests for idempotent reprocessing, artifact manifest persistence, and partial outcomes in `tests/unit/test_processing_idempotency.py`, `tests/integration/test_artifact_manifest_persistence.py`, and `tests/e2e/test_async_pipeline_regression.py`
 
 ### Implementation for User Story 3
 
-- [ ] T029 [P] [US3] Implement deterministic artifact key builder and manifest persistence services in `src/faturama/application/services/artifact_key_builder.py` and `src/faturama/application/services/artifact_manifest_service.py`
-- [ ] T030 [P] [US3] Implement artifact manifest repository and S3 artifact writer for `processados-faturama` in `src/faturama/infrastructure/repositories/artifact_manifest_repository.py` and `src/faturama/infrastructure/aws/s3_storage.py`
-- [ ] T031 [P] [US3] Adapt canonical persistence to reuse document hash and avoid duplicate records across retries in `src/faturama/application/use_cases/process_invoice.py`, `src/faturama/domain/services/document_identity.py`, and `src/faturama/infrastructure/repositories/statement_repository.py`
-- [ ] T032 [P] [US3] Persist `SUCCESS`, `PARTIAL`, and `FAILED` result references plus artifact links for the status API in `src/faturama/application/use_cases/process_processing_command.py` and `src/faturama/application/services/processing_status_service.py`
-- [ ] T033 [US3] Implement retry-safe processing ledger rules for repeated PDFs and new `processing_id` attempts in `src/faturama/infrastructure/repositories/processing_job_repository.py` and `src/faturama/application/services/reprocessing.py`
-- [ ] T034 [US3] Wire artifact bucket segregation and retry-safe runtime config across infra and app in `infra/terraform/modules/faturama_runtime/main.tf`, `infra/terraform/environments/local/main.tf`, and `src/faturama/infrastructure/config/settings.py`
+- [X] T029 [P] [US3] Implement deterministic artifact key builder and manifest persistence services in `src/faturama/application/services/artifact_key_builder.py` and `src/faturama/application/services/artifact_manifest_service.py`
+- [X] T030 [P] [US3] Implement artifact manifest repository and S3 artifact writer for `processados-faturama` in `src/faturama/infrastructure/repositories/artifact_manifest_repository.py` and `src/faturama/infrastructure/aws/s3_storage.py`
+- [X] T031 [P] [US3] Adapt canonical persistence to reuse document hash and avoid duplicate records across retries in `src/faturama/application/use_cases/process_invoice.py`, `src/faturama/domain/services/document_identity.py`, and `src/faturama/infrastructure/repositories/statement_repository.py`
+- [X] T032 [P] [US3] Persist `SUCCESS`, `PARTIAL`, and `FAILED` result references plus artifact links for the status API in `src/faturama/application/use_cases/process_processing_command.py` and `src/faturama/application/services/processing_status_service.py`
+- [X] T033 [US3] Implement retry-safe processing ledger rules for repeated PDFs and new `processing_id` attempts in `src/faturama/infrastructure/repositories/processing_job_repository.py` and `src/faturama/application/services/reprocessing.py`
+- [X] T034 [US3] Wire artifact bucket segregation and retry-safe runtime config across infra and app in `infra/terraform/modules/faturama_runtime/main.tf`, `infra/terraform/environments/local/main.tf`, and `src/faturama/infrastructure/config/settings.py`
 
 **Checkpoint**: User Story 3 is functional when the async flow preserves the canonical business output and exposes stable references for consumers.
 
@@ -118,13 +118,13 @@ description: "Task list for event-driven asynchronous invoice processing"
 
 **Purpose**: Consolidar validação local, documentação operacional e paridade entre ambientes.
 
-- [ ] T035 [P] Update local validation guide and parity caveats for lifecycle events, SLA targets, and concurrency expectations in `README.md`, `specs/004-event-driven-file-processing/quickstart.md`, and `specs/004-event-driven-file-processing/contracts/runtime-config.md`
-- [ ] T036 [P] Add automated latency verification for `5 minutos` completion and `30 segundos` status propagation in `tests/integration/test_status_propagation_latency.py` and `tests/e2e/test_async_sla.py`
-- [ ] T037 [P] Add concurrent burst and failure-isolation validation for 20 eligible uploads in `tests/e2e/test_async_concurrency_burst.py` and `tests/integration/test_worker_failure_isolation.py`
-- [ ] T038 [P] Add duplicate, delayed, and out-of-order source-event validation in `tests/integration/test_source_event_deduplication.py` and `tests/integration/test_source_event_ordering.py`
-- [ ] T039 [P] Add automated local infra/runtime verification for the async contract in `tests/e2e/test_local_runtime_contract.py` and `infra/terraform/environments/local/outputs.tf`
-- [ ] T040 [P] Document operational runbook and operator-diagnosis checklist for dispatch, review resume, and failure triage in `docs/runbooks/event-driven-file-processing.md` and `tests/e2e/test_operational_diagnostics.py`
-- [ ] T041 Run repository quality gates and record the async verification command matrix in `README.md` and `docs/runbooks/event-driven-file-processing.md`
+- [X] T035 [P] Update local validation guide and parity caveats for lifecycle events, SLA targets, and concurrency expectations in `README.md`, `specs/004-event-driven-file-processing/quickstart.md`, and `specs/004-event-driven-file-processing/contracts/runtime-config.md`
+- [X] T036 [P] Add automated latency verification for `5 minutos` completion and `30 segundos` status propagation in `tests/integration/test_status_propagation_latency.py` and `tests/e2e/test_async_sla.py`
+- [X] T037 [P] Add concurrent burst and failure-isolation validation for 20 eligible uploads in `tests/e2e/test_async_concurrency_burst.py` and `tests/integration/test_worker_failure_isolation.py`
+- [X] T038 [P] Add duplicate, delayed, and out-of-order source-event validation in `tests/integration/test_source_event_deduplication.py` and `tests/integration/test_source_event_ordering.py`
+- [X] T039 [P] Add automated local infra/runtime verification for the async contract in `tests/e2e/test_local_runtime_contract.py` and `infra/terraform/environments/local/outputs.tf`
+- [X] T040 [P] Document operational runbook and operator-diagnosis checklist for dispatch, review resume, and failure triage in `docs/runbooks/event-driven-file-processing.md` and `tests/e2e/test_operational_diagnostics.py`
+- [X] T041 Run repository quality gates and record the async verification command matrix in `README.md` and `docs/runbooks/event-driven-file-processing.md`
 
 ---
 

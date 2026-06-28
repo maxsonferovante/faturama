@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: faturama
+      POSTGRES_USER: faturama
+      POSTGRES_PASSWORD: faturama
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  ministack:
+    image: ministackorg/ministack:full
+    environment:
+      AWS_REGION: us-east-1
+      DOCKER_NETWORK: "${COMPOSE_PROJECT_NAME:-faturama}_default"
+    ports:
+      - "4566:4566"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/worker/Dockerfile
+    environment:
+      FATURAMA_RUNTIME_ENV: local
+      FATURAMA_DB_DSN: postgresql://faturama:faturama@postgres:5432/faturama
+      FATURAMA_AWS_REGION: us-east-1
+      FATURAMA_AWS_ENDPOINT_URL: http://ministack:4566
+      FATURAMA_INPUT_BUCKET: pre-processamento-faturama
+      FATURAMA_ARTIFACT_BUCKET: processados-faturama
+      FATURAMA_ARTIFACT_PREFIX: processed
+      FATURAMA_SIGNED_UPLOAD_EXPIRATION_SECONDS: "300"
+      FATURAMA_OPENDATALOADER_STUB_MODE: "1"
+    depends_on:
+      - postgres
+      - ministack
+    command: ["--help"]
+
+volumes:
+  postgres-data:

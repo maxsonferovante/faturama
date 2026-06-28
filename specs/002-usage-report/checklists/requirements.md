@@ -2,7 +2,7 @@
 
 **Purpose**: Validate specification completeness and quality before proceeding to planning
 **Created**: 2026-06-27
-**Feature**: [spec.md](/Users/mferovante/Documents/faturama/specs/002-usage-report/spec.md)
+**Feature**: [spec.md](../spec.md)
 
 ## Content Quality
 

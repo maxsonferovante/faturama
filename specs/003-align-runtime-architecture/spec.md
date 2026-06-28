@@ -6,7 +6,7 @@
 
 **Status**: Draft
 
-**Input**: User description: "$speckit-specify eu fiz duas interacoes /Users/mferovante/Documents/faturama/specs/001-invoice-extractor /Users/mferovante/Documents/faturama/specs/002-usage-report para implementacao de uma Construir um pipeline para transformar faturas de cartão em dados estruturados, consultáveis por mês, cartão, compra, parcela e saldo futuro, com separação clara entre extração, interpretação assistida e persistência, que usasse LangGraph e OpenDataLoader, mas nao foi feito LangGraph e OpenDataLoader como declarados sem integração real de runtime,. Eu quero corrigir isso e passar a usar VERDADEIRAMENTE ESSAS DUAS LIBS PYTHON CADA UMA PARA OS SEUS DEVIDOS PROPOSSITOS DENTRO DO PROJETO COMO CITADO NAS SPECS.MD"
+**Input**: User description: "$speckit-specify eu fiz duas interacoes `specs/001-invoice-extractor` `specs/002-usage-report` para implementacao de uma Construir um pipeline para transformar faturas de cartão em dados estruturados, consultáveis por mês, cartão, compra, parcela e saldo futuro, com separação clara entre extração, interpretação assistida e persistência, que usasse LangGraph e OpenDataLoader, mas nao foi feito LangGraph e OpenDataLoader como declarados sem integração real de runtime,. Eu quero corrigir isso e passar a usar VERDADEIRAMENTE ESSAS DUAS LIBS PYTHON CADA UMA PARA OS SEUS DEVIDOS PROPOSSITOS DENTRO DO PROJETO COMO CITADO NAS SPECS.MD"
 
 ## Clarifications
 

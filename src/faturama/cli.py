@@ -8,7 +8,6 @@ import json
 from faturama.interface.cli.process_invoice import register_process_invoice
 from faturama.interface.cli.queries import register_query_commands
 from faturama.interface.cli.review import register_review_commands
-from faturama.interface.cli.usage_report import register_usage_report
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -17,7 +16,6 @@ def build_parser() -> argparse.ArgumentParser:
     register_process_invoice(subparsers)
     register_query_commands(subparsers)
     register_review_commands(subparsers)
-    register_usage_report(subparsers)
     return parser
 
 

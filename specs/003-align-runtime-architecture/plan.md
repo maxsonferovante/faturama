@@ -6,7 +6,7 @@
 
 ## Summary
 
-Restabelecer o runtime oficial do pipeline de faturas para que a ingestão execute de verdade com `OpenDataLoader PDF` na extração primária e `LangGraph` na orquestração com checkpoints e revisão assistida, preservando a persistência canônica em SQLite, a idempotência, as consultas já prometidas na `001-invoice-extractor` e a verificabilidade operacional diagnosticada na `002-usage-report`.
+Restabelecer o runtime oficial do pipeline de faturas para que a ingestão execute de verdade com `OpenDataLoader PDF` na extração primária e `LangGraph` na orquestração com checkpoints e revisão assistida, preservando a persistência canônica em SQLite, a idempotência e as consultas já prometidas na `001-invoice-extractor`.
 
 ## Technical Context
 
@@ -99,7 +99,7 @@ As decisões de pesquisa foram consolidadas em [research.md](./research.md) com 
 
 - O modelo de dados da correção foi definido em [data-model.md](./data-model.md), cobrindo job oficial, artefatos extraídos, checkpoints, casos de revisão e resolução assistida.
 - Os contratos operacionais foram definidos em [contracts/cli.md](./contracts/cli.md) e [contracts/workflow.md](./contracts/workflow.md).
-- O fluxo de validação local e ponta a ponta foi documentado em [quickstart.md](./quickstart.md), incluindo extração real, pausa por revisão, retomada e verificação posterior via `usage-report`.
+- O fluxo de validação local e ponta a ponta foi documentado em [quickstart.md](./quickstart.md), incluindo extração real, pausa por revisão e retomada.
 - O bloco gerenciado do agente deve apontar para este plano após a atualização de contexto.
 
 ## Post-Design Constitution Check

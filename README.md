@@ -19,7 +19,6 @@ python3 -m faturama.cli process-invoice --pdf-path samples/invoice-2026-04.pdf -
 python3 -m faturama.cli monthly-spend --user-id demo-user --month 2026-04
 python3 -m faturama.cli future-installments --user-id demo-user --month 2026-05
 python3 -m faturama.cli review-queue --user-id demo-user
-python3 -m faturama.cli usage-report --format json
 ```
 
 ## Variaveis uteis
@@ -44,7 +43,7 @@ python3 -m faturama.cli usage-report --format json
 - `src/faturama/infrastructure`: SQLite, cache de artefatos, adapters OpenDataLoader e contexto LLM
 - `src/faturama/interface/cli`: superficie de comandos da v1
 - `tests/`: suites unit, integration, contract e e2e
-- `docs/runbooks/`: operacao do pipeline oficial, validacao de performance e diagnostico de aderencia
+- `docs/runbooks/`: operacao do pipeline oficial e validacao de performance
 
 ## Validacao
 

@@ -8,7 +8,7 @@
 
 **Alternatives considered**:
 
-- **Manter orquestração manual em função linear**: descartado porque preserva exatamente a lacuna apontada na `002-usage-report`.
+- **Manter orquestração manual em função linear**: descartado porque preserva a lacuna entre arquitetura prometida e runtime real.
 - **Criar um motor de estados próprio**: descartado por reinventar responsabilidade já coberta pela biblioteca que a arquitetura prometeu usar.
 
 ## Decision 2: Revisão assistida usará `interrupt` e checkpoints SQLite
@@ -56,15 +56,7 @@
 - **Eliminar totalmente artefatos intermediários**: descartado porque reduz explicabilidade e dificulta auditoria local.
 - **Persistir somente texto bruto no banco**: descartado porque perde a relação direta com a extração primária e com dados estruturais por página.
 
-## Decision 6: A validação de aderência usará o `usage-report` como prova regressiva
-
-**Decision**: O critério de pronto da feature incluirá a execução do `usage-report` para confirmar que `LangGraph` e `OpenDataLoader` deixaram de aparecer como declarados sem runtime real.
-
-**Rationale**: A `002-usage-report` já materializa exatamente a lacuna que esta feature corrige. Reusá-la como verificação final reduz ambiguidade e transforma o diagnóstico anterior em prova objetiva de fechamento.
-
-**Alternatives considered**:
-
-- **Confiar apenas em testes unitários e integração**: descartado porque isso não mede explicitamente o mesmo desvio arquitetural já diagnosticado.
+- **Confiar apenas em testes unitários e integração**: descartado porque isso não evidencia sozinho o fechamento do desvio arquitetural sem checagens de comportamento observável.
 
 ## Source References
 

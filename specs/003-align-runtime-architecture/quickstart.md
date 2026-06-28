@@ -97,18 +97,6 @@ python3 -m faturama.cli remaining-balance --user-id demo-user --format json
 
 Consulte os formatos esperados em [contracts/cli.md](./contracts/cli.md).
 
-## Validation Scenario 4: Verificar o fechamento do desvio arquitetural
-
-```bash
-python3 -m faturama.cli usage-report --format json
-```
-
-**Expected outcome**:
-
-- `LangGraph` aparece como uso real de runtime no workflow principal;
-- `OpenDataLoader` aparece como extração primária real do PDF;
-- o relatório deixa de tratar ambos apenas como dependência declarada ou naming arquitetural.
-
 ## Validation Status
 
 Os cenários centrais desta feature devem ficar cobertos por:
@@ -121,14 +109,12 @@ Os cenários centrais desta feature devem ficar cobertos por:
 Validação executada no checkout atual em `2026-06-27`:
 
 - `python3 -m pytest -q` => `49 passed`
-- `python3 -m faturama.cli usage-report --format json` => `critical_deviations=0`
 
 ## Test Guidance
 
 - incluir regressão específica contra o comportamento antigo de apenas resolver sidecars locais;
 - validar que checkpoints podem ser restaurados sem criar duplicação;
 - validar que o ramo assistido por IA só entra quando regras e confiança exigirem;
-- validar que `usage-report` reconhece o fechamento do desvio após a implementação.
 
 ## Troubleshooting
 

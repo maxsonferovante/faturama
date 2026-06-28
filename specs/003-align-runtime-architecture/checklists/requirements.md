@@ -31,4 +31,4 @@
 
 ## Notes
 
-- A spec corrige o desvio entre arquitetura aprovada e runtime real usando como contexto as features `001-invoice-extractor` e `002-usage-report`, mas mantém os requisitos desta feature em nível comportamental e verificável.
+- A spec corrige o desvio entre arquitetura aprovada e runtime real mantendo os requisitos desta feature em nível comportamental e verificável.

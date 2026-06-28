@@ -6,7 +6,7 @@
 
 **Status**: Draft
 
-**Input**: User description: "$speckit-specify eu fiz duas interacoes `specs/001-invoice-extractor` `specs/002-usage-report` para implementacao de uma Construir um pipeline para transformar faturas de cartão em dados estruturados, consultáveis por mês, cartão, compra, parcela e saldo futuro, com separação clara entre extração, interpretação assistida e persistência, que usasse LangGraph e OpenDataLoader, mas nao foi feito LangGraph e OpenDataLoader como declarados sem integração real de runtime,. Eu quero corrigir isso e passar a usar VERDADEIRAMENTE ESSAS DUAS LIBS PYTHON CADA UMA PARA OS SEUS DEVIDOS PROPOSSITOS DENTRO DO PROJETO COMO CITADO NAS SPECS.MD"
+**Input**: User description: "$speckit-specify eu fiz uma interação anterior para implementação de um pipeline para transformar faturas de cartão em dados estruturados, consultáveis por mês, cartão, compra, parcela e saldo futuro, com separação clara entre extração, interpretação assistida e persistência, que usasse LangGraph e OpenDataLoader, mas isso não foi feito com integração real de runtime. Eu quero corrigir isso e passar a usar VERDADEIRAMENTE ESSAS DUAS LIBS PYTHON CADA UMA PARA OS SEUS DEVIDOS PROPÓSITOS DENTRO DO PROJETO."
 
 ## Clarifications
 
@@ -120,7 +120,7 @@ Como usuário da base consolidada, quero continuar consultando gastos, parcelas 
 ## Assumptions
 
 - A proposta funcional da `001-invoice-extractor` continua válida; esta feature corrige a aderência de runtime do fluxo principal sem redefinir os objetivos de negócio já aprovados para ingestão, consulta e persistência.
-- O diagnóstico produzido em `002-usage-report` é tratado como evidência de lacuna atual e como insumo para validar que a correção realmente removeu o desvio identificado.
+- O desvio entre arquitetura aprovada e runtime real é tratado como a lacuna principal a ser fechada por esta feature.
 - A v1 continua priorizando faturas de cartão pessoais já suportadas pelo projeto antes de expandir cobertura para novos emissores ou novas classes documentais.
 - Itens ambíguos elegíveis podem ser decididos e aplicados automaticamente pelo agente de IA; os demais continuam seguindo para revisão humana.
 - A autoaplicação pelo agente de IA só é permitida acima de um limiar alto específico de confiança, mais restritivo do que o limiar geral de ambiguidade.

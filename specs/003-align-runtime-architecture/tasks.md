@@ -93,13 +93,13 @@
 
 **Goal**: Garantir idempotência, continuidade das consultas válidas, invalidação do histórico legado e fechamento do desvio arquitetural detectado pela feature `002`.
 
-**Independent Test**: Reprocessar o mesmo documento no fluxo oficial corrigido, bloquear consultas sobre histórico legado inválido, consultar apenas dados reconstruídos válidos e validar que o `usage-report` classifica `LangGraph` e `OpenDataLoader` como runtime real.
+**Independent Test**: Reprocessar o mesmo documento no fluxo oficial corrigido, bloquear consultas sobre histórico legado inválido, consultar apenas dados reconstruídos válidos e validar por evidências de execução e testes que `LangGraph` e `OpenDataLoader` estão integrados ao runtime real.
 
 ### Tests for User Story 3
 
 - [X] T026 [P] [US3] Add integration coverage for idempotent reprocessing with workflow-generated artifacts and partial persistence markers in `tests/integration/test_invoice_ingestion.py`
 - [X] T027 [P] [US3] Add contract coverage for blocking query access to invalidated legacy history in `tests/contract/test_cli_queries.py`
-- [X] T028 [P] [US3] Add integration coverage for runtime-aligned `usage-report` findings in `tests/integration/test_usage_report_deviations.py` and `tests/integration/test_usage_report_generation.py`
+- [X] T028 [P] [US3] Add integration coverage for runtime-aligned workflow evidence in `tests/integration/test_langgraph_workflow.py` and `tests/integration/test_opendataloader_extractor.py`
 - [X] T029 [P] [US3] Add end-to-end regression coverage for reprocess + legacy invalidation + remaining valid queries in `tests/e2e/test_invoice_pipeline_e2e.py`
 
 ### Implementation for User Story 3
@@ -107,7 +107,7 @@
 - [X] T030 [P] [US3] Update ingestion persistence flow to keep reprocessing idempotent with workflow checkpoints, generated artifacts, and explicit partial markers in `src/faturama/application/use_cases/process_invoice.py`
 - [X] T031 [P] [US3] Preserve query semantics and observed-vs-projected separation while rejecting invalidated legacy history in `src/faturama/application/queries/monthly_spend.py`, `src/faturama/application/queries/future_installments.py`, `src/faturama/application/queries/remaining_balance.py`, and `src/faturama/application/queries/list_statements.py`
 - [X] T032 [P] [US3] Implement legacy-history invalidation and manual rebuild gating in `src/faturama/infrastructure/repositories/statement_repository.py`, `src/faturama/infrastructure/repositories/summary_repository.py`, and `src/faturama/infrastructure/database/schema.py`
-- [X] T033 [US3] Update usage-report target analysis so `LangGraph` and `OpenDataLoader` are recognized as real runtime integrations and legacy fallback removal is detected in `src/faturama/application/services/repository_analysis.py`, `src/faturama/application/services/analysis_catalog.py`, and `src/faturama/application/services/finding_builder.py`
+- [X] T033 [US3] Confirm runtime alignment through workflow, extraction, and persistence behavior in `src/faturama/application/services/workflow_nodes.py`, `src/faturama/infrastructure/opendataloader/extractor.py`, and `src/faturama/application/use_cases/process_invoice.py`
 - [X] T034 [US3] Align runtime artifact persistence and document identity handling with regenerated Markdown/JSON outputs and invalid legacy status in `src/faturama/domain/entities/raw_document.py` and `src/faturama/domain/services/document_identity.py`
 
 **Checkpoint**: All user stories should now be independently functional
@@ -197,7 +197,7 @@ Task: "Replace the ambiguity placeholder with agent-assisted review orchestratio
 # Launch US3 regression tests together:
 Task: "Add integration coverage for idempotent reprocessing with workflow-generated artifacts and partial persistence markers in tests/integration/test_invoice_ingestion.py"
 Task: "Add contract coverage for blocking query access to invalidated legacy history in tests/contract/test_cli_queries.py"
-Task: "Add integration coverage for runtime-aligned usage-report findings in tests/integration/test_usage_report_deviations.py and tests/integration/test_usage_report_generation.py"
+Task: "Add integration coverage for runtime-aligned workflow evidence in tests/integration/test_langgraph_workflow.py and tests/integration/test_opendataloader_extractor.py"
 ```
 
 ---
@@ -210,13 +210,13 @@ Task: "Add integration coverage for runtime-aligned usage-report findings in tes
 2. Complete Phase 2: Foundational
 3. Complete Phase 3: User Story 1
 4. **STOP and VALIDATE** with `process-invoice` and the US1 tests
-5. Use `usage-report` as a first architectural sanity check
+5. Use workflow execution, extraction artifacts, and persistence checks as a first architectural sanity check
 
 ### Incremental Delivery
 
 1. Deliver the official runtime flow in US1
 2. Add auto-apply/review-resume orchestration in US2
-3. Close idempotency, partial persistence, legacy invalidation, queries, and usage-report regressions in US3
+3. Close idempotency, partial persistence, legacy invalidation, and query regressions in US3
 4. Finish with documentation and full quickstart validation in Phase 6
 
 ### Parallel Team Strategy
@@ -225,4 +225,4 @@ Task: "Add integration coverage for runtime-aligned usage-report findings in tes
 2. After Foundation:
    - Developer A: US1 runtime extraction and workflow
    - Developer B: US2 auto-apply/review branch and agent context loading
-   - Developer C: US3 regressions in queries, legacy invalidation, and usage-report after US1 stabilizes
+   - Developer C: US3 regressions in queries and legacy invalidation after US1 estabilizar

@@ -32,7 +32,6 @@ services:
       FATURAMA_ARTIFACT_BUCKET: processados-faturama
       FATURAMA_ARTIFACT_PREFIX: processed
       FATURAMA_SIGNED_UPLOAD_EXPIRATION_SECONDS: "300"
-      FATURAMA_OPENDATALOADER_STUB_MODE: "1"
     depends_on:
       - postgres
       - ministack

@@ -21,7 +21,7 @@ def test_status_propagation_latency_is_under_30_seconds(async_settings):
             "bucket": "pre-processamento-faturama",
             "object_key": "incoming/invoice-latency.pdf",
             "event_time": "2026-06-28T12:00:00Z",
-            "source": "s3",
+            "source": "aws.s3.eventbridge",
             "metadata": {},
         },
         settings=async_settings,

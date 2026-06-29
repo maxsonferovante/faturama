@@ -22,19 +22,7 @@ variable "signed_upload_expiration_seconds" {
   type = number
 }
 
-variable "processing_queue_name" {
-  type = string
-}
-
-variable "processing_dlq_name" {
-  type = string
-}
-
-variable "pipe_name" {
-  type = string
-}
-
-variable "state_machine_name" {
+variable "dispatch_rule_name" {
   type = string
 }
 
@@ -62,6 +50,10 @@ variable "db_password_secret_ref" {
   type = string
 }
 
+variable "db_password" {
+  type = string
+}
+
 variable "db_host" {
   type = string
 }
@@ -70,15 +62,16 @@ variable "db_port" {
   type = number
 }
 
-variable "status_polling_visibility_seconds" {
-  type = number
-}
-
 variable "use_local_aws_endpoints" {
   type = bool
 }
 
 variable "local_aws_endpoint_url" {
+  type    = string
+  default = null
+}
+
+variable "local_container_aws_endpoint_url" {
   type    = string
   default = null
 }

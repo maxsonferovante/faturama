@@ -20,13 +20,13 @@ def main(argv: list[str] | None = None) -> int:
         print(
             json.dumps(
                 {
-                    "processing_id": "evt-20260628-0001",
+                    "processing_id": "evtbridge-20260628-0001",
                     "bucket": "pre-processamento-faturama",
                     "object_key": "incoming/fatura-2026-04.pdf",
                     "event_time": "2026-06-28T12:00:00Z",
-                    "source": "s3",
+                    "source": "aws.s3.eventbridge",
                     "upload_grant_id": "grant-20260628-001",
-                    "metadata": {},
+                    "metadata": {"source_event_id": "20260628-0001"},
                 }
             )
         )

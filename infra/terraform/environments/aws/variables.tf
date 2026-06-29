@@ -28,24 +28,9 @@ variable "signed_upload_expiration_seconds" {
   default = 300
 }
 
-variable "processing_queue_name" {
+variable "dispatch_rule_name" {
   type    = string
-  default = "faturama-processing"
-}
-
-variable "processing_dlq_name" {
-  type    = string
-  default = "faturama-processing-dlq"
-}
-
-variable "pipe_name" {
-  type    = string
-  default = "faturama-processing-pipe"
-}
-
-variable "state_machine_name" {
-  type    = string
-  default = "faturama-processing-sm"
+  default = "faturama-processing-dispatch"
 }
 
 variable "ecs_cluster_name" {
@@ -78,6 +63,11 @@ variable "db_password_secret_ref" {
   default = "arn:aws:secretsmanager:us-east-1:123456789012:secret:faturama/db"
 }
 
+variable "db_password" {
+  type    = string
+  default = "change-me"
+}
+
 variable "db_host" {
   type    = string
   default = "faturama.cluster.local"
@@ -86,11 +76,6 @@ variable "db_host" {
 variable "db_port" {
   type    = number
   default = 5432
-}
-
-variable "status_polling_visibility_seconds" {
-  type    = number
-  default = 30
 }
 
 variable "subnet_ids" {

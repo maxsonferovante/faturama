@@ -16,4 +16,6 @@ def test_s3_event_is_normalized_and_saved(temp_db):
     saved = repository.get_source_event_by_dedupe_key(normalized["dedupe_key"])
     assert saved is not None
     assert command.object_key == "incoming/invoice-2026-04.pdf"
+    assert command.source == "aws.s3.eventbridge"
+    assert command.processing_id == "evtbridge-17793124-05d4-b198-2fde-7ededc63b103"
     assert saved["bucket_name"] == "pre-processamento-faturama"

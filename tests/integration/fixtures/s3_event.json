@@ -1,15 +1,21 @@
 {
-  "Records": [
-    {
-      "eventTime": "2026-06-28T12:00:00Z",
-      "s3": {
-        "bucket": { "name": "pre-processamento-faturama" },
-        "object": {
-          "key": "incoming/invoice-2026-04.pdf",
-          "versionId": "v1",
-          "eTag": "etag-1"
-        }
-      }
-    }
-  ]
+  "version": "0",
+  "id": "17793124-05d4-b198-2fde-7ededc63b103",
+  "detail-type": "Object Created",
+  "source": "aws.s3",
+  "time": "2026-06-28T12:00:00Z",
+  "detail": {
+    "bucket": {
+      "name": "pre-processamento-faturama"
+    },
+    "object": {
+      "key": "incoming/invoice-2026-04.pdf",
+      "etag": "etag-1",
+      "version-id": "v1",
+      "sequencer": "000000000000000001"
+    },
+    "request-id": "REQ-001",
+    "requester": "123456789012",
+    "reason": "PutObject"
+  }
 }

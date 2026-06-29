@@ -28,24 +28,9 @@ variable "signed_upload_expiration_seconds" {
   default = 300
 }
 
-variable "processing_queue_name" {
+variable "dispatch_rule_name" {
   type    = string
-  default = "faturama-processing"
-}
-
-variable "processing_dlq_name" {
-  type    = string
-  default = "faturama-processing-dlq"
-}
-
-variable "pipe_name" {
-  type    = string
-  default = "faturama-processing-pipe"
-}
-
-variable "state_machine_name" {
-  type    = string
-  default = "faturama-processing-sm"
+  default = "faturama-processing-dispatch"
 }
 
 variable "ecs_cluster_name" {
@@ -78,6 +63,11 @@ variable "db_password_secret_ref" {
   default = "local/faturama/db-password"
 }
 
+variable "db_password" {
+  type    = string
+  default = "faturama"
+}
+
 variable "db_host" {
   type    = string
   default = "postgres"
@@ -88,14 +78,14 @@ variable "db_port" {
   default = 5432
 }
 
-variable "status_polling_visibility_seconds" {
-  type    = number
-  default = 30
-}
-
 variable "local_aws_endpoint_url" {
   type    = string
   default = "http://localhost:4566"
+}
+
+variable "local_container_aws_endpoint_url" {
+  type    = string
+  default = "http://ministack:4566"
 }
 
 variable "log_group_name" {

@@ -16,8 +16,11 @@ def run_processing_message(payload: dict[str, object], *, settings: Settings) ->
         extra=build_log_extra(
             event="async_worker_started",
             processing_id=command.processing_id,
+            source_event_id=command.metadata.get("source_event_id"),
+            eventbridge_id=command.metadata.get("eventbridge_id"),
             bucket=command.bucket,
             object_key=command.object_key,
+            source=command.source,
         ),
     )
     result = process_processing_command(command, settings=settings)
@@ -26,8 +29,11 @@ def run_processing_message(payload: dict[str, object], *, settings: Settings) ->
         extra=build_log_extra(
             event="async_worker_completed",
             processing_id=command.processing_id,
+            source_event_id=command.metadata.get("source_event_id"),
+            eventbridge_id=command.metadata.get("eventbridge_id"),
             bucket=command.bucket,
             object_key=command.object_key,
+            source=command.source,
             status=result["status"],
         ),
     )

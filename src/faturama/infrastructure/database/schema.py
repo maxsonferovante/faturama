@@ -347,14 +347,51 @@ def _apply_compatibility_migrations(connection: Any) -> None:
 
 
 def _ensure_columns(connection: Any, table_name: str, columns: dict[str, str]) -> None:
-    try:
-        rows = connection.execute(f"PRAGMA table_info({table_name})").fetchall()
-    except Exception:
-        return
-    existing = {row[1] for row in rows}
+    existing = _existing_columns(connection, table_name)
     for name, definition in columns.items():
         if name not in existing:
             connection.execute(f"ALTER TABLE {table_name} ADD COLUMN {name} {definition}")
+
+
+def _existing_columns(connection: Any, table_name: str) -> set[str]:
+    module_name = type(connection).__module__
+    if module_name.startswith("sqlite3"):
+        try:
+            rows = connection.execute(f"PRAGMA table_info({table_name})").fetchall()
+        except Exception:
+            return set()
+        return {row[1] for row in rows}
+
+    try:
+        rows = connection.execute(
+            """
+            SELECT column_name
+            FROM information_schema.columns
+            WHERE table_schema = current_schema()
+              AND table_name = %s
+            """,
+            (table_name,),
+        ).fetchall()
+    except Exception:
+        try:
+            connection.rollback()
+        except Exception:
+            pass
+        return set()
+
+    existing: set[str] = set()
+    for row in rows:
+        if isinstance(row, tuple):
+            existing.add(row[0])
+            continue
+        try:
+            existing.add(row["column_name"])
+        except Exception:
+            try:
+                existing.add(row[0])
+            except Exception:
+                continue
+    return existing
 
 
 def _mark_legacy_rows(connection: Any) -> None:

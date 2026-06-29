@@ -16,6 +16,8 @@ class JsonFormatter(logging.Formatter):
         for key in (
             "event",
             "processing_id",
+            "source_event_id",
+            "eventbridge_id",
             "report_id",
             "repository_root",
             "metrics",
@@ -23,6 +25,7 @@ class JsonFormatter(logging.Formatter):
             "error_code",
             "bucket",
             "object_key",
+            "source",
             "job_id",
             "user_id",
             "pdf_path",

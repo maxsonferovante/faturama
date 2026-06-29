@@ -1,6 +1,6 @@
 # Schema do Banco
 
-Este projeto usa SQLite e inicializa o schema em [src/faturama/infrastructure/database/schema.py](/Users/mferovante/Documents/faturama/src/faturama/infrastructure/database/schema.py:1).
+Este projeto usa SQLite e inicializa o schema em [src/faturama/infrastructure/database/schema.py](/Users/USER_PROFILE/Documents/faturama/src/faturama/infrastructure/database/schema.py:1).
 
 ## Visão geral
 
@@ -32,11 +32,13 @@ Função:
 Registrar a identidade do arquivo PDF processado e os artefatos brutos associados ao documento.
 
 Uso operacional:
+
 - escrita por `StatementRepository.save_document(...)`
 - leitura por `StatementRepository.get_document_by_hash(...)`
 - usada para idempotência via `file_hash`
 
 Colunas-chave:
+
 - `document_id`: identificador canônico do documento
 - `file_hash`: hash SHA-256 do PDF, único
 - `source_pdf_path`: caminho do PDF de origem
@@ -51,11 +53,13 @@ Função:
 Representar a fatura já interpretada para uma competência e um cartão.
 
 Uso operacional:
+
 - escrita por `StatementRepository.save_statement(...)`
 - leitura por `list_statements`, `get_statement` e `list_statements_filtered`
 - usada como base para consultas por mês e cartão
 
 Colunas-chave:
+
 - `statement_id`: identificador da fatura
 - `document_id`: documento de origem
 - `card_fingerprint`: identidade estável do cartão
@@ -70,10 +74,12 @@ Função:
 Guardar o trecho bruto extraído que sustenta uma linha ou decisão do pipeline.
 
 Uso operacional:
+
 - escrita por `EvidenceRepository.save_evidence(...)`
 - vinculada a `transactions.source_evidence_id`
 
 Colunas-chave:
+
 - `evidence_id`: identificador da evidência
 - `document_id`: documento de origem
 - `raw_text`: trecho bruto observado
@@ -87,11 +93,13 @@ Função:
 Persistir cada lançamento canônico da fatura, já classificado e com metadados de decisão.
 
 Uso operacional:
+
 - escrita por `TransactionRepository.save_transaction(...)`
 - leitura por `list_by_statement`, `list_by_month` e `find_by_line_hash`
 - base de consultas de compras, parcelas observadas e revisão
 
 Colunas-chave:
+
 - `transaction_id`: identificador da transação
 - `statement_id`, `document_id`: vínculos de origem
 - `line_hash`: chave estável da linha dentro da fatura
@@ -103,6 +111,7 @@ Colunas-chave:
 - `is_installment`, `installment_current`, `installment_total`: semântica de parcelamento
 
 Observação:
+
 - há `UNIQUE(statement_id, line_hash)` para evitar duplicação no reprocessamento
 
 ### `installment_plans`
@@ -111,11 +120,13 @@ Função:
 Consolidar uma compra parcelada como entidade de longo prazo, atravessando múltiplas faturas.
 
 Uso operacional:
+
 - escrita por `InstallmentRepository.save_plan(...)`
 - leitura por `InstallmentRepository.list_plans(...)`
 - usada para saldo restante e projeções futuras
 
 Colunas-chave:
+
 - `installment_plan_id`: identificador do plano parcelado
 - `canonical_key`: chave única da compra parcelada
 - `description_anchor`, `description_normalized`, `merchant_normalized`: identidade semântica do parcelamento
@@ -130,11 +141,13 @@ Função:
 Persistir as parcelas futuras projetadas de cada `installment_plan`.
 
 Uso operacional:
+
 - regravada por `InstallmentRepository.save_projections(...)`
 - lida por `InstallmentRepository.list_projections(...)`
 - usada por queries de parcelas futuras e saldo restante
 
 Colunas-chave:
+
 - `projection_id`: identificador da projeção
 - `installment_plan_id`: plano ao qual pertence
 - `projected_billing_year`, `projected_billing_month`: competência futura
@@ -143,6 +156,7 @@ Colunas-chave:
 - `projection_status`, `projection_confidence`: governança da projeção
 
 Observação:
+
 - há unicidade por plano + competência + número da parcela
 
 ### `summaries`
@@ -151,11 +165,13 @@ Função:
 Materializar um read model mensal por cartão para consultas rápidas.
 
 Uso operacional:
+
 - escrita por `SummaryRepository.upsert_summary(...)`
 - leitura por `SummaryRepository.list_summaries(...)`
 - usada pela query `monthly_spend`
 
 Colunas-chave:
+
 - `summary_id`: identificador do resumo
 - `user_id`, `card_fingerprint`, `billing_year`, `billing_month`: chave funcional do resumo
 - `statement_total_amount`: total da fatura
@@ -166,6 +182,7 @@ Colunas-chave:
 - `runtime_source`, `legacy_status`: governança de validade
 
 Observação:
+
 - há `UNIQUE(user_id, card_fingerprint, billing_year, billing_month)`
 
 ### `review_items`
@@ -174,12 +191,14 @@ Função:
 Representar pendências operacionais abertas para revisão humana.
 
 Uso operacional:
+
 - escrita por `ReviewRepository.save_review_item(...)`
 - listada por `review-queue`
 - resolvida por `ReviewRepository.resolve_review_item(...)`
 - reutilizada no reprocessamento para não reabrir a mesma pendência resolvida
 
 Colunas-chave:
+
 - `review_item_id`: identificador da pendência
 - `entity_type`, `entity_id`: entidade sob revisão
 - `reason_code`, `reason_detail`: motivo da revisão
@@ -194,11 +213,13 @@ Função:
 Persistir a trilha auditável de decisões tomadas no pipeline.
 
 Uso operacional:
+
 - escrita por `DecisionRepository.save_decision(...)`
 - leitura por `DecisionRepository.list_decisions(...)`
 - cobre decisões de regra, agente e revisão reaplicada
 
 Colunas-chave:
+
 - `decision_id`: identificador da decisão
 - `entity_type`, `entity_id`: alvo da decisão
 - `decision_state`: estado final da decisão
@@ -213,12 +234,14 @@ Função:
 Persistir snapshots do estado do workflow oficial executado com `LangGraph`.
 
 Uso operacional:
+
 - escrita por `SQLiteCheckpointStore.save(...)`
 - leitura por `SQLiteCheckpointStore.latest(...)`
 - atualização por `SQLiteCheckpointStore.mark_restored(...)`
 - também pode coexistir com o checkpointer oficial `SqliteSaver` do `LangGraph`
 
 Colunas-chave:
+
 - `checkpoint_id`: identificador do checkpoint
 - `job_id`: execução de ingestão
 - `thread_id`: thread lógica do workflow
@@ -398,7 +421,7 @@ erDiagram
 
 ## Onde consultar no código
 
-- schema: [src/faturama/infrastructure/database/schema.py](/Users/mferovante/Documents/faturama/src/faturama/infrastructure/database/schema.py:1)
-- conexão SQLite: [src/faturama/infrastructure/database/sqlite.py](/Users/mferovante/Documents/faturama/src/faturama/infrastructure/database/sqlite.py:1)
-- repositórios: [src/faturama/infrastructure/repositories](/Users/mferovante/Documents/faturama/src/faturama/infrastructure/repositories)
-- workflow oficial: [src/faturama/application/use_cases/process_invoice.py](/Users/mferovante/Documents/faturama/src/faturama/application/use_cases/process_invoice.py:1)
+- schema: [src/faturama/infrastructure/database/schema.py](/Users/USER_PROFILE/Documents/faturama/src/faturama/infrastructure/database/schema.py:1)
+- conexão SQLite: [src/faturama/infrastructure/database/sqlite.py](/Users/USER_PROFILE/Documents/faturama/src/faturama/infrastructure/database/sqlite.py:1)
+- repositórios: [src/faturama/infrastructure/repositories](/Users/USER_PROFILE/Documents/faturama/src/faturama/infrastructure/repositories)
+- workflow oficial: [src/faturama/application/use_cases/process_invoice.py](/Users/USER_PROFILE/Documents/faturama/src/faturama/application/use_cases/process_invoice.py:1)

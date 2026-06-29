@@ -18,7 +18,7 @@ def test_operational_diagnostics_capture_lifecycle_events(async_settings):
             "bucket": "pre-processamento-faturama",
             "object_key": "incoming/invoice-diagnostics.pdf",
             "event_time": "2026-06-28T12:00:00Z",
-            "source": "s3",
+            "source": "aws.s3.eventbridge",
             "metadata": {},
         },
         settings=async_settings,

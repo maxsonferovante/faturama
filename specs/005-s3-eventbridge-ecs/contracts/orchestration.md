@@ -84,7 +84,12 @@ Essas evidências são o mínimo exigido para considerar o teste ponta a ponta b
 
 ## Local Emulator Caveat
 
-Na validacao local com MiniStack `1.3.69`, a regra EventBridge aceita o evento e o target ECS fica registrado, mas o runtime do emulador nao despacha `ecs:RunTask`. O log observado foi:
+Na validacao local com MiniStack `1.3.69`, o target ECS fica registrado no EventBridge, mas:
+
+- o upload real no bucket nao gerou evidência de dispatch ate o worker;
+- um evento publicado manualmente no EventBridge nao despachou `ecs:RunTask`.
+
+O log observado no segundo caso foi:
 
 ```text
 EventBridge: unsupported target type for ARN arn:aws:ecs:us-east-1:000000000000:cluster/faturama-cluster

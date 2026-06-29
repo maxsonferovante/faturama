@@ -62,7 +62,8 @@ uv run scripts/test_worker_from_ministack_s3.py
 
 - a regra EventBridge e o target ECS sao provisionados corretamente;
 - o upload chega ao bucket S3 local;
-- o MiniStack retorna a evidência `EventBridge: unsupported target type for ARN arn:aws:ecs:...:cluster/faturama-cluster`;
+- durante a espera do teste real nao apareceu container ECS nem artefato novo;
+- um `put_events` manual contra o EventBridge local retorna a evidência `EventBridge: unsupported target type for ARN arn:aws:ecs:...:cluster/faturama-cluster`;
 - portanto o dispatch real para ECS nao acontece nesse runtime local.
 
 ## Validation Scenario 3: Verificar evidência operacional

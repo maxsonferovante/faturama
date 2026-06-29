@@ -226,6 +226,7 @@ def main() -> int:
         time.sleep(int(TEST_CONFIG["poll_interval_seconds"]))
 
     if not artifact_keys:
+        ministack_logs = read_ministack_logs(TEST_CONFIG["ministack_container_name"])
         raise SystemExit(
             json.dumps(
                 {
@@ -234,6 +235,10 @@ def main() -> int:
                         "O arquivo foi enviado para o bucket de entrada, mas nenhuma evidencia de processamento "
                         "real apareceu no bucket de artefatos dentro do tempo limite."
                     ),
+                    "diagnosis": (
+                        "Durante a janela de espera nao apareceram container ECS do worker, artefatos novos "
+                        "nem evidencia suficiente nos logs do MiniStack de entrega S3 -> EventBridge -> ECS."
+                    ),
                     "pdf_path": str(pdf_path),
                     "input_bucket": TEST_CONFIG["input_bucket"],
                     "artifact_bucket": TEST_CONFIG["artifact_bucket"],
@@ -241,6 +246,8 @@ def main() -> int:
                     "dispatch_rule_name": TEST_CONFIG["dispatch_rule_name"],
                     "new_container_ids": new_container_ids,
                     "artifact_prefix": TEST_CONFIG["artifact_prefix"],
+                    "ministack_container_name": TEST_CONFIG["ministack_container_name"],
+                    "ministack_log_tail": ministack_logs.splitlines()[-20:],
                 },
                 ensure_ascii=False,
                 indent=2,

@@ -71,7 +71,12 @@ O bootstrap local deve:
 
 ## Current Emulator Limitation
 
-No ambiente local atual com `ministackorg/ministack:full` `1.3.69`, o Terraform consegue criar a regra EventBridge e o target ECS, mas o emulador nao executa esse target. A evidência operacional observada no container do MiniStack é:
+No ambiente local atual com `ministackorg/ministack:full` `1.3.69`, o Terraform consegue criar a regra EventBridge e o target ECS, mas a validacao local mostrou duas limitacoes:
+
+- o upload real no S3 local nao gerou evidência suficiente de entrega ate o ECS;
+- quando um evento e publicado manualmente no EventBridge, o emulador nao executa o target ECS.
+
+A evidência operacional observada no container do MiniStack é:
 
 ```text
 EventBridge: unsupported target type for ARN arn:aws:ecs:us-east-1:000000000000:cluster/faturama-cluster

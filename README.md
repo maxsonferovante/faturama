@@ -157,13 +157,15 @@ Em `2026-06-28`, a validacao executada neste repositorio ficou assim:
 | Terraform estatico       | `terraform -chdir=infra/terraform/environments/local validate`                                                                                           | PASS                                                                                                                |
 | Provisionamento local    | `bash scripts/bootstrap_local_runtime.sh`                                                                                                                | PASS                                                                                                                |
 | Contratos e wiring local | `python3 -m pytest tests/contract/test_processing_message_contract.py tests/integration/test_async_dispatch.py tests/e2e/test_local_runtime_contract.py` | PASS                                                                                                                |
-| Dispatch real por upload | `uv run scripts/test_worker_from_ministack_s3.py`                                                                                                        | FAIL no MiniStack `1.3.69`: `EventBridge: unsupported target type for ARN arn:aws:ecs:...:cluster/faturama-cluster` |
+| Dispatch real por upload | `uv run scripts/test_worker_from_ministack_s3.py`                                                                                                        | FAIL por timeout: nenhum container ECS nem artefato novo apareceu apos o upload                                      |
+| Isolamento manual do target ECS | `put_events` manual no EventBridge local | FAIL no MiniStack `1.3.69`: `EventBridge: unsupported target type for ARN arn:aws:ecs:...:cluster/faturama-cluster` |
 
 Isso significa:
 
 - o Terraform do desenho novo esta correto e provisiona buckets, regra e target;
 - o upload chega ao S3 local;
-- a versao atual do MiniStack usada em `ministackorg/ministack:full` ainda nao executa target ECS do EventBridge;
+- o upload S3 local nao mostrou evidencia de entrega ate o target ECS durante a janela do teste;
+- quando o EventBridge recebe um evento manualmente, a versao atual do MiniStack usada em `ministackorg/ministack:full` ainda nao executa target ECS do EventBridge;
 - por isso o fluxo `S3 -> EventBridge -> ECS` fica pronto para AWS real, mas nao fecha o e2e completo nesse emulador especifico.
 
 ## Validacao

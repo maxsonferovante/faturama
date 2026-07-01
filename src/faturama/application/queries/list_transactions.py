@@ -2,18 +2,20 @@
 
 from __future__ import annotations
 
-from pathlib import Path
-
-from faturama.infrastructure.database.sqlite import connect
-from faturama.infrastructure.repositories.transaction_repository import TransactionRepository
+from faturama.application.ports.query_service import QueryService
 
 
 def execute(
-    database_path: str,
+    query_service: QueryService,
     statement_id: str,
     kind: str | None = None,
     installments_only: bool = False,
     review_status: str | None = None,
 ) -> list[dict]:
-    repo = TransactionRepository(connect(Path(database_path)))
-    return repo.list_by_statement(statement_id, kind=kind, installments_only=installments_only, review_status=review_status)
+    return query_service.query(
+        "list_transactions",
+        statement_id=statement_id,
+        kind=kind,
+        installments_only=installments_only,
+        review_status=review_status,
+    )

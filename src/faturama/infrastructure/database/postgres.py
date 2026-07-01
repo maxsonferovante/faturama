@@ -1,108 +1,86 @@
-"""Generic SQL connection helpers for async runtime."""
+"""PostgreSQL connection and unit-of-work helpers."""
 
 from __future__ import annotations
 
-from pathlib import Path
-import re
-import sqlite3
+from dataclasses import dataclass
 from typing import Any
 from urllib.parse import urlparse
 
+import psycopg
+from psycopg.rows import dict_row
+
+from faturama.application.ports.unit_of_work import UnitOfWorkFactory
+from faturama.infrastructure.checkpoint.postgres_checkpoint_store import PostgresCheckpointStore
 from faturama.infrastructure.database.schema import initialize_schema
+from faturama.infrastructure.repositories.artifact_manifest_repository import ArtifactManifestRepository
+from faturama.infrastructure.repositories.decision_repository import DecisionRepository
+from faturama.infrastructure.repositories.evidence_repository import EvidenceRepository
+from faturama.infrastructure.repositories.installment_repository import InstallmentRepository
+from faturama.infrastructure.repositories.processing_job_repository import ProcessingJobRepository
+from faturama.infrastructure.repositories.processing_status_repository import ProcessingStatusRepository
+from faturama.infrastructure.repositories.review_repository import ReviewRepository
+from faturama.infrastructure.repositories.statement_repository import StatementRepository
+from faturama.infrastructure.repositories.summary_repository import SummaryRepository
+from faturama.infrastructure.repositories.transaction_repository import TransactionRepository
 
 
-_NAMED_PARAM_PATTERN = re.compile(r":([A-Za-z_][A-Za-z0-9_]*)")
-_INSERT_OR_REPLACE_PATTERN = re.compile(
-    r"""
-    INSERT\s+OR\s+REPLACE\s+INTO\s+
-    (?P<table>[A-Za-z_][A-Za-z0-9_]*)\s*
-    \((?P<columns>[^)]+)\)\s*
-    VALUES\s*\((?P<values>[^)]+)\)
-    """,
-    re.IGNORECASE | re.VERBOSE | re.DOTALL,
-)
+class DatabaseConfigurationError(ValueError):
+    """Raised when FATURAMA database configuration is invalid."""
 
 
-class PostgresCompatConnection:
-    def __init__(self, connection: Any) -> None:
-        self._connection = connection
-
-    def execute(self, query: str, params: Any = None) -> Any:
-        adapted_query, adapted_params = _adapt_sql(query, params)
-        if adapted_params is None:
-            return self._connection.execute(adapted_query)
-        return self._connection.execute(adapted_query, adapted_params)
-
-    def __getattr__(self, name: str) -> Any:
-        return getattr(self._connection, name)
-
-
-def _adapt_sql(query: str, params: Any) -> tuple[str, Any]:
-    adapted_query = _adapt_insert_or_replace(query)
-    if isinstance(params, dict):
-        adapted_query = _NAMED_PARAM_PATTERN.sub(r"%(\1)s", adapted_query)
-        return adapted_query, _normalize_params(params)
-    if params is not None:
-        adapted_query = adapted_query.replace("?", "%s")
-    return adapted_query, _normalize_params(params)
-
-
-def _adapt_insert_or_replace(query: str) -> str:
-    match = _INSERT_OR_REPLACE_PATTERN.search(query)
-    if not match:
-        return query
-
-    table_name = match.group("table")
-    columns = [column.strip() for column in match.group("columns").split(",")]
-    values = match.group("values").strip()
-    conflict_column = columns[0]
-    update_columns = [column for column in columns if column != conflict_column]
-    update_assignments = ", ".join(f"{column} = EXCLUDED.{column}" for column in update_columns)
-    replacement = (
-        f"INSERT INTO {table_name} ({', '.join(columns)}) "
-        f"VALUES ({values}) "
-        f"ON CONFLICT ({conflict_column}) DO UPDATE SET {update_assignments}"
-    )
-    return _INSERT_OR_REPLACE_PATTERN.sub(replacement, query, count=1)
-
-
-def _normalize_params(params: Any) -> Any:
-    if isinstance(params, bool):
-        return int(params)
-    if isinstance(params, dict):
-        return {key: _normalize_params(value) for key, value in params.items()}
-    if isinstance(params, tuple):
-        return tuple(_normalize_params(value) for value in params)
-    if isinstance(params, list):
-        return [_normalize_params(value) for value in params]
-    return params
-
-
-def _as_db_path(dsn: str) -> Path:
-    if dsn.startswith("sqlite:///"):
-        return Path(dsn.removeprefix("sqlite:///"))
-    return Path(dsn)
-
-
-def connect_from_dsn(dsn: str) -> Any:
-    if dsn.startswith("sqlite:///") or dsn.endswith(".sqlite3") or dsn.endswith(".db"):
-        database_path = _as_db_path(dsn)
-        database_path.parent.mkdir(parents=True, exist_ok=True)
-        connection = sqlite3.connect(database_path)
-        connection.row_factory = sqlite3.Row
-        initialize_schema(connection)
-        return connection
-
+def validate_postgres_dsn(dsn: str) -> str:
+    if not dsn:
+        raise DatabaseConfigurationError("FATURAMA_DB_DSN is required")
     parsed = urlparse(dsn)
     if parsed.scheme not in {"postgresql", "postgres"}:
-        raise ValueError(f"Unsupported DSN scheme: {parsed.scheme}")
+        raise DatabaseConfigurationError(
+            "FATURAMA_DB_DSN must use the postgresql:// or postgres:// scheme"
+        )
+    if dsn.endswith(".sqlite3") or dsn.endswith(".db"):
+        raise DatabaseConfigurationError("FATURAMA_DB_DSN must point to PostgreSQL, not a local database file")
+    return dsn
 
-    try:
-        import psycopg
-        from psycopg.rows import dict_row
-    except Exception as exc:  # pragma: no cover - exercised only without psycopg installed
-        raise RuntimeError("psycopg is required for PostgreSQL DSNs") from exc
 
-    connection = PostgresCompatConnection(psycopg.connect(dsn, row_factory=dict_row))
+def connect(dsn: str) -> psycopg.Connection[Any]:
+    connection = psycopg.connect(validate_postgres_dsn(dsn), row_factory=dict_row)
     initialize_schema(connection)
     return connection
+
+
+def connect_from_dsn(dsn: str) -> psycopg.Connection[Any]:
+    return connect(dsn)
+
+
+@dataclass(slots=True)
+class PostgresUnitOfWork:
+    connection: psycopg.Connection[Any]
+
+    def __post_init__(self) -> None:
+        self.statement_repository = StatementRepository(self.connection)
+        self.evidence_repository = EvidenceRepository(self.connection)
+        self.transaction_repository = TransactionRepository(self.connection)
+        self.installment_repository = InstallmentRepository(self.connection)
+        self.summary_repository = SummaryRepository(self.connection)
+        self.review_repository = ReviewRepository(self.connection)
+        self.decision_repository = DecisionRepository(self.connection)
+        self.processing_job_repository = ProcessingJobRepository(self.connection)
+        self.processing_status_repository = ProcessingStatusRepository(self.connection)
+        self.artifact_manifest_repository = ArtifactManifestRepository(self.connection)
+        self.checkpoint_store = PostgresCheckpointStore(self.connection)
+
+    def commit(self) -> None:
+        self.connection.commit()
+
+    def rollback(self) -> None:
+        self.connection.rollback()
+
+    def close(self) -> None:
+        self.connection.close()
+
+
+class PostgresUnitOfWorkFactory(UnitOfWorkFactory):
+    def __init__(self, dsn: str) -> None:
+        self.dsn = validate_postgres_dsn(dsn)
+
+    def open(self) -> PostgresUnitOfWork:
+        return PostgresUnitOfWork(connect(self.dsn))

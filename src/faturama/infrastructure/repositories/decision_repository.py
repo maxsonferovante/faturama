@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 import json
-from sqlite3 import Connection
+from typing import Any
 
 
 class DecisionRepository:
-    def __init__(self, connection: Connection) -> None:
+    def __init__(self, connection: Any) -> None:
         self.connection = connection
 
     def save_decision(self, payload: dict) -> None:
@@ -19,7 +19,7 @@ class DecisionRepository:
             payload["audit_payload"] = json.dumps(audit_payload, ensure_ascii=False)
         self.connection.execute(
             """
-            INSERT OR REPLACE INTO decision_records (
+            INSERT INTO decision_records (
                 decision_id, entity_type, entity_id, decision_state, confidence_structural,
                 confidence_semantic, confidence_relational, confidence_operational, decision_reason,
                 decision_source, audit_payload
@@ -28,14 +28,24 @@ class DecisionRepository:
                 :confidence_semantic, :confidence_relational, :confidence_operational, :decision_reason,
                 :decision_source, :audit_payload
             )
+            ON CONFLICT (decision_id) DO UPDATE SET
+                entity_type = EXCLUDED.entity_type,
+                entity_id = EXCLUDED.entity_id,
+                decision_state = EXCLUDED.decision_state,
+                confidence_structural = EXCLUDED.confidence_structural,
+                confidence_semantic = EXCLUDED.confidence_semantic,
+                confidence_relational = EXCLUDED.confidence_relational,
+                confidence_operational = EXCLUDED.confidence_operational,
+                decision_reason = EXCLUDED.decision_reason,
+                decision_source = EXCLUDED.decision_source,
+                audit_payload = EXCLUDED.audit_payload
             """,
             payload,
         )
-        self.connection.commit()
 
     def list_decisions(self, entity_type: str, entity_id: str) -> list[dict]:
         rows = self.connection.execute(
-            "SELECT * FROM decision_records WHERE entity_type = ? AND entity_id = ? ORDER BY decision_id",
+            "SELECT * FROM decision_records WHERE entity_type = %s AND entity_id = %s ORDER BY decision_id",
             (entity_type, entity_id),
         ).fetchall()
         return [dict(row) for row in rows]

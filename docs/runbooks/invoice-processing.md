@@ -6,10 +6,10 @@ Operar a ingestao de faturas com rastreabilidade, idempotencia e revisao manual 
 
 ## Fluxo normal
 
-1. Garanta escrita para `FATURAMA_DB_PATH`, `FATURAMA_CHECKPOINT_DB_PATH` e `FATURAMA_ARTIFACT_CACHE_DIR`.
+1. Garanta a conexão válida configurada em `FATURAMA_DB_DSN` e permissões de escrita para `FATURAMA_ARTIFACT_CACHE_DIR`.
 2. Execute `python3 -m faturama.cli process-invoice --pdf-path <arquivo.pdf> --user-id <id>`.
 3. O runtime oficial usa `OpenDataLoader PDF` para gerar ou reutilizar cache `markdown/json` em `FATURAMA_ARTIFACT_CACHE_DIR`.
-4. O workflow `LangGraph` percorre extração, parsing, classificação, resolução e persistência com checkpoints SQLite.
+4. O workflow `LangGraph` percorre extração, parsing, classificação, resolução e persistência com checkpoints PostgreSQL.
 5. Consulte o resultado no JSON de saída.
 6. Se `status=review_required`, liste pendências com `review-queue`.
 
@@ -31,7 +31,7 @@ Operar a ingestao de faturas com rastreabilidade, idempotencia e revisao manual 
 
 ## Checkpoints
 
-Checkpoints ficam em `FATURAMA_CHECKPOINT_DB_PATH` e registram:
+Checkpoints ficam no PostgreSQL (`FATURAMA_DB_DSN`) e registram:
 
 - `job_id`
 - `thread_id`
@@ -46,4 +46,5 @@ Checkpoints ficam em `FATURAMA_CHECKPOINT_DB_PATH` e registram:
 - erro de extração complexa: configure `FATURAMA_OPENDATALOADER_HYBRID_URL` e suba o backend híbrido
 - duplicacao inesperada: valide `line_hash` e a chave canonica do parcelamento
 - pendencia recorrente apos revisao: verifique se o `review_item` foi resolvido e se a nova execucao usou o mesmo PDF/hash
-- consulta vazia: confirme `FATURAMA_DB_PATH` apontando para a base correta
+- consulta vazia: confirme `FATURAMA_DB_DSN` apontando para o banco correto
+

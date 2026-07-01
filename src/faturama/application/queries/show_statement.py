@@ -2,14 +2,8 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict
-from pathlib import Path
-
-from faturama.infrastructure.database.sqlite import connect
-from faturama.infrastructure.repositories.statement_repository import StatementRepository
+from faturama.application.ports.query_service import QueryService
 
 
-def execute(database_path: str, statement_id: str) -> dict | None:
-    repo = StatementRepository(connect(Path(database_path)))
-    statement = repo.get_statement(statement_id)
-    return asdict(statement) if statement else None
+def execute(query_service: QueryService, statement_id: str) -> dict | None:
+    return query_service.query("show_statement", statement_id=statement_id)

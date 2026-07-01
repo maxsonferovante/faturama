@@ -1,13 +1,18 @@
 from __future__ import annotations
 
 import json
-from pathlib import Path
 import subprocess
 
-from faturama.infrastructure.database.sqlite import connect
+from faturama.infrastructure.database.postgres import connect_from_dsn
+from tests.integration.test_monthly_queries import require_postgres_dsn, reset_database
 
 
-def test_query_clis_return_json(invoice_dir, cli_env):
+def test_query_clis_return_json(invoice_dir, cli_env, monkeypatch):
+    dsn = require_postgres_dsn(monkeypatch)
+    reset_database(dsn)
+    env = dict(cli_env)
+    env["FATURAMA_DB_DSN"] = dsn
+
     subprocess.run(
         [
             "python3",
@@ -22,7 +27,7 @@ def test_query_clis_return_json(invoice_dir, cli_env):
         check=True,
         capture_output=True,
         text=True,
-        env=cli_env,
+        env=env,
     )
 
     spend = subprocess.run(
@@ -30,28 +35,28 @@ def test_query_clis_return_json(invoice_dir, cli_env):
         check=True,
         capture_output=True,
         text=True,
-        env=cli_env,
+        env=env,
     )
     current = subprocess.run(
         ["python3", "-m", "faturama.cli", "current-installments", "--user-id", "demo-user", "--month", "2026-04"],
         check=True,
         capture_output=True,
         text=True,
-        env=cli_env,
+        env=env,
     )
     future = subprocess.run(
         ["python3", "-m", "faturama.cli", "future-installments", "--user-id", "demo-user", "--month", "2026-05"],
         check=True,
         capture_output=True,
         text=True,
-        env=cli_env,
+        env=env,
     )
     balance = subprocess.run(
         ["python3", "-m", "faturama.cli", "remaining-balance", "--user-id", "demo-user"],
         check=True,
         capture_output=True,
         text=True,
-        env=cli_env,
+        env=env,
     )
 
     assert json.loads(spend.stdout)[0]["new_purchase_total"] == "250.00"
@@ -60,8 +65,12 @@ def test_query_clis_return_json(invoice_dir, cli_env):
     assert json.loads(balance.stdout)[0]["remaining_balance"] == "3383.12"
 
 
-def test_query_clis_ignore_invalidated_legacy_history(cli_env):
-    connection = connect(Path(cli_env["FATURAMA_DB_PATH"]))
+def test_query_clis_ignore_invalidated_legacy_history(cli_env, monkeypatch):
+    dsn = require_postgres_dsn(monkeypatch)
+    reset_database(dsn)
+    env = dict(cli_env)
+    env["FATURAMA_DB_DSN"] = dsn
+    connection = connect_from_dsn(dsn)
     connection.execute(
         """
         INSERT INTO summaries (
@@ -99,7 +108,7 @@ def test_query_clis_ignore_invalidated_legacy_history(cli_env):
         check=True,
         capture_output=True,
         text=True,
-        env=cli_env,
+        env=env,
     )
 
     assert json.loads(spend.stdout) == []

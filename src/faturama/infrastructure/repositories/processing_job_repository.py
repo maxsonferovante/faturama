@@ -1,14 +1,11 @@
-"""Repository for async processing jobs and lifecycle events."""
-
 from __future__ import annotations
 
 import json
-from sqlite3 import Connection
 from typing import Any
 
 
 class ProcessingJobRepository:
-    def __init__(self, connection: Connection) -> None:
+    def __init__(self, connection: Any) -> None:
         self.connection = connection
 
     def create_job(self, payload: dict[str, Any]) -> None:
@@ -25,23 +22,53 @@ class ProcessingJobRepository:
         row.setdefault("runtime_environment", None)
         self.connection.execute(
             """
-            INSERT OR REPLACE INTO processing_jobs (
+            INSERT INTO processing_jobs (
                 processing_id, source_event_id, execution_arn, dispatch_attempt, current_status, status_detail,
                 bucket_name, object_key, document_id, file_hash, requested_at, started_at, finished_at,
                 failure_code, failure_message, runtime_environment
             ) VALUES (
-                :processing_id, :source_event_id, :execution_arn, :dispatch_attempt, :current_status, :status_detail,
-                :bucket_name, :object_key, :document_id, :file_hash, :requested_at, :started_at, :finished_at,
-                :failure_code, :failure_message, :runtime_environment
+                %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
             )
+            ON CONFLICT (processing_id) DO UPDATE SET
+                source_event_id = EXCLUDED.source_event_id,
+                execution_arn = EXCLUDED.execution_arn,
+                dispatch_attempt = EXCLUDED.dispatch_attempt,
+                current_status = EXCLUDED.current_status,
+                status_detail = EXCLUDED.status_detail,
+                bucket_name = EXCLUDED.bucket_name,
+                object_key = EXCLUDED.object_key,
+                document_id = EXCLUDED.document_id,
+                file_hash = EXCLUDED.file_hash,
+                requested_at = EXCLUDED.requested_at,
+                started_at = EXCLUDED.started_at,
+                finished_at = EXCLUDED.finished_at,
+                failure_code = EXCLUDED.failure_code,
+                failure_message = EXCLUDED.failure_message,
+                runtime_environment = EXCLUDED.runtime_environment
             """,
-            row,
+            (
+                row.get("processing_id"),
+                row.get("source_event_id"),
+                row.get("execution_arn"),
+                row.get("dispatch_attempt"),
+                row.get("current_status"),
+                row.get("status_detail"),
+                row.get("bucket_name"),
+                row.get("object_key"),
+                row.get("document_id"),
+                row.get("file_hash"),
+                row.get("requested_at"),
+                row.get("started_at"),
+                row.get("finished_at"),
+                row.get("failure_code"),
+                row.get("failure_message"),
+                row.get("runtime_environment"),
+            ),
         )
-        self.connection.commit()
 
     def get_job(self, processing_id: str) -> dict[str, Any] | None:
         row = self.connection.execute(
-            "SELECT * FROM processing_jobs WHERE processing_id = ?",
+            "SELECT * FROM processing_jobs WHERE processing_id = %s",
             (processing_id,),
         ).fetchone()
         return dict(row) if row else None
@@ -49,14 +76,12 @@ class ProcessingJobRepository:
     def update_job(self, processing_id: str, **fields: Any) -> None:
         if not fields:
             return
-        assignments = ", ".join(f"{key} = :{key}" for key in fields)
-        payload = dict(fields)
-        payload["processing_id"] = processing_id
+        assignments = ", ".join(f"{key} = %s" for key in fields)
+        params = list(fields.values()) + [processing_id]
         self.connection.execute(
-            f"UPDATE processing_jobs SET {assignments} WHERE processing_id = :processing_id",
-            payload,
+            f"UPDATE processing_jobs SET {assignments} WHERE processing_id = %s",
+            tuple(params),
         )
-        self.connection.commit()
 
     def record_lifecycle_event(self, payload: dict[str, Any]) -> None:
         row = dict(payload)
@@ -68,9 +93,17 @@ class ProcessingJobRepository:
             INSERT INTO processing_lifecycle_events (
                 event_id, processing_id, event_name, status, status_detail, payload_json, created_at
             ) VALUES (
-                :event_id, :processing_id, :event_name, :status, :status_detail, :payload_json, :created_at
+                %s, %s, %s, %s, %s, %s, %s
             )
             """,
-            row,
+            (
+                row.get("event_id"),
+                row.get("processing_id"),
+                row.get("event_name"),
+                row.get("status"),
+                row.get("status_detail"),
+                row.get("payload_json"),
+                row.get("created_at"),
+            ),
         )
-        self.connection.commit()
+

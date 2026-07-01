@@ -2,18 +2,15 @@
 
 from __future__ import annotations
 
-from pathlib import Path
-
-from faturama.infrastructure.database.sqlite import connect
-from faturama.infrastructure.repositories.transaction_repository import TransactionRepository
+from faturama.application.ports.query_service import QueryService
 
 
-def execute(database_path: str, user_id: str, month: str, card: str | None = None) -> list[dict]:
+def execute(query_service: QueryService, user_id: str, month: str, card: str | None = None) -> list[dict]:
     year_str, month_str = month.split("-", 1)
-    return TransactionRepository(connect(Path(database_path))).list_by_month(
+    return query_service.query(
+        "current_installments",
         user_id=user_id,
         year=int(year_str),
         month=int(month_str),
-        kind="installment_charge",
         card_fingerprint=card,
     )

@@ -1,11 +1,11 @@
 # Faturama
 
-Pipeline local para extracao auditavel de faturas de cartao, persistencia em SQLite e consultas por CLI, com runtime assíncrono provisionado por Terraform para dispatch `S3 -> EventBridge -> ECS`.
+Pipeline local para extracao auditavel de faturas de cartao, persistencia em PostgreSQL e consultas por CLI, com runtime assíncrono provisionado por Terraform para dispatch `S3 -> EventBridge -> ECS`.
 
 ## Stack
 
 - Python com estrutura `src/`
-- Persistencia SQLite para o modo local e PostgreSQL para o runtime assíncrono
+- Persistencia PostgreSQL única para dados e checkpoints
 - Contratos Pydantic
 - `LangGraph` como workflow oficial
 - `OpenDataLoader PDF` como extracao primaria de PDF
@@ -23,9 +23,7 @@ faturama-worker --help-message
 
 ## Variaveis uteis
 
-- `FATURAMA_DB_PATH`
 - `FATURAMA_DB_DSN`
-- `FATURAMA_CHECKPOINT_DB_PATH`
 - `FATURAMA_ARTIFACT_CACHE_DIR`
 - `FATURAMA_INPUT_BUCKET`
 - `FATURAMA_ARTIFACT_BUCKET`

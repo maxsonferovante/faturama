@@ -50,14 +50,32 @@ def write_invoice(base_dir: Path, stem: str, markdown: str) -> Path:
 
 
 @pytest.fixture
-def temp_db(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
-    db_path = tmp_path / "faturama.sqlite3"
-    monkeypatch.setenv("FATURAMA_DB_PATH", str(db_path))
-    monkeypatch.setenv("FATURAMA_CHECKPOINT_DB_PATH", str(tmp_path / "faturama-checkpoints.sqlite3"))
+def postgres_dsn(monkeypatch: pytest.MonkeyPatch) -> str:
+    dsn = os.getenv("FATURAMA_TEST_DB_DSN") or os.getenv("FATURAMA_DB_DSN")
+    if not dsn:
+        pytest.skip("FATURAMA_TEST_DB_DSN or FATURAMA_DB_DSN is required for PostgreSQL integration tests")
+    monkeypatch.setenv("FATURAMA_DB_DSN", dsn)
+    return dsn
+
+
+@pytest.fixture
+def temp_db(postgres_dsn: str) -> str:
+    return postgres_dsn
+
+
+@pytest.fixture
+def postgres_env(postgres_dsn: str, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> dict[str, str]:
+    monkeypatch.setenv("FATURAMA_DB_DSN", postgres_dsn)
     monkeypatch.setenv("FATURAMA_ARTIFACT_CACHE_DIR", str(tmp_path / "output"))
     monkeypatch.setenv("FATURAMA_OPENDATALOADER_STUB_MODE", "1")
     monkeypatch.setenv("FATURAMA_AGENT_AUTO_APPLY_THRESHOLD", "0.92")
-    return db_path
+    return {
+        "FATURAMA_DB_DSN": postgres_dsn,
+        "FATURAMA_ARTIFACT_CACHE_DIR": str(tmp_path / "output"),
+        "FATURAMA_OPENDATALOADER_STUB_MODE": "1",
+        "FATURAMA_AGENT_AUTO_APPLY_THRESHOLD": "0.92",
+        "PYTHONPATH": str(Path.cwd() / "src"),
+    }
 
 
 @pytest.fixture
@@ -68,14 +86,9 @@ def invoice_dir(tmp_path: Path) -> Path:
 
 
 @pytest.fixture
-def cli_env(temp_db: Path) -> dict[str, str]:
+def cli_env(postgres_env: dict[str, str]) -> dict[str, str]:
     env = dict(os.environ)
-    env["FATURAMA_DB_PATH"] = str(temp_db)
-    env["FATURAMA_CHECKPOINT_DB_PATH"] = str(temp_db.with_name("faturama-checkpoints.sqlite3"))
-    env["FATURAMA_ARTIFACT_CACHE_DIR"] = str(temp_db.parent / "output")
-    env["FATURAMA_OPENDATALOADER_STUB_MODE"] = "1"
-    env["FATURAMA_AGENT_AUTO_APPLY_THRESHOLD"] = "0.92"
-    env["PYTHONPATH"] = str(Path.cwd() / "src")
+    env.update(postgres_env)
     return env
 
 
@@ -87,13 +100,12 @@ def async_storage_root(tmp_path: Path) -> Path:
 
 @pytest.fixture
 def async_settings(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, async_storage_root: Path) -> Settings:
-    db_path = tmp_path / "async.sqlite3"
-    checkpoint_path = tmp_path / "async-checkpoints.sqlite3"
+    dsn = os.getenv("FATURAMA_TEST_DB_DSN") or os.getenv("FATURAMA_DB_DSN")
+    if not dsn:
+        pytest.skip("FATURAMA_TEST_DB_DSN or FATURAMA_DB_DSN is required for PostgreSQL integration tests")
     artifact_cache_dir = tmp_path / "artifacts"
     monkeypatch.setenv("FATURAMA_RUNTIME_ENV", "test")
-    monkeypatch.setenv("FATURAMA_DB_DSN", f"sqlite:///{db_path}")
-    monkeypatch.setenv("FATURAMA_DB_PATH", str(db_path))
-    monkeypatch.setenv("FATURAMA_CHECKPOINT_DB_PATH", str(checkpoint_path))
+    monkeypatch.setenv("FATURAMA_DB_DSN", dsn)
     monkeypatch.setenv("FATURAMA_ARTIFACT_CACHE_DIR", str(artifact_cache_dir))
     monkeypatch.setenv("FATURAMA_ARTIFACT_BUCKET", "processados-faturama")
     monkeypatch.setenv("FATURAMA_INPUT_BUCKET", "pre-processamento-faturama")
@@ -106,9 +118,7 @@ def async_settings(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, async_storag
         input_bucket="pre-processamento-faturama",
         artifact_bucket="processados-faturama",
         artifact_prefix="processed",
-        database_dsn=f"sqlite:///{db_path}",
-        database_path=db_path,
-        checkpoint_database_path=checkpoint_path,
+        database_dsn=dsn,
         artifact_cache_dir=artifact_cache_dir,
         opendataloader_stub_mode=True,
     )

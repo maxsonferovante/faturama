@@ -19,9 +19,8 @@ from faturama.domain.entities.invoice_statement import InvoiceStatement
 from faturama.domain.entities.raw_document import RawDocument
 from faturama.domain.services.document_identity import build_document_id, hash_file
 from faturama.infrastructure.config.settings import Settings
-from faturama.infrastructure.database.postgres import connect_from_dsn
-from faturama.infrastructure.database.langgraph_checkpoint import LangGraphSqliteRuntime, SQLiteCheckpointStore
-from faturama.infrastructure.database.sqlite import connect
+from faturama.infrastructure.database.postgres import connect
+from faturama.infrastructure.database.langgraph_checkpoint import LangGraphPostgresRuntime
 from faturama.infrastructure.repositories.decision_repository import DecisionRepository
 from faturama.infrastructure.repositories.evidence_repository import EvidenceRepository
 from faturama.infrastructure.repositories.installment_repository import InstallmentRepository
@@ -61,7 +60,7 @@ def process_invoice(
     del timezone
     logger = get_logger("faturama.invoice_workflow")
     metrics = MetricsRegistry()
-    db = connect_from_dsn(settings.database_dsn) if settings.database_dsn else connect(settings.database_path)
+    db = connect(settings.database_dsn)
     statement_repo = StatementRepository(db)
     evidence_repo = EvidenceRepository(db)
     transaction_repo = TransactionRepository(db)
@@ -69,8 +68,8 @@ def process_invoice(
     summary_repo = SummaryRepository(db)
     review_repo = ReviewRepository(db)
     decision_repo = DecisionRepository(db)
-    checkpoint_store = SQLiteCheckpointStore(settings.checkpoint_database_path)
-    langgraph_runtime = LangGraphSqliteRuntime(settings.checkpoint_database_path)
+    langgraph_runtime = LangGraphPostgresRuntime(settings.database_dsn)
+    checkpoint_store = langgraph_runtime.open()
     workflow = WorkflowBuilder()
 
     file_hash = hash_file(pdf_path)
@@ -115,8 +114,7 @@ def process_invoice(
     )
     workflow.add_node("finalize_job", make_finalize_job_node(checkpoint_store=checkpoint_store))
     workflow.add_default_flow()
-    langgraph_checkpointer = langgraph_runtime.open()
-    compiled = workflow.compile(checkpointer=langgraph_checkpointer)
+    compiled = workflow.compile(checkpointer=checkpoint_store)
     try:
         result = compiled.invoke(
             initial_state,
@@ -130,6 +128,7 @@ def process_invoice(
         raise
     finally:
         langgraph_runtime.close()
+        db.close()
 
     status = "review_required" if result["review_items"] else "parsed"
     metrics.inc("transactions_persisted", result.get("transactions_persisted", 0))
@@ -167,3 +166,4 @@ def process_invoice(
         },
     )
     return payload
+

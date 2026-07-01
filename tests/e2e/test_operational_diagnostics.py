@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from faturama.infrastructure.database.sqlite import connect
+from faturama.infrastructure.database.postgres import connect
 from faturama.infrastructure.repositories.processing_job_repository import ProcessingJobRepository
 from faturama.interface.worker.runner import run_processing_message
 from tests.async_helpers import write_async_source
@@ -23,7 +23,12 @@ def test_operational_diagnostics_capture_lifecycle_events(async_settings):
         },
         settings=async_settings,
     )
-    repository = ProcessingJobRepository(connect(async_settings.database_path))
-    job = repository.get_job("evt-diagnostics")
-    assert job is not None
-    assert job["current_status"] in {"SUCCESS", "PARTIAL", "REVIEW_REQUIRED"}
+    connection = connect(async_settings.database_dsn)
+    try:
+        repository = ProcessingJobRepository(connection)
+        job = repository.get_job("evt-diagnostics")
+        assert job is not None
+        assert job["current_status"] in {"SUCCESS", "PARTIAL", "REVIEW_REQUIRED"}
+    finally:
+        connection.close()
+

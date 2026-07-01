@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from sqlite3 import Connection
 from typing import Any
 
 
@@ -85,7 +84,7 @@ SCHEMA_STATEMENTS = [
         merchant_normalized TEXT,
         raw_text TEXT,
         page_number INTEGER,
-        is_installment INTEGER NOT NULL,
+        is_installment BOOLEAN NOT NULL,
         installment_current INTEGER,
         installment_total INTEGER,
         UNIQUE(statement_id, line_hash)
@@ -187,7 +186,7 @@ SCHEMA_STATEMENTS = [
         node_name TEXT NOT NULL,
         checkpoint_status TEXT NOT NULL,
         state_json TEXT NOT NULL,
-        review_required INTEGER NOT NULL DEFAULT 0,
+        review_required BOOLEAN NOT NULL DEFAULT false,
         created_at TEXT NOT NULL,
         restored_at TEXT
     )
@@ -274,11 +273,11 @@ SCHEMA_STATEMENTS = [
         document_id TEXT,
         file_hash TEXT,
         current_status TEXT NOT NULL,
-        is_terminal INTEGER NOT NULL,
+        is_terminal BOOLEAN NOT NULL,
         status_detail TEXT,
         result_reference TEXT,
         artifact_manifest_id TEXT,
-        review_required INTEGER NOT NULL,
+        review_required BOOLEAN NOT NULL,
         last_transition_at TEXT NOT NULL,
         updated_at TEXT NOT NULL
     )
@@ -289,153 +288,4 @@ SCHEMA_STATEMENTS = [
 def initialize_schema(connection: Any) -> None:
     for statement in SCHEMA_STATEMENTS:
         connection.execute(statement)
-    _apply_compatibility_migrations(connection)
     connection.commit()
-
-
-def _apply_compatibility_migrations(connection: Any) -> None:
-    _ensure_columns(
-        connection,
-        "documents",
-        {
-            "runtime_source": "TEXT NOT NULL DEFAULT 'legacy'",
-            "legacy_status": "TEXT NOT NULL DEFAULT 'invalidated'",
-            "partial_status": "TEXT NOT NULL DEFAULT 'complete'",
-        },
-    )
-    _ensure_columns(
-        connection,
-        "statements",
-        {
-            "runtime_source": "TEXT NOT NULL DEFAULT 'legacy'",
-            "legacy_status": "TEXT NOT NULL DEFAULT 'invalidated'",
-            "partial_status": "TEXT NOT NULL DEFAULT 'complete'",
-        },
-    )
-    _ensure_columns(
-        connection,
-        "installment_plans",
-        {
-            "runtime_source": "TEXT NOT NULL DEFAULT 'legacy'",
-            "legacy_status": "TEXT NOT NULL DEFAULT 'invalidated'",
-        },
-    )
-    _ensure_columns(
-        connection,
-        "summaries",
-        {
-            "runtime_source": "TEXT NOT NULL DEFAULT 'legacy'",
-            "legacy_status": "TEXT NOT NULL DEFAULT 'invalidated'",
-        },
-    )
-    _ensure_columns(
-        connection,
-        "review_items",
-        {
-            "resolution_payload": "TEXT",
-        },
-    )
-    _ensure_columns(
-        connection,
-        "decision_records",
-        {
-            "decision_source": "TEXT NOT NULL DEFAULT 'rule'",
-            "audit_payload": "TEXT",
-        },
-    )
-    _mark_legacy_rows(connection)
-
-
-def _ensure_columns(connection: Any, table_name: str, columns: dict[str, str]) -> None:
-    existing = _existing_columns(connection, table_name)
-    for name, definition in columns.items():
-        if name not in existing:
-            connection.execute(f"ALTER TABLE {table_name} ADD COLUMN {name} {definition}")
-
-
-def _existing_columns(connection: Any, table_name: str) -> set[str]:
-    module_name = type(connection).__module__
-    if module_name.startswith("sqlite3"):
-        try:
-            rows = connection.execute(f"PRAGMA table_info({table_name})").fetchall()
-        except Exception:
-            return set()
-        return {row[1] for row in rows}
-
-    try:
-        rows = connection.execute(
-            """
-            SELECT column_name
-            FROM information_schema.columns
-            WHERE table_schema = current_schema()
-              AND table_name = %s
-            """,
-            (table_name,),
-        ).fetchall()
-    except Exception:
-        try:
-            connection.rollback()
-        except Exception:
-            pass
-        return set()
-
-    existing: set[str] = set()
-    for row in rows:
-        if isinstance(row, tuple):
-            existing.add(row[0])
-            continue
-        try:
-            existing.add(row["column_name"])
-        except Exception:
-            try:
-                existing.add(row[0])
-            except Exception:
-                continue
-    return existing
-
-
-def _mark_legacy_rows(connection: Any) -> None:
-    connection.execute(
-        """
-        UPDATE documents
-        SET runtime_source = COALESCE(NULLIF(runtime_source, ''), 'legacy'),
-            legacy_status = CASE
-                WHEN runtime_source = 'official' THEN legacy_status
-                ELSE 'invalidated'
-            END
-        WHERE runtime_source IS NULL OR runtime_source = '' OR runtime_source != 'official'
-        """
-    )
-    connection.execute(
-        """
-        UPDATE installment_plans
-        SET runtime_source = COALESCE(NULLIF(runtime_source, ''), 'legacy'),
-            legacy_status = CASE
-                WHEN runtime_source = 'official' THEN legacy_status
-                ELSE 'invalidated'
-            END
-        WHERE runtime_source IS NULL OR runtime_source = '' OR runtime_source != 'official'
-        """
-    )
-    connection.execute(
-        """
-        UPDATE summaries
-        SET runtime_source = COALESCE(NULLIF(runtime_source, ''), 'legacy'),
-            legacy_status = CASE
-                WHEN runtime_source = 'official' THEN legacy_status
-                ELSE 'invalidated'
-            END
-        WHERE runtime_source IS NULL OR runtime_source = '' OR runtime_source != 'official'
-        """
-    )
-    connection.execute(
-        """
-        UPDATE statements
-        SET runtime_source = COALESCE(NULLIF(runtime_source, ''), 'legacy'),
-            legacy_status = CASE
-                WHEN runtime_source = 'official' THEN legacy_status
-                ELSE 'invalidated'
-            END
-        WHERE runtime_source IS NULL OR runtime_source = '' OR runtime_source != 'official'
-        """
-    )

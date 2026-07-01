@@ -11,48 +11,51 @@ from faturama.application.queries import (
     remaining_balance,
     show_statement,
 )
-from faturama.infrastructure.config.settings import load_settings
-
-
-def _db_path() -> str:
-    return str(load_settings().database_path)
+from faturama.interface.cli.composition import read_model_query_service
 
 
 def _handle_list_statements(args) -> list[dict]:
-    return list_statements.execute(_db_path(), args.user_id, args.card, args.from_period, args.to_period)
+    with read_model_query_service() as query_service:
+        return list_statements.execute(query_service, args.user_id, args.card, args.from_period, args.to_period)
 
 
 def _handle_show_statement(args) -> dict | tuple[dict, int]:
-    payload = show_statement.execute(_db_path(), args.statement_id)
+    with read_model_query_service() as query_service:
+        payload = show_statement.execute(query_service, args.statement_id)
     if payload is None:
         return {"error_code": "statement_not_found", "message": "Statement not found"}, 1
     return payload
 
 
 def _handle_list_transactions(args) -> list[dict]:
-    return list_transactions.execute(
-        _db_path(),
-        args.statement_id,
-        kind=args.kind,
-        installments_only=args.installments_only,
-        review_status=args.review_status,
-    )
+    with read_model_query_service() as query_service:
+        return list_transactions.execute(
+            query_service,
+            args.statement_id,
+            kind=args.kind,
+            installments_only=args.installments_only,
+            review_status=args.review_status,
+        )
 
 
 def _handle_monthly_spend(args) -> list[dict]:
-    return monthly_spend.execute(_db_path(), args.user_id, args.month, args.card)
+    with read_model_query_service() as query_service:
+        return monthly_spend.execute(query_service, args.user_id, args.month, args.card)
 
 
 def _handle_current_installments(args) -> list[dict]:
-    return current_installments.execute(_db_path(), args.user_id, args.month, args.card)
+    with read_model_query_service() as query_service:
+        return current_installments.execute(query_service, args.user_id, args.month, args.card)
 
 
 def _handle_future_installments(args) -> list[dict]:
-    return future_installments.execute(_db_path(), args.user_id, args.month, args.card)
+    with read_model_query_service() as query_service:
+        return future_installments.execute(query_service, args.user_id, args.month, args.card)
 
 
 def _handle_remaining_balance(args) -> list[dict]:
-    return remaining_balance.execute(_db_path(), args.user_id, args.card, args.plan_id)
+    with read_model_query_service() as query_service:
+        return remaining_balance.execute(query_service, args.user_id, args.card, args.plan_id)
 
 
 def register_query_commands(subparsers) -> None:

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from faturama.infrastructure.database.sqlite import connect
+from faturama.infrastructure.database.postgres import connect
 from faturama.infrastructure.repositories.processing_status_repository import ProcessingStatusRepository
 from faturama.interface.worker.runner import run_processing_message
 from tests.async_helpers import write_async_source
@@ -21,8 +21,13 @@ def test_async_pipeline_reprocessing_is_idempotent(async_settings):
             },
             settings=async_settings,
         )
-    repository = ProcessingStatusRepository(connect(async_settings.database_path))
-    first = repository.get_status("evt-1")
-    second = repository.get_status("evt-2")
-    assert first is not None and second is not None
-    assert first["file_hash"] == second["file_hash"]
+    connection = connect(async_settings.database_dsn)
+    try:
+        repository = ProcessingStatusRepository(connection)
+        first = repository.get_status("evt-1")
+        second = repository.get_status("evt-2")
+        assert first is not None and second is not None
+        assert first["file_hash"] == second["file_hash"]
+    finally:
+        connection.close()
+

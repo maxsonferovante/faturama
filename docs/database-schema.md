@@ -1,15 +1,12 @@
 # Schema do Banco
 
-Este projeto usa SQLite e inicializa o schema em [src/faturama/infrastructure/database/schema.py](/Users/USER_PROFILE/Documents/faturama/src/faturama/infrastructure/database/schema.py:1).
+Este projeto usa PostgreSQL e inicializa o schema em [src/faturama/infrastructure/database/schema.py](/Users/USER_PROFILE/Documents/faturama/src/faturama/infrastructure/database/schema.py:1).
 
 ## Visão geral
 
-- Base canônica principal:
-  `FATURAMA_DB_PATH`, padrão `data/faturama.sqlite3`
-- Base de checkpoints do workflow:
-  `FATURAMA_CHECKPOINT_DB_PATH`, padrão `data/faturama-checkpoints.sqlite3`
-- O schema é criado por `initialize_schema(...)`.
-- O projeto não declara `FOREIGN KEY` no SQLite; a integridade entre tabelas é mantida pela aplicação.
+- Base transacional única:
+  `FATURAMA_DB_DSN`, única fonte de configuração para dados canônicos, read models e checkpoints.
+- O schema é criado por `initialize_schema(...)` ao conectar.
 - Registros antigos fora do runtime oficial são marcados como `legacy_status='invalidated'` e ficam fora das consultas.
 
 ## Fluxo resumido
@@ -235,10 +232,10 @@ Persistir snapshots do estado do workflow oficial executado com `LangGraph`.
 
 Uso operacional:
 
-- escrita por `SQLiteCheckpointStore.save(...)`
-- leitura por `SQLiteCheckpointStore.latest(...)`
-- atualização por `SQLiteCheckpointStore.mark_restored(...)`
-- também pode coexistir com o checkpointer oficial `SqliteSaver` do `LangGraph`
+- escrita por `PostgresCheckpointStore.save(...)`
+- leitura por `PostgresCheckpointStore.latest(...)`
+- atualização por `PostgresCheckpointStore.mark_restored(...)`
+- também pode coexistir com o checkpointer oficial `PostgresSaver` do `LangGraph`
 
 Colunas-chave:
 
@@ -422,6 +419,6 @@ erDiagram
 ## Onde consultar no código
 
 - schema: [src/faturama/infrastructure/database/schema.py](/Users/USER_PROFILE/Documents/faturama/src/faturama/infrastructure/database/schema.py:1)
-- conexão SQLite: [src/faturama/infrastructure/database/sqlite.py](/Users/USER_PROFILE/Documents/faturama/src/faturama/infrastructure/database/sqlite.py:1)
+- conexão PostgreSQL: [src/faturama/infrastructure/database/postgres.py](/Users/USER_PROFILE/Documents/faturama/src/faturama/infrastructure/database/postgres.py:1)
 - repositórios: [src/faturama/infrastructure/repositories](/Users/USER_PROFILE/Documents/faturama/src/faturama/infrastructure/repositories)
 - workflow oficial: [src/faturama/application/use_cases/process_invoice.py](/Users/USER_PROFILE/Documents/faturama/src/faturama/application/use_cases/process_invoice.py:1)

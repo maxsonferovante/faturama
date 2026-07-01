@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 import uuid
-from sqlite3 import Connection
+from typing import Any
 
 
 class EvidenceRepository:
-    def __init__(self, connection: Connection) -> None:
+    def __init__(self, connection: Any) -> None:
         self.connection = connection
 
     def save_evidence(
@@ -23,9 +23,8 @@ class EvidenceRepository:
             """
             INSERT INTO evidences (
                 evidence_id, document_id, page_number, raw_text, bbox, json_node_ref, extraction_method, structural_confidence
-            ) VALUES (?, ?, ?, ?, NULL, NULL, ?, ?)
+            ) VALUES (%s, %s, %s, %s, NULL, NULL, %s, %s)
             """,
             (evidence_id, document_id, page_number, raw_text, extraction_method, structural_confidence),
         )
-        self.connection.commit()
         return evidence_id

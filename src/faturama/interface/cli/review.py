@@ -3,19 +3,17 @@
 from __future__ import annotations
 
 from faturama.application.use_cases.review_queue import list_pending, resolve_item
-from faturama.infrastructure.config.settings import load_settings
-
-
-def _db_path() -> str:
-    return str(load_settings().database_path)
+from faturama.interface.cli.composition import read_model_query_service
 
 
 def _handle_review_queue(args) -> list[dict]:
-    return list_pending(_db_path(), args.user_id, args.entity_type, args.status, args.severity)
+    with read_model_query_service() as query_service:
+        return list_pending(query_service, args.user_id, args.entity_type, args.status, args.severity)
 
 
 def _handle_resolve_review(args):
-    return resolve_item(_db_path(), args.review_item_id, args.resolution, args.note)
+    with read_model_query_service() as query_service:
+        return resolve_item(query_service, args.review_item_id, args.resolution, args.note)
 
 
 def register_review_commands(subparsers) -> None:

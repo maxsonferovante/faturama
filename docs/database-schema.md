@@ -248,6 +248,100 @@ Colunas-chave:
 - `review_required`: flag para pausa operacional
 - `created_at`, `restored_at`: trilha temporal
 
+### `upload_authorization_grants`
+
+Função:
+Registrar as autorizações temporárias concedidas para upload de arquivos PDFs de fatura (por exemplo, via presigned URL do S3).
+
+Uso operacional:
+- escrita ao conceder autorização para upload
+- leitura para confirmar se o upload foi completado dentro do tempo limite
+
+Colunas-chave:
+- `upload_grant_id`: identificador único da autorização
+- `authorized_bucket`, `authorized_object_key`: destino autorizado no S3
+- `granted_at`, `expires_at`: janela temporal de validade da autorização
+- `upload_completed_at`: data/hora de confirmação do término do upload
+- `grant_status`: status da autorização (ex: `pending`, `completed`, `expired`)
+
+### `source_object_events`
+
+Função:
+Registrar e deduplicar os eventos de criação/modificação de objetos no S3 local ou AWS de produção.
+
+Uso operacional:
+- escrita ao receber um evento de webhook ou notificação do S3 (via EventBridge ou Lambda)
+- chave única `dedupe_key` para evitar disparos duplicados do mesmo arquivo
+
+Colunas-chave:
+- `source_event_id`: identificador canônico do evento
+- `bucket_name`, `object_key`: identificação do arquivo no S3
+- `event_time`, `event_name`: data/hora e tipo do evento S3
+- `dedupe_key`: string de deduplicação (geralmente baseada em bucket + key + etag)
+
+### `processing_jobs`
+
+Função:
+Acompanhar a execução dos jobs assíncronos no ECS iniciados a partir de eventos do S3.
+
+Uso operacional:
+- escrita ao despachar o job ECS pela Lambda/EventBridge
+- atualização periódica de status conforme o worker processa o arquivo
+
+Colunas-chave:
+- `processing_id`: identificador canônico da execução do job
+- `source_event_id`: referência ao evento S3 que originou o processamento
+- `current_status`: status atual do processamento (ex: `PENDING`, `RUNNING`, `SUCCESS`, `FAILED`)
+- `bucket_name`, `object_key`: arquivo sendo processado
+- `requested_at`, `started_at`, `finished_at`: linha do tempo da execução
+
+### `processing_lifecycle_events`
+
+Função:
+Manter um histórico cronológico auditável de todas as transições de status de cada job de processamento.
+
+Uso operacional:
+- escrita acionada em cada transição de status de processamento
+- lida para auditar tempos de execução e gargalos
+
+Colunas-chave:
+- `event_id`: identificador do evento de ciclo de vida
+- `processing_id`: job associado
+- `event_name`, `status`: nome do evento e status de transição correspondente
+- `payload_json`: detalhes e contexto adicional no formato JSON
+
+### `artifact_manifests`
+
+Função:
+Registrar o manifesto final de todos os artefatos de saída gerados pela execução de um job de processamento de fatura e salvos no S3 de destino.
+
+Uso operacional:
+- escrita ao término bem-sucedido (ou parcial) do processamento do workflow
+- leitura para retornar os links de download dos arquivos extraídos
+
+Colunas-chave:
+- `artifact_manifest_id`: identificador único do manifesto
+- `processing_id`: job correspondente
+- `source_pdf_uri`, `markdown_uri`, `json_uri`, `result_uri`: URIs completas no S3
+- `artifact_key_prefix`: prefixo do caminho dos artefatos
+- `checksum`: hash de integridade dos arquivos
+
+### `processing_status_read_model`
+
+Função:
+Prover uma projeção de leitura simplificada para consultas instantâneas sobre o estado geral e resultado de qualquer processamento de fatura.
+
+Uso operacional:
+- escrita/atualização em tempo real conforme os jobs progridem ou mudam de fase
+- lida diretamente por ferramentas de monitoramento e testes de integração
+
+Colunas-chave:
+- `processing_id`: identificador do processamento
+- `current_status`: status do processamento
+- `is_terminal`: booleano indicando se o job terminou (sucesso ou falha definitiva)
+- `review_required`: booleano indicando se o workflow está travado aguardando revisão humana
+- `last_transition_at`, `updated_at`: timestamps de controle temporal
+
 ## Relações lógicas
 
 - `documents` 1:N `statements`
@@ -396,6 +490,70 @@ erDiagram
         TEXT restored_at
     }
 
+    upload_authorization_grants {
+        TEXT upload_grant_id PK
+        TEXT authorized_bucket
+        TEXT authorized_object_key
+        TEXT granted_at
+        TEXT expires_at
+        TEXT upload_completed_at
+        TEXT grant_status
+    }
+
+    source_object_events {
+        TEXT source_event_id PK
+        TEXT bucket_name
+        TEXT object_key
+        TEXT event_time
+        TEXT event_name
+        TEXT upload_grant_id
+        TEXT dedupe_key UK
+    }
+
+    processing_jobs {
+        TEXT processing_id PK
+        TEXT source_event_id
+        TEXT current_status
+        TEXT bucket_name
+        TEXT object_key
+        TEXT document_id
+        TEXT file_hash
+        TEXT requested_at
+        TEXT started_at
+        TEXT finished_at
+    }
+
+    processing_lifecycle_events {
+        TEXT event_id PK
+        TEXT processing_id
+        TEXT event_name
+        TEXT status
+        TEXT created_at
+    }
+
+    artifact_manifests {
+        TEXT artifact_manifest_id PK
+        TEXT processing_id UK
+        TEXT artifact_bucket
+        TEXT source_pdf_uri
+        TEXT markdown_uri
+        TEXT json_uri
+        TEXT result_uri
+        TEXT created_at
+        TEXT updated_at
+    }
+
+    processing_status_read_model {
+        TEXT processing_id PK
+        TEXT document_id
+        TEXT file_hash
+        TEXT current_status
+        BOOLEAN is_terminal
+        BOOLEAN review_required
+        TEXT last_transition_at
+        TEXT updated_at
+    }
+
     documents ||--o{ statements : origina
     documents ||--o{ evidences : produz
     documents ||--o{ transactions : contextualiza
@@ -406,6 +564,12 @@ erDiagram
     statements ||--o{ summaries : agrega
     transactions ||--o{ decision_records : registra
     transactions ||--o{ review_items : abre
+
+    source_object_events ||--o| upload_authorization_grants : associa
+    processing_jobs ||--o| source_object_events : origina
+    processing_lifecycle_events }o--|| processing_jobs : loga
+    artifact_manifests ||--|| processing_jobs : descreve
+    processing_status_read_model ||--|| processing_jobs : projeta
 ```
 
 ## Regras importantes de negócio refletidas no schema

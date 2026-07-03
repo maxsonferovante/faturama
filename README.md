@@ -41,6 +41,36 @@ No ambiente local, o runtime sobe com `postgres`, `ministack`, imagem Docker do 
 5. worker real processando o PDF
 6. artefatos gravados em `processados-faturama`
 
+### Diagrama da Arquitetura
+
+```mermaid
+graph TD
+    subgraph Client [Cliente / Trigger]
+        Upload[Upload de PDF - incoming/*.pdf]
+    end
+
+    subgraph AWS [AWS Runtime / Terraform]
+        S3Input[S3 Bucket de Entrada]
+        EventBridge[Regra EventBridge]
+        ECSCluster[ECS Cluster]
+        Worker[ECS Task / Worker]
+        S3Artifacts[S3 Bucket de Artefatos]
+    end
+
+    subgraph Storage [Armazenamento Externo]
+        Postgres[Banco PostgreSQL]
+    end
+
+    Upload -->|1. Envia PDF| S3Input
+    S3Input -->|2. Object Created| EventBridge
+    EventBridge -->|3. Dispara Task| ECSCluster
+    ECSCluster -->|4. Executa| Worker
+    Worker -->|5. Lê PDF Original| S3Input
+    Worker -->|6. Grava Resultados| S3Artifacts
+    Worker -->|7. Persiste Dados| Postgres
+```
+
+
 Suba tudo com:
 
 ```bash

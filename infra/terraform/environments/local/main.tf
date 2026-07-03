@@ -23,6 +23,7 @@ provider "aws" {
     ecs    = var.local_aws_endpoint_url
     events = var.local_aws_endpoint_url
     iam    = var.local_aws_endpoint_url
+    lambda = var.local_aws_endpoint_url
     logs   = var.local_aws_endpoint_url
     s3     = var.local_aws_endpoint_url
     sts    = var.local_aws_endpoint_url

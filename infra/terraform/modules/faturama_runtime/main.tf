@@ -38,6 +38,20 @@ resource "aws_s3_bucket" "artifact" {
 resource "aws_s3_bucket_notification" "input" {
   bucket      = aws_s3_bucket.input.id
   eventbridge = true
+
+  dynamic "lambda_function" {
+    for_each = var.use_local_aws_endpoints ? [1] : []
+    content {
+      lambda_function_arn = aws_lambda_function.local_dispatcher[0].arn
+      events              = ["s3:ObjectCreated:*"]
+      filter_prefix       = "incoming/"
+      filter_suffix       = ".pdf"
+    }
+  }
+
+  depends_on = [
+    aws_lambda_permission.allow_s3
+  ]
 }
 
 resource "aws_iam_role" "ecs_task_execution" {

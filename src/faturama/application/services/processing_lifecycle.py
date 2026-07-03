@@ -47,11 +47,11 @@ def status_projection_payload(
         "document_id": document_id,
         "file_hash": file_hash,
         "current_status": status.value,
-        "is_terminal": 1 if status.is_terminal else 0,
+        "is_terminal": status.is_terminal,
         "status_detail": status_detail,
         "result_reference": result_reference,
         "artifact_manifest_id": artifact_manifest_id,
-        "review_required": 1 if status.review_required else 0,
+        "review_required": status.review_required,
         "last_transition_at": timestamp,
         "updated_at": timestamp,
     }

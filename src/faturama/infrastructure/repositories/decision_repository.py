@@ -24,9 +24,9 @@ class DecisionRepository:
                 confidence_semantic, confidence_relational, confidence_operational, decision_reason,
                 decision_source, audit_payload
             ) VALUES (
-                :decision_id, :entity_type, :entity_id, :decision_state, :confidence_structural,
-                :confidence_semantic, :confidence_relational, :confidence_operational, :decision_reason,
-                :decision_source, :audit_payload
+                %(decision_id)s, %(entity_type)s, %(entity_id)s, %(decision_state)s, %(confidence_structural)s,
+                %(confidence_semantic)s, %(confidence_relational)s, %(confidence_operational)s, %(decision_reason)s,
+                %(decision_source)s, %(audit_payload)s
             )
             ON CONFLICT (decision_id) DO UPDATE SET
                 entity_type = EXCLUDED.entity_type,

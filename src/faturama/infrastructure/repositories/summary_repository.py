@@ -22,10 +22,10 @@ class SummaryRepository:
                 interest_and_fees_total, refund_total, future_installment_balance, next_cycle_installment_commitment,
                 runtime_source, legacy_status
             ) VALUES (
-                :summary_id, :user_id, :card_fingerprint, :issuer_name, :card_label, :billing_year, :billing_month,
-                :statement_total_amount, :new_purchase_total, :installment_charge_total, :invoice_financing_total,
-                :interest_and_fees_total, :refund_total, :future_installment_balance, :next_cycle_installment_commitment,
-                :runtime_source, :legacy_status
+                %(summary_id)s, %(user_id)s, %(card_fingerprint)s, %(issuer_name)s, %(card_label)s, %(billing_year)s, %(billing_month)s,
+                %(statement_total_amount)s, %(new_purchase_total)s, %(installment_charge_total)s, %(invoice_financing_total)s,
+                %(interest_and_fees_total)s, %(refund_total)s, %(future_installment_balance)s, %(next_cycle_installment_commitment)s,
+                %(runtime_source)s, %(legacy_status)s
             )
             ON CONFLICT (summary_id) DO UPDATE SET
                 user_id = EXCLUDED.user_id,

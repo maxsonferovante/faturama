@@ -114,7 +114,7 @@ def process_invoice(
     )
     workflow.add_node("finalize_job", make_finalize_job_node(checkpoint_store=checkpoint_store))
     workflow.add_default_flow()
-    compiled = workflow.compile(checkpointer=checkpoint_store)
+    compiled = workflow.compile(checkpointer=langgraph_runtime.checkpointer)
     try:
         result = compiled.invoke(
             initial_state,

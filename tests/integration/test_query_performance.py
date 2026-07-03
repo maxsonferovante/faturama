@@ -5,7 +5,7 @@ import time
 from faturama.application.queries.monthly_spend import execute as monthly_spend
 from faturama.application.use_cases.process_invoice import process_invoice
 from faturama.infrastructure.config.settings import load_settings
-from faturama.interface.cli.composition import read_model_query_service
+from faturama.application.services.query_service import read_model_query_service
 from tests.integration.test_monthly_queries import require_postgres_dsn, reset_database
 
 

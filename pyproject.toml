@@ -14,7 +14,6 @@ dependencies = [
 ]
 
 [project.scripts]
-faturama = "faturama.cli:main"
 faturama-worker = "faturama.interface.worker.entrypoint:main"
 
 [project.optional-dependencies]

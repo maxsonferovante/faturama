@@ -6,7 +6,7 @@ from faturama.application.queries.remaining_balance import execute as remaining_
 from faturama.application.use_cases.process_invoice import process_invoice
 from faturama.application.use_cases.review_queue import list_pending, resolve_item
 from faturama.infrastructure.config.settings import load_settings
-from faturama.interface.cli.composition import read_model_query_service
+from faturama.application.services.query_service import read_model_query_service
 from tests.integration.test_monthly_queries import require_postgres_dsn, reset_database
 
 

@@ -11,7 +11,7 @@ from faturama.application.queries.remaining_balance import execute as remaining_
 from faturama.application.use_cases.process_invoice import process_invoice
 from faturama.infrastructure.config.settings import load_settings
 from faturama.infrastructure.database.postgres import connect_from_dsn
-from faturama.interface.cli.composition import read_model_query_service
+from faturama.application.services.query_service import read_model_query_service
 
 
 TABLES = (

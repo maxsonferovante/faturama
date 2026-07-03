@@ -4,7 +4,7 @@ from faturama.application.use_cases.process_invoice import process_invoice
 from faturama.application.use_cases.review_queue import list_pending, resolve_item
 from faturama.infrastructure.config.settings import load_settings
 from faturama.infrastructure.database.postgres import connect
-from faturama.interface.cli.composition import read_model_query_service
+from faturama.application.services.query_service import read_model_query_service
 
 
 def test_review_workflow_lists_and_resolves_low_confidence_items(invoice_dir, temp_db):

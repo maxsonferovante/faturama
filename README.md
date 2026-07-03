@@ -1,6 +1,6 @@
 # Faturama
 
-Pipeline local para extracao auditavel de faturas de cartao, persistencia em PostgreSQL e consultas por CLI, com runtime assíncrono provisionado por Terraform para dispatch `S3 -> EventBridge -> ECS`.
+Pipeline local para extracao auditavel de faturas de cartao, persistencia em PostgreSQL, com runtime assíncrono provisionado por Terraform para dispatch `S3 -> EventBridge -> ECS`.
 
 ## Stack
 
@@ -14,11 +14,14 @@ Pipeline local para extracao auditavel de faturas de cartao, persistencia em Pos
 ## Comandos principais
 
 ```bash
-python3 -m faturama.cli process-invoice --pdf-path samples/invoice-2026-04.pdf --user-id demo-user
-python3 -m faturama.cli monthly-spend --user-id demo-user --month 2026-04
-python3 -m faturama.cli future-installments --user-id demo-user --month 2026-05
-python3 -m faturama.cli review-queue --user-id demo-user
-faturama-worker --help-message
+# Inicializar o ambiente local completo (Docker + Terraform)
+bash scripts/bootstrap_local_runtime.sh
+
+# Executar simulação de processamento de fatura via upload S3 local (MiniStack)
+uv run scripts/test_worker_from_ministack_s3.py
+
+# Executar testes unitários e de integração
+uv run python3 -m pytest
 ```
 
 ## Variaveis uteis

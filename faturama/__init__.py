@@ -1,6 +1,6 @@
 """Repository-local package shim for src layout.
 
-Allows `python -m faturama.cli` from a source checkout without requiring an
+Allows referencing the local codebase from a source checkout without requiring an
 editable install first.
 """
 

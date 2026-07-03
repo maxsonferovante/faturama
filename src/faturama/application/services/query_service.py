@@ -1,4 +1,4 @@
-"""CLI read-side composition for PostgreSQL-backed queries."""
+"""Application read-side query service for PostgreSQL-backed read model."""
 
 from __future__ import annotations
 
@@ -17,8 +17,8 @@ from faturama.infrastructure.repositories.summary_repository import SummaryRepos
 from faturama.infrastructure.repositories.transaction_repository import TransactionRepository
 
 
-class CliReadModelQueryService:
-    """Read-side service assembled at the CLI boundary."""
+class ReadModelQueryService:
+    """Read-side service assembled at the application boundary for querying the database."""
 
     def __init__(self, connection: Any) -> None:
         self._connection = connection
@@ -172,7 +172,7 @@ def require_database_dsn(settings: Settings | None = None) -> str:
     active_settings = settings or load_settings()
     dsn = active_settings.database_dsn
     if not dsn:
-        raise RuntimeError("FATURAMA_DB_DSN is required for PostgreSQL-backed CLI queries")
+        raise RuntimeError("FATURAMA_DB_DSN is required for PostgreSQL-backed query services")
 
     parsed = urlparse(dsn)
     if parsed.scheme not in {"postgresql", "postgres"}:
@@ -181,8 +181,8 @@ def require_database_dsn(settings: Settings | None = None) -> str:
 
 
 @contextmanager
-def read_model_query_service(settings: Settings | None = None) -> Iterator[CliReadModelQueryService]:
-    service = CliReadModelQueryService(connect_from_dsn(require_database_dsn(settings)))
+def read_model_query_service(settings: Settings | None = None) -> Iterator[ReadModelQueryService]:
+    service = ReadModelQueryService(connect_from_dsn(require_database_dsn(settings)))
     try:
         yield service
     finally:

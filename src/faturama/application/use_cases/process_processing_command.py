@@ -84,14 +84,18 @@ def process_processing_command(
                     source_object_key=command.object_key,
                 )
         except Exception as exc:
-            status_service.transition(
-                command.processing_id,
-                ProcessingStatus.FAILED,
-                status_detail=str(exc),
-                finished_at=utc_now(),
-                failure_code=type(exc).__name__,
-                failure_message=str(exc),
-            )
+            try:
+                status_service.transition(
+                    command.processing_id,
+                    ProcessingStatus.FAILED,
+                    status_detail=str(exc),
+                    finished_at=utc_now(),
+                    failure_code=type(exc).__name__,
+                    failure_message=str(exc),
+                )
+                connection.commit()
+            except Exception as commit_exc:
+                pass
             raise
 
         final_status = ProcessingStatus.REVIEW_REQUIRED if result["review_items_opened"] else ProcessingStatus.SUCCESS
@@ -112,6 +116,7 @@ def process_processing_command(
             document_id=result.get("document_id"),
             file_hash=result.get("file_hash"),
         )
+        connection.commit()
         return {
             "processing_id": command.processing_id,
             "status": final_status.value,

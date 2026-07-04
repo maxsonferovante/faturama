@@ -42,7 +42,11 @@ def validate_postgres_dsn(dsn: str) -> str:
 
 
 def connect(dsn: str) -> psycopg.Connection[Any]:
-    connection = psycopg.connect(validate_postgres_dsn(dsn), row_factory=dict_row)
+    connection = psycopg.connect(
+        validate_postgres_dsn(dsn),
+        row_factory=dict_row,
+        prepare_threshold=None,
+    )
     initialize_schema(connection)
     return connection
 

@@ -120,6 +120,7 @@ def process_invoice(
             initial_state,
             {"configurable": {"thread_id": state.thread_id, "checkpoint_ns": ""}},
         )
+        db.commit()
     except Exception:
         logger.exception(
             "invoice_workflow_failed",

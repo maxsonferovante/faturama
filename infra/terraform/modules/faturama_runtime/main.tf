@@ -251,3 +251,45 @@ resource "aws_cloudwatch_event_target" "dispatch" {
 EOT
   }
 }
+
+resource "aws_iam_role" "api" {
+  name = "faturama-api-role-${var.environment_name}"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = "sts:AssumeRole"
+        Principal = {
+          AWS = "*"
+        }
+      }
+    ]
+  })
+  tags = local.common_tags
+}
+
+resource "aws_iam_role_policy" "api" {
+  name = "faturama-api-policy-${var.environment_name}"
+  role = aws_iam_role.api.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:DeleteObject",
+          "s3:ListBucket"
+        ]
+        Resource = [
+          aws_s3_bucket.input.arn,
+          "${aws_s3_bucket.input.arn}/*",
+          aws_s3_bucket.artifact.arn,
+          "${aws_s3_bucket.artifact.arn}/*"
+        ]
+      }
+    ]
+  })
+}

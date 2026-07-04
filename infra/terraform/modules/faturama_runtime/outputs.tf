@@ -25,3 +25,7 @@ output "dispatch_rule_name" {
 output "dispatch_rule_arn" {
   value = aws_cloudwatch_event_rule.dispatch.arn
 }
+
+output "api_role_arn" {
+  value = aws_iam_role.api.arn
+}

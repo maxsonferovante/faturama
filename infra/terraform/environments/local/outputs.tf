@@ -7,5 +7,6 @@ output "runtime" {
     ecs_task_definition = module.faturama_runtime.ecs_task_definition_arn
     dispatch_rule_name  = module.faturama_runtime.dispatch_rule_name
     dispatch_rule_arn   = module.faturama_runtime.dispatch_rule_arn
+    api_role_arn        = module.faturama_runtime.api_role_arn
   }
 }

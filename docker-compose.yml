@@ -5,8 +5,30 @@ services:
       POSTGRES_DB: faturama
       POSTGRES_USER: faturama
       POSTGRES_PASSWORD: faturama
+    ports:
+      - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+
+  pgbouncer:
+    image: pgbouncer/pgbouncer:latest
+    platform: linux/amd64
+    ports:
+      - "6432:6432"
+    environment:
+      - DATABASES_HOST=postgres
+      - DATABASES_PORT=5432
+      - DATABASES_USER=faturama
+      - DATABASES_PASSWORD=faturama
+      - DATABASES_DBNAME=faturama
+      - PGBOUNCER_LISTEN_ADDR=0.0.0.0
+      - PGBOUNCER_LISTEN_PORT=6432
+      - PGBOUNCER_AUTH_TYPE=any
+      - PGBOUNCER_POOL_MODE=transaction
+      - PGBOUNCER_MAX_CLIENT_CONN=100
+      - PGBOUNCER_DEFAULT_POOL_SIZE=20
+    depends_on:
+      - postgres
 
   ministack:
     image: ministackorg/ministack:full

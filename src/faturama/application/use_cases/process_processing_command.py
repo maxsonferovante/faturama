@@ -84,18 +84,7 @@ def process_processing_command(
                     source_object_key=command.object_key,
                 )
         except Exception as exc:
-            try:
-                status_service.transition(
-                    command.processing_id,
-                    ProcessingStatus.FAILED,
-                    status_detail=str(exc),
-                    finished_at=utc_now(),
-                    failure_code=type(exc).__name__,
-                    failure_message=str(exc),
-                )
-                connection.commit()
-            except Exception as commit_exc:
-                pass
+            connection.commit()
             raise
 
         final_status = ProcessingStatus.REVIEW_REQUIRED if result["review_items_opened"] else ProcessingStatus.SUCCESS

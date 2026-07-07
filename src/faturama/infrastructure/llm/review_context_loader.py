@@ -14,9 +14,7 @@ def load_review_context(pdf_path: str, markdown_path: str | None, json_path: str
 
 
 def _load_langchain_loader():
-    try:
-        from langchain_opendataloader_pdf import OpenDataLoaderPDFLoader  # type: ignore
-    except Exception:
+    except ImportError:
         return None
 
     def _loader(pdf_path: str) -> list[dict]:

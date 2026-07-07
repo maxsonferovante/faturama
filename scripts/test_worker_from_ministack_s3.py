@@ -27,10 +27,7 @@ TEST_CONFIG = {
 
 def ensure_buckets(s3, *buckets: str) -> None:
     for bucket in buckets:
-        try:
-            s3.create_bucket(Bucket=bucket)
-        except Exception:
-            pass
+        s3.create_bucket(Bucket=bucket)
 
 
 def list_relevant_artifacts(
@@ -40,13 +37,8 @@ def list_relevant_artifacts(
         Bucket=bucket,
         Prefix=f"{artifact_prefix.rstrip('/')}/",
     )
-    relevant = []
     marker = f"/{object_stem}-"
-    for item in output_listing.get("Contents", []):
-        key = item["Key"]
-        if marker in key:
-            relevant.append(key)
-    return relevant
+    return [item["Key"] for item in output_listing.get("Contents", []) if marker in item["Key"]]
 
 
 def log_progress(message: str) -> None:
@@ -71,12 +63,12 @@ def list_worker_containers(worker_image: str) -> list[dict[str, str]]:
     if result.returncode != 0:
         return []
 
-    containers: list[dict[str, str]] = []
-    for line in result.stdout.splitlines():
-        if not line.strip():
-            continue
-        container_id, name, status = (line.split("\t", 2) + ["", ""])[:3]
-        containers.append({"id": container_id, "name": name, "status": status})
+    containers = [
+        {"id": cid, "name": name, "status": status}
+        for line in result.stdout.splitlines()
+        if line.strip()
+        for cid, name, status in [(line.split("\t", 2) + ["", ""])[:3]]
+    ]
     return containers
 
 
@@ -179,31 +171,7 @@ def main() -> int:
             None,
         )
         if unsupported_target_line:
-            raise SystemExit(
-                json.dumps(
-                    {
-                        "status": "unsupported_runtime",
-                        "message": (
-                            "O MiniStack provisionou a regra EventBridge, mas a versao atual do emulador "
-                            "nao executa target ECS. O upload chegou ao S3, porem o dispatch real "
-                            "EventBridge -> ECS nao e suportado neste runtime local."
-                        ),
-                        "pdf_path": str(pdf_path),
-                        "input_bucket": TEST_CONFIG["input_bucket"],
-                        "artifact_bucket": TEST_CONFIG["artifact_bucket"],
-                        "object_key": object_key,
-                        "dispatch_rule_name": TEST_CONFIG["dispatch_rule_name"],
-                        "new_container_ids": new_container_ids,
-                        "artifact_prefix": TEST_CONFIG["artifact_prefix"],
-                        "ministack_container_name": TEST_CONFIG[
-                            "ministack_container_name"
-                        ],
-                        "ministack_log_evidence": unsupported_target_line,
-                    },
-                    ensure_ascii=False,
-                    indent=2,
-                )
-            )
+            raise RuntimeError("Unsupported runtime: MiniStack does not support target ECS in local emulation.")
 
         artifact_keys = sorted(
             set(
@@ -227,32 +195,7 @@ def main() -> int:
 
     if not artifact_keys:
         ministack_logs = read_ministack_logs(TEST_CONFIG["ministack_container_name"])
-        raise SystemExit(
-            json.dumps(
-                {
-                    "status": "timeout",
-                    "message": (
-                        "O arquivo foi enviado para o bucket de entrada, mas nenhuma evidencia de processamento "
-                        "real apareceu no bucket de artefatos dentro do tempo limite."
-                    ),
-                    "diagnosis": (
-                        "Durante a janela de espera nao apareceram container ECS do worker, artefatos novos "
-                        "nem evidencia suficiente nos logs do MiniStack de entrega S3 -> EventBridge -> ECS."
-                    ),
-                    "pdf_path": str(pdf_path),
-                    "input_bucket": TEST_CONFIG["input_bucket"],
-                    "artifact_bucket": TEST_CONFIG["artifact_bucket"],
-                    "object_key": object_key,
-                    "dispatch_rule_name": TEST_CONFIG["dispatch_rule_name"],
-                    "new_container_ids": new_container_ids,
-                    "artifact_prefix": TEST_CONFIG["artifact_prefix"],
-                    "ministack_container_name": TEST_CONFIG["ministack_container_name"],
-                    "ministack_log_tail": ministack_logs.splitlines()[-20:],
-                },
-                ensure_ascii=False,
-                indent=2,
-            )
-        )
+    raise RuntimeError("Timeout: no artifacts appeared in the bucket within the wait period.")
 
     print(
         json.dumps(

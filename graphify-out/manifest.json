@@ -1,0 +1,1347 @@
+{
+  ".specify/extensions/agent-context/scripts/bash/update-agent-context.sh": {
+    "mtime": 1782001363.449124,
+    "ast_hash": "b1168bb9cffc02061aa72530000b76ef",
+    "semantic_hash": "b1168bb9cffc02061aa72530000b76ef"
+  },
+  ".specify/extensions/agent-context/scripts/powershell/update-agent-context.ps1": {
+    "mtime": 1782001363.4496808,
+    "ast_hash": "490a5c678c46baf04f36b571861a1045",
+    "semantic_hash": "490a5c678c46baf04f36b571861a1045"
+  },
+  ".specify/feature.json": {
+    "mtime": 1782753159.5654628,
+    "ast_hash": "2081d68999a3273cbc6d311f9f9c4cbe",
+    "semantic_hash": "2081d68999a3273cbc6d311f9f9c4cbe"
+  },
+  ".specify/init-options.json": {
+    "mtime": 1782946525.7626393,
+    "ast_hash": "47598697687c8bf48af083b27e0f1cf0",
+    "semantic_hash": "47598697687c8bf48af083b27e0f1cf0"
+  },
+  ".specify/integration.json": {
+    "mtime": 1782946525.7349102,
+    "ast_hash": "eb05eff9e6eb6afb9db18def3983862d",
+    "semantic_hash": "eb05eff9e6eb6afb9db18def3983862d"
+  },
+  ".specify/integrations/codex.manifest.json": {
+    "mtime": 1782531220.6045127,
+    "ast_hash": "0dc5a211c79318fe5f93ef8afcd205e4",
+    "semantic_hash": "0dc5a211c79318fe5f93ef8afcd205e4"
+  },
+  ".specify/integrations/gemini.manifest.json": {
+    "mtime": 1782946525.7339077,
+    "ast_hash": "479b008ee61e1a80294cecff6212e5ac",
+    "semantic_hash": "479b008ee61e1a80294cecff6212e5ac"
+  },
+  ".specify/integrations/speckit.manifest.json": {
+    "mtime": 1782946525.7518687,
+    "ast_hash": "1ba847a269130e5390a30c147754e71f",
+    "semantic_hash": "1ba847a269130e5390a30c147754e71f"
+  },
+  ".specify/scripts/bash/check-prerequisites.sh": {
+    "mtime": 1782946525.7456684,
+    "ast_hash": "ddffcaa289bcea05e41382525618b58e",
+    "semantic_hash": "ddffcaa289bcea05e41382525618b58e"
+  },
+  ".specify/scripts/bash/common.sh": {
+    "mtime": 1782946525.7420077,
+    "ast_hash": "eda4c81694719220aa1f115053cbcddc",
+    "semantic_hash": "eda4c81694719220aa1f115053cbcddc"
+  },
+  ".specify/scripts/bash/create-new-feature.sh": {
+    "mtime": 1782946525.7469828,
+    "ast_hash": "e61cae6d9125f1f765586ecca62a0b3b",
+    "semantic_hash": "e61cae6d9125f1f765586ecca62a0b3b"
+  },
+  ".specify/scripts/bash/setup-plan.sh": {
+    "mtime": 1782946525.7432818,
+    "ast_hash": "39835c6d789d2e385e7e71461dfc9340",
+    "semantic_hash": "39835c6d789d2e385e7e71461dfc9340"
+  },
+  ".specify/scripts/bash/setup-tasks.sh": {
+    "mtime": 1782946525.7443855,
+    "ast_hash": "ca80794ff10eb25b554393917b218f76",
+    "semantic_hash": "ca80794ff10eb25b554393917b218f76"
+  },
+  ".specify/workflows/workflow-registry.json": {
+    "mtime": 1782531220.6329057,
+    "ast_hash": "fff19315da796d6a6d9aee57dc4d0f36",
+    "semantic_hash": "fff19315da796d6a6d9aee57dc4d0f36"
+  },
+  "faturama/__init__.py": {
+    "mtime": 1783119738.5437055,
+    "ast_hash": "cbbd573d70f8c985e302d60a2f96b93b",
+    "semantic_hash": "cbbd573d70f8c985e302d60a2f96b93b"
+  },
+  "infra/terraform/environments/aws/main.tf": {
+    "mtime": 1782694392.2608645,
+    "ast_hash": "46f1fcfba2694b67f2874a6a9183452a",
+    "semantic_hash": "46f1fcfba2694b67f2874a6a9183452a"
+  },
+  "infra/terraform/environments/aws/variables.tf": {
+    "mtime": 1782694039.1509519,
+    "ast_hash": "da99a679521adabffd0239537b2d8fa3",
+    "semantic_hash": "da99a679521adabffd0239537b2d8fa3"
+  },
+  "infra/terraform/environments/local/.terraform.lock.hcl": {
+    "mtime": 1783118971.7296853,
+    "ast_hash": "f198d82076edc2ccea9ad36b5625275d",
+    "semantic_hash": "f198d82076edc2ccea9ad36b5625275d"
+  },
+  "infra/terraform/environments/local/main.tf": {
+    "mtime": 1783118420.020005,
+    "ast_hash": "9d294284f732a031ece1d99b51d5d26e",
+    "semantic_hash": "9d294284f732a031ece1d99b51d5d26e"
+  },
+  "infra/terraform/environments/local/outputs.tf": {
+    "mtime": 1783123992.1916492,
+    "ast_hash": "e9df10dd1bc55a5eb81f09fb596ec386",
+    "semantic_hash": "e9df10dd1bc55a5eb81f09fb596ec386"
+  },
+  "infra/terraform/environments/local/variables.tf": {
+    "mtime": 1782694038.901385,
+    "ast_hash": "a0142076a73f6ce21f9a1b155e5ef636",
+    "semantic_hash": "a0142076a73f6ce21f9a1b155e5ef636"
+  },
+  "infra/terraform/modules/faturama_runtime/lambda/local_dispatcher.py": {
+    "mtime": 1783118277.7600176,
+    "ast_hash": "8db8291ee9c07ffb1220849a5cbc568a",
+    "semantic_hash": "8db8291ee9c07ffb1220849a5cbc568a"
+  },
+  "infra/terraform/modules/faturama_runtime/local_dispatcher.tf": {
+    "mtime": 1783118316.7044644,
+    "ast_hash": "31949c52c7619264229d75db63e8a332",
+    "semantic_hash": "31949c52c7619264229d75db63e8a332"
+  },
+  "infra/terraform/modules/faturama_runtime/main.tf": {
+    "mtime": 1783123979.6426337,
+    "ast_hash": "608d6e13ed77de7101a5a76ae3cb5c06",
+    "semantic_hash": "608d6e13ed77de7101a5a76ae3cb5c06"
+  },
+  "infra/terraform/modules/faturama_runtime/outputs.tf": {
+    "mtime": 1783123985.8956213,
+    "ast_hash": "553d6f55020c5c58aad17a5330f944b7",
+    "semantic_hash": "553d6f55020c5c58aad17a5330f944b7"
+  },
+  "infra/terraform/modules/faturama_runtime/variables.tf": {
+    "mtime": 1782694038.6522617,
+    "ast_hash": "e544be1ba5f7f97de1de68accb89ae12",
+    "semantic_hash": "e544be1ba5f7f97de1de68accb89ae12"
+  },
+  "pyproject.toml": {
+    "mtime": 1783122486.2045765,
+    "ast_hash": "1d3b43b4068185bfac5289ef91e2a2ed",
+    "semantic_hash": "1d3b43b4068185bfac5289ef91e2a2ed"
+  },
+  "refinamento-faturama/main.py": {
+    "mtime": 1782523484.8966393,
+    "ast_hash": "fe3ac828a30a4ce67c6037909c4399e3",
+    "semantic_hash": "fe3ac828a30a4ce67c6037909c4399e3"
+  },
+  "refinamento-faturama/pyproject.toml": {
+    "mtime": 1782523677.0405593,
+    "ast_hash": "a36a030c8cc8b02031d4c1dcb0d13a05",
+    "semantic_hash": "a36a030c8cc8b02031d4c1dcb0d13a05"
+  },
+  "scripts/bootstrap_local_runtime.sh": {
+    "mtime": 1782695152.8662887,
+    "ast_hash": "d4c60a7f9556b6ade945839b32a66da8",
+    "semantic_hash": "d4c60a7f9556b6ade945839b32a66da8"
+  },
+  "scripts/test_worker_from_ministack_s3.py": {
+    "mtime": 1783207569.703302,
+    "ast_hash": "2375d8775d77fb81ca5bcaa8a56887a0",
+    "semantic_hash": "2375d8775d77fb81ca5bcaa8a56887a0"
+  },
+  "src/faturama/__init__.py": {
+    "mtime": 1782586715.8029594,
+    "ast_hash": "cf43ce2589ae5649af33da48a754794b",
+    "semantic_hash": "cf43ce2589ae5649af33da48a754794b"
+  },
+  "src/faturama/application/dto/__init__.py": {
+    "mtime": 1782599773.5613785,
+    "ast_hash": "c9616d26c229c1d49432bb23409337c6",
+    "semantic_hash": "c9616d26c229c1d49432bb23409337c6"
+  },
+  "src/faturama/application/dto/decision_record_dto.py": {
+    "mtime": 1782586778.7817576,
+    "ast_hash": "a6c482b36a700d66a93be324425489c3",
+    "semantic_hash": "a6c482b36a700d66a93be324425489c3"
+  },
+  "src/faturama/application/dto/document_dto.py": {
+    "mtime": 1782586777.7088733,
+    "ast_hash": "014330a792b7a104ed392199d843e551",
+    "semantic_hash": "014330a792b7a104ed392199d843e551"
+  },
+  "src/faturama/application/dto/installment_plan_dto.py": {
+    "mtime": 1782586778.241831,
+    "ast_hash": "e1aca450d09e98f778ea83d05fc358fe",
+    "semantic_hash": "e1aca450d09e98f778ea83d05fc358fe"
+  },
+  "src/faturama/application/dto/processing_command_dto.py": {
+    "mtime": 1782665798.1641374,
+    "ast_hash": "eeac00cdf0738f58b3e4b37cf2bf43e9",
+    "semantic_hash": "eeac00cdf0738f58b3e4b37cf2bf43e9"
+  },
+  "src/faturama/application/dto/processing_status_dto.py": {
+    "mtime": 1782665798.3483763,
+    "ast_hash": "bf735e71d195d2334e3a937755f8046f",
+    "semantic_hash": "bf735e71d195d2334e3a937755f8046f"
+  },
+  "src/faturama/application/dto/projection_dto.py": {
+    "mtime": 1782586778.4232478,
+    "ast_hash": "86481c5acea823090abb91ed98be2e8f",
+    "semantic_hash": "86481c5acea823090abb91ed98be2e8f"
+  },
+  "src/faturama/application/dto/review_dto.py": {
+    "mtime": 1782586778.6013591,
+    "ast_hash": "54e163e8fdae84eb6405efde69533b3b",
+    "semantic_hash": "54e163e8fdae84eb6405efde69533b3b"
+  },
+  "src/faturama/application/dto/statement_dto.py": {
+    "mtime": 1782586777.8848808,
+    "ast_hash": "a5a551bc44ecfd493fc8536094169a57",
+    "semantic_hash": "a5a551bc44ecfd493fc8536094169a57"
+  },
+  "src/faturama/application/dto/transaction_dto.py": {
+    "mtime": 1782586778.060857,
+    "ast_hash": "2595d9f614bb261bf825335313511ffe",
+    "semantic_hash": "2595d9f614bb261bf825335313511ffe"
+  },
+  "src/faturama/application/ports/__init__.py": {
+    "mtime": 1782754706.79201,
+    "ast_hash": "b7b8922d68479bbe819c9e0398d0de0c",
+    "semantic_hash": "b7b8922d68479bbe819c9e0398d0de0c"
+  },
+  "src/faturama/application/ports/artifact_manifest_repository.py": {
+    "mtime": 1782665799.2416048,
+    "ast_hash": "ec11057d81dbd9f68b1212446b760b5c",
+    "semantic_hash": "ec11057d81dbd9f68b1212446b760b5c"
+  },
+  "src/faturama/application/ports/checkpoint_store.py": {
+    "mtime": 1782754706.4345317,
+    "ast_hash": "2cf3eeb54760bea0d83dd953342a84cb",
+    "semantic_hash": "2cf3eeb54760bea0d83dd953342a84cb"
+  },
+  "src/faturama/application/ports/document_repository.py": {
+    "mtime": 1782586778.9656768,
+    "ast_hash": "434b0c6825a5af62189853f8fe64c15a",
+    "semantic_hash": "434b0c6825a5af62189853f8fe64c15a"
+  },
+  "src/faturama/application/ports/extraction_service.py": {
+    "mtime": 1782586780.0339315,
+    "ast_hash": "630508b699594a6a9549d6741290c74e",
+    "semantic_hash": "630508b699594a6a9549d6741290c74e"
+  },
+  "src/faturama/application/ports/installment_repository.py": {
+    "mtime": 1782586779.4963145,
+    "ast_hash": "71493e92a8f3075bd71ddcb3e267268b",
+    "semantic_hash": "71493e92a8f3075bd71ddcb3e267268b"
+  },
+  "src/faturama/application/ports/object_storage.py": {
+    "mtime": 1782665798.7020204,
+    "ast_hash": "771d95f7c534c9e248abff7287b6334b",
+    "semantic_hash": "771d95f7c534c9e248abff7287b6334b"
+  },
+  "src/faturama/application/ports/processing_job_repository.py": {
+    "mtime": 1782665798.8822966,
+    "ast_hash": "9344155475f1b115a1164b829430a2e3",
+    "semantic_hash": "9344155475f1b115a1164b829430a2e3"
+  },
+  "src/faturama/application/ports/processing_status_repository.py": {
+    "mtime": 1782665799.0612943,
+    "ast_hash": "d47f7e05ed29ca82e1750f9a7000a0d4",
+    "semantic_hash": "d47f7e05ed29ca82e1750f9a7000a0d4"
+  },
+  "src/faturama/application/ports/query_service.py": {
+    "mtime": 1782586779.8513863,
+    "ast_hash": "a32b90785b502e1b08def200c8a44fd4",
+    "semantic_hash": "a32b90785b502e1b08def200c8a44fd4"
+  },
+  "src/faturama/application/ports/review_repository.py": {
+    "mtime": 1782586779.6749022,
+    "ast_hash": "abd51f623b79bd137b5cdde65984337c",
+    "semantic_hash": "abd51f623b79bd137b5cdde65984337c"
+  },
+  "src/faturama/application/ports/statement_repository.py": {
+    "mtime": 1782586779.143043,
+    "ast_hash": "ceea48314de3b396d82dc7bf5014554a",
+    "semantic_hash": "ceea48314de3b396d82dc7bf5014554a"
+  },
+  "src/faturama/application/ports/transaction_repository.py": {
+    "mtime": 1782586779.3197417,
+    "ast_hash": "4b1d207c3e4b9a35d9c28ded86e871b1",
+    "semantic_hash": "4b1d207c3e4b9a35d9c28ded86e871b1"
+  },
+  "src/faturama/application/ports/unit_of_work.py": {
+    "mtime": 1782754706.609908,
+    "ast_hash": "c7375daa16833f695f486ba739f4b69c",
+    "semantic_hash": "c7375daa16833f695f486ba739f4b69c"
+  },
+  "src/faturama/application/queries/__init__.py": {
+    "mtime": 1782587413.3581243,
+    "ast_hash": "4c8c8cb9b4b60f4634c1687e0dd37d23",
+    "semantic_hash": "4c8c8cb9b4b60f4634c1687e0dd37d23"
+  },
+  "src/faturama/application/queries/current_installments.py": {
+    "mtime": 1782754841.3789458,
+    "ast_hash": "741ece3c812e6ce5430b4b2a481dced0",
+    "semantic_hash": "741ece3c812e6ce5430b4b2a481dced0"
+  },
+  "src/faturama/application/queries/future_installments.py": {
+    "mtime": 1782754841.5536408,
+    "ast_hash": "ee45ca6c951d967e53bb97c4b1873827",
+    "semantic_hash": "ee45ca6c951d967e53bb97c4b1873827"
+  },
+  "src/faturama/application/queries/list_statements.py": {
+    "mtime": 1782754841.7279294,
+    "ast_hash": "c515aa41b71ea5c3b4661a5d22c09b2d",
+    "semantic_hash": "c515aa41b71ea5c3b4661a5d22c09b2d"
+  },
+  "src/faturama/application/queries/list_transactions.py": {
+    "mtime": 1782754841.9049141,
+    "ast_hash": "60ef7b8bb80ddb5dd7b7793a819fcaa1",
+    "semantic_hash": "60ef7b8bb80ddb5dd7b7793a819fcaa1"
+  },
+  "src/faturama/application/queries/monthly_spend.py": {
+    "mtime": 1782754842.0823996,
+    "ast_hash": "5f1ee7639846cd62a054c299bfdd6192",
+    "semantic_hash": "5f1ee7639846cd62a054c299bfdd6192"
+  },
+  "src/faturama/application/queries/remaining_balance.py": {
+    "mtime": 1782754842.2605124,
+    "ast_hash": "76f9963333ff675af6c2e5f2a8d384d0",
+    "semantic_hash": "76f9963333ff675af6c2e5f2a8d384d0"
+  },
+  "src/faturama/application/queries/show_statement.py": {
+    "mtime": 1782754842.4318955,
+    "ast_hash": "34c77468690bd66a1f07e1c52e372bcd",
+    "semantic_hash": "34c77468690bd66a1f07e1c52e372bcd"
+  },
+  "src/faturama/application/services/__init__.py": {
+    "mtime": 1782599773.4356496,
+    "ast_hash": "29b96f8dd7509b92601b916c6a281295",
+    "semantic_hash": "29b96f8dd7509b92601b916c6a281295"
+  },
+  "src/faturama/application/services/ambiguity_resolution.py": {
+    "mtime": 1782604039.6455123,
+    "ast_hash": "0b57fd7fe7020d4ee3a5269ceedd7380",
+    "semantic_hash": "0b57fd7fe7020d4ee3a5269ceedd7380"
+  },
+  "src/faturama/application/services/artifact_key_builder.py": {
+    "mtime": 1782666044.9973836,
+    "ast_hash": "e2530d77d76e1f99c5c122ff78481053",
+    "semantic_hash": "e2530d77d76e1f99c5c122ff78481053"
+  },
+  "src/faturama/application/services/artifact_manifest_service.py": {
+    "mtime": 1782666045.1719737,
+    "ast_hash": "e067580e74bb8c34a7ab8f2cda015a9a",
+    "semantic_hash": "e067580e74bb8c34a7ab8f2cda015a9a"
+  },
+  "src/faturama/application/services/processing_lifecycle.py": {
+    "mtime": 1783119104.4421985,
+    "ast_hash": "78dc308fa9bc6111c8eded8cc2acb1b4",
+    "semantic_hash": "78dc308fa9bc6111c8eded8cc2acb1b4"
+  },
+  "src/faturama/application/services/processing_status_service.py": {
+    "mtime": 1782666044.8232276,
+    "ast_hash": "a5e79d355933dc3ddd1410206634c84f",
+    "semantic_hash": "a5e79d355933dc3ddd1410206634c84f"
+  },
+  "src/faturama/application/services/query_service.py": {
+    "mtime": 1783119807.91295,
+    "ast_hash": "06c76ea40b622b3b13d32f11298e40ee",
+    "semantic_hash": "06c76ea40b622b3b13d32f11298e40ee"
+  },
+  "src/faturama/application/services/reprocessing.py": {
+    "mtime": 1782666095.642999,
+    "ast_hash": "4e308a21b07d9117823c0e0bb9675be9",
+    "semantic_hash": "4e308a21b07d9117823c0e0bb9675be9"
+  },
+  "src/faturama/application/services/source_event_normalizer.py": {
+    "mtime": 1782694171.7214925,
+    "ast_hash": "2432c46c014e0edd4180ba948fbb2fd6",
+    "semantic_hash": "2432c46c014e0edd4180ba948fbb2fd6"
+  },
+  "src/faturama/application/services/workflow_builder.py": {
+    "mtime": 1782616779.5636716,
+    "ast_hash": "fd7608803bef6629644e2b5df37270e8",
+    "semantic_hash": "fd7608803bef6629644e2b5df37270e8"
+  },
+  "src/faturama/application/services/workflow_nodes.py": {
+    "mtime": 1782604858.308025,
+    "ast_hash": "5560564bd2ec1ef4fd35087dc9b88830",
+    "semantic_hash": "5560564bd2ec1ef4fd35087dc9b88830"
+  },
+  "src/faturama/application/services/workflow_state.py": {
+    "mtime": 1782604039.3937588,
+    "ast_hash": "fc27af7445360449a48e3d73cb2b2fb8",
+    "semantic_hash": "fc27af7445360449a48e3d73cb2b2fb8"
+  },
+  "src/faturama/application/use_cases/__init__.py": {
+    "mtime": 1782599773.3144298,
+    "ast_hash": "ae802694c0959c276099f566daa96ea9",
+    "semantic_hash": "ae802694c0959c276099f566daa96ea9"
+  },
+  "src/faturama/application/use_cases/build_processing_command.py": {
+    "mtime": 1782666044.2965298,
+    "ast_hash": "f46c46bfe64581dc249f229cac26b86f",
+    "semantic_hash": "f46c46bfe64581dc249f229cac26b86f"
+  },
+  "src/faturama/application/use_cases/process_invoice.py": {
+    "mtime": 1783188991.920438,
+    "ast_hash": "cef3fd919813c0062b2b37b508f58421",
+    "semantic_hash": "cef3fd919813c0062b2b37b508f58421"
+  },
+  "src/faturama/application/use_cases/process_processing_command.py": {
+    "mtime": 1783207581.6945643,
+    "ast_hash": "67056a3d252bf7ff34d061f451f07ce6",
+    "semantic_hash": "67056a3d252bf7ff34d061f451f07ce6"
+  },
+  "src/faturama/application/use_cases/review_queue.py": {
+    "mtime": 1782755632.7107532,
+    "ast_hash": "4fbaa11c4c372a3f587bb1305f0a6c97",
+    "semantic_hash": "4fbaa11c4c372a3f587bb1305f0a6c97"
+  },
+  "src/faturama/application/use_cases/update_processing_status.py": {
+    "mtime": 1782666044.6495676,
+    "ast_hash": "d0191a847edd6c104d7423e7bbb8861b",
+    "semantic_hash": "d0191a847edd6c104d7423e7bbb8861b"
+  },
+  "src/faturama/domain/entities/__init__.py": {
+    "mtime": 1782599772.9624605,
+    "ast_hash": "eb370eb7f83ce8bcaddaaa03597cc4ee",
+    "semantic_hash": "eb370eb7f83ce8bcaddaaa03597cc4ee"
+  },
+  "src/faturama/domain/entities/future_installment_projection.py": {
+    "mtime": 1782586717.4746797,
+    "ast_hash": "5df6f7ddd983e364ff84e897e5072f15",
+    "semantic_hash": "5df6f7ddd983e364ff84e897e5072f15"
+  },
+  "src/faturama/domain/entities/installment_plan.py": {
+    "mtime": 1782604310.9516323,
+    "ast_hash": "a74b79da47eea8f9ade0f5e67a09dd29",
+    "semantic_hash": "a74b79da47eea8f9ade0f5e67a09dd29"
+  },
+  "src/faturama/domain/entities/invoice_statement.py": {
+    "mtime": 1782603925.062755,
+    "ast_hash": "d029f2088a68fd62fa38ff92406e4cae",
+    "semantic_hash": "d029f2088a68fd62fa38ff92406e4cae"
+  },
+  "src/faturama/domain/entities/raw_document.py": {
+    "mtime": 1782603924.9336786,
+    "ast_hash": "bd246d9891afd4f92a07e30973207f3b",
+    "semantic_hash": "bd246d9891afd4f92a07e30973207f3b"
+  },
+  "src/faturama/domain/entities/review_item.py": {
+    "mtime": 1782586717.6588855,
+    "ast_hash": "47741f4577558e5390544acfcee78fc5",
+    "semantic_hash": "47741f4577558e5390544acfcee78fc5"
+  },
+  "src/faturama/domain/entities/transaction_line.py": {
+    "mtime": 1782587137.675925,
+    "ast_hash": "45b111422e5b18298b2912e55f1789f4",
+    "semantic_hash": "45b111422e5b18298b2912e55f1789f4"
+  },
+  "src/faturama/domain/exceptions.py": {
+    "mtime": 1782586716.1661325,
+    "ast_hash": "91cab8a47eaf8b2511ec049e08fb50f9",
+    "semantic_hash": "91cab8a47eaf8b2511ec049e08fb50f9"
+  },
+  "src/faturama/domain/services/__init__.py": {
+    "mtime": 1782599773.0675175,
+    "ast_hash": "bd49778a68102ad9358777ce804680f9",
+    "semantic_hash": "bd49778a68102ad9358777ce804680f9"
+  },
+  "src/faturama/domain/services/confidence_policy.py": {
+    "mtime": 1782587347.9368262,
+    "ast_hash": "12a0a1502bbecaab08f55cf404fc8135",
+    "semantic_hash": "12a0a1502bbecaab08f55cf404fc8135"
+  },
+  "src/faturama/domain/services/document_identity.py": {
+    "mtime": 1782605097.7599697,
+    "ast_hash": "0bc887bef6727dd08c2426993f39a7a4",
+    "semantic_hash": "0bc887bef6727dd08c2426993f39a7a4"
+  },
+  "src/faturama/domain/services/future_projection.py": {
+    "mtime": 1782587347.7543592,
+    "ast_hash": "c3af5e092059124dab554d6469fb92e8",
+    "semantic_hash": "c3af5e092059124dab554d6469fb92e8"
+  },
+  "src/faturama/domain/services/header_extractor.py": {
+    "mtime": 1782586929.9779007,
+    "ast_hash": "b88b24c5f0791591ed66bdbfa742abd2",
+    "semantic_hash": "b88b24c5f0791591ed66bdbfa742abd2"
+  },
+  "src/faturama/domain/services/installment_matcher.py": {
+    "mtime": 1782587874.312062,
+    "ast_hash": "2178e15223c8c362a16eeb100b40107d",
+    "semantic_hash": "2178e15223c8c362a16eeb100b40107d"
+  },
+  "src/faturama/domain/services/issuer_detector.py": {
+    "mtime": 1782587465.5170155,
+    "ast_hash": "6b03eeb76fb0727be099178f1ae0247c",
+    "semantic_hash": "6b03eeb76fb0727be099178f1ae0247c"
+  },
+  "src/faturama/domain/services/monthly_summary.py": {
+    "mtime": 1782586931.0541072,
+    "ast_hash": "88a290cf729a273f320b7e0d074d45df",
+    "semantic_hash": "88a290cf729a273f320b7e0d074d45df"
+  },
+  "src/faturama/domain/services/section_segmenter.py": {
+    "mtime": 1782586930.1535945,
+    "ast_hash": "a005cf48ca3bbb8eb7d12cefbf040eb2",
+    "semantic_hash": "a005cf48ca3bbb8eb7d12cefbf040eb2"
+  },
+  "src/faturama/domain/services/transaction_candidate_extractor.py": {
+    "mtime": 1782587538.1625988,
+    "ast_hash": "e401467e43573ee09ae85e18fc4e5b31",
+    "semantic_hash": "e401467e43573ee09ae85e18fc4e5b31"
+  },
+  "src/faturama/domain/services/transaction_parser.py": {
+    "mtime": 1782587538.3401544,
+    "ast_hash": "2d95d91b295bbcb391ba4a4039795865",
+    "semantic_hash": "2d95d91b295bbcb391ba4a4039795865"
+  },
+  "src/faturama/domain/value_objects/__init__.py": {
+    "mtime": 1782599773.17108,
+    "ast_hash": "78b5f2a46608d60d9666b0998a387089",
+    "semantic_hash": "78b5f2a46608d60d9666b0998a387089"
+  },
+  "src/faturama/domain/value_objects/confidence_score.py": {
+    "mtime": 1782586716.532987,
+    "ast_hash": "56b0bc00a00865a00ebcab2b22be2365",
+    "semantic_hash": "56b0bc00a00865a00ebcab2b22be2365"
+  },
+  "src/faturama/domain/value_objects/money.py": {
+    "mtime": 1782586716.344453,
+    "ast_hash": "a2c5627f766e07ea5a8b731c746e6e4b",
+    "semantic_hash": "a2c5627f766e07ea5a8b731c746e6e4b"
+  },
+  "src/faturama/domain/value_objects/processing_status.py": {
+    "mtime": 1782665798.525483,
+    "ast_hash": "363c6455c237319c8079bf9c665c83e2",
+    "semantic_hash": "363c6455c237319c8079bf9c665c83e2"
+  },
+  "src/faturama/infrastructure/aws/__init__.py": {
+    "mtime": 1782665795.2178164,
+    "ast_hash": "bc9ac18811b426e98596c18ccf501d63",
+    "semantic_hash": "bc9ac18811b426e98596c18ccf501d63"
+  },
+  "src/faturama/infrastructure/aws/s3_storage.py": {
+    "mtime": 1782669353.702862,
+    "ast_hash": "7cd06940900ca6775b98d92f92d0b367",
+    "semantic_hash": "7cd06940900ca6775b98d92f92d0b367"
+  },
+  "src/faturama/infrastructure/checkpoint/__init__.py": {
+    "mtime": 1782755614.7258575,
+    "ast_hash": "fa0d42b3aeb6e7cad1c20071011ae0d4",
+    "semantic_hash": "fa0d42b3aeb6e7cad1c20071011ae0d4"
+  },
+  "src/faturama/infrastructure/checkpoint/postgres_checkpoint_store.py": {
+    "mtime": 1782755622.5670693,
+    "ast_hash": "e00d5fdc860f80519b5af90042cbc04b",
+    "semantic_hash": "e00d5fdc860f80519b5af90042cbc04b"
+  },
+  "src/faturama/infrastructure/config/settings.py": {
+    "mtime": 1783119590.687299,
+    "ast_hash": "0d9af06009546dee88696d08c12c1cf8",
+    "semantic_hash": "0d9af06009546dee88696d08c12c1cf8"
+  },
+  "src/faturama/infrastructure/database/langgraph_checkpoint.py": {
+    "mtime": 1783118849.7424808,
+    "ast_hash": "48dbff298b286752e886aeadade3b2c6",
+    "semantic_hash": "48dbff298b286752e886aeadade3b2c6"
+  },
+  "src/faturama/infrastructure/database/postgres.py": {
+    "mtime": 1783123747.00641,
+    "ast_hash": "4fad842bd7777acea23c02a1a53c85ce",
+    "semantic_hash": "4fad842bd7777acea23c02a1a53c85ce"
+  },
+  "src/faturama/infrastructure/database/schema.py": {
+    "mtime": 1782755577.8972657,
+    "ast_hash": "91387309e9c3356c0ff5421e36ba3bf6",
+    "semantic_hash": "91387309e9c3356c0ff5421e36ba3bf6"
+  },
+  "src/faturama/infrastructure/files/artifacts.py": {
+    "mtime": 1782603956.3455787,
+    "ast_hash": "1f2d5fb6c1a4fac7768b31df3c8807eb",
+    "semantic_hash": "1f2d5fb6c1a4fac7768b31df3c8807eb"
+  },
+  "src/faturama/infrastructure/llm/review_context_loader.py": {
+    "mtime": 1783207561.4845605,
+    "ast_hash": "2df58ff1bb8b7ff1fda4ca235687495e",
+    "semantic_hash": "2df58ff1bb8b7ff1fda4ca235687495e"
+  },
+  "src/faturama/infrastructure/llm/structured_extractor.py": {
+    "mtime": 1782604039.5147514,
+    "ast_hash": "c5fff5c192abbf9ea421f697301f26b9",
+    "semantic_hash": "c5fff5c192abbf9ea421f697301f26b9"
+  },
+  "src/faturama/infrastructure/messaging/__init__.py": {
+    "mtime": 1782665795.5180783,
+    "ast_hash": "c0f81e572c52e8cb7b731f6da8c8f17b",
+    "semantic_hash": "c0f81e572c52e8cb7b731f6da8c8f17b"
+  },
+  "src/faturama/infrastructure/opendataloader/extractor.py": {
+    "mtime": 1783119570.8840716,
+    "ast_hash": "0f757df1e79e063b3aff7c521f395f63",
+    "semantic_hash": "0f757df1e79e063b3aff7c521f395f63"
+  },
+  "src/faturama/infrastructure/opendataloader/issuer_layout_registry.py": {
+    "mtime": 1782587559.0363345,
+    "ast_hash": "071ccbf7a38d12a7e79da6e30ae28e12",
+    "semantic_hash": "071ccbf7a38d12a7e79da6e30ae28e12"
+  },
+  "src/faturama/infrastructure/repositories/artifact_manifest_repository.py": {
+    "mtime": 1782946949.4134386,
+    "ast_hash": "abb8eecf7fca29f48986b621ffe3f053",
+    "semantic_hash": "abb8eecf7fca29f48986b621ffe3f053"
+  },
+  "src/faturama/infrastructure/repositories/decision_repository.py": {
+    "mtime": 1783119421.6747508,
+    "ast_hash": "6686c543e9aa9fb24db0c721d8252356",
+    "semantic_hash": "6686c543e9aa9fb24db0c721d8252356"
+  },
+  "src/faturama/infrastructure/repositories/evidence_repository.py": {
+    "mtime": 1782754840.3946488,
+    "ast_hash": "ee52077a611f2ba9327ddccad286b039",
+    "semantic_hash": "ee52077a611f2ba9327ddccad286b039"
+  },
+  "src/faturama/infrastructure/repositories/installment_repository.py": {
+    "mtime": 1782756195.7839928,
+    "ast_hash": "e7cbd9f2a94069f84fcf372297a87294",
+    "semantic_hash": "e7cbd9f2a94069f84fcf372297a87294"
+  },
+  "src/faturama/infrastructure/repositories/processing_job_repository.py": {
+    "mtime": 1782946958.535912,
+    "ast_hash": "90b76bdc2c7b91adc5621329949aedc7",
+    "semantic_hash": "90b76bdc2c7b91adc5621329949aedc7"
+  },
+  "src/faturama/infrastructure/repositories/processing_status_repository.py": {
+    "mtime": 1782946938.2084272,
+    "ast_hash": "7062923b8771753c0c551bab714563bb",
+    "semantic_hash": "7062923b8771753c0c551bab714563bb"
+  },
+  "src/faturama/infrastructure/repositories/review_repository.py": {
+    "mtime": 1782756216.2578762,
+    "ast_hash": "c0d26ee5a250f423a130ecde569127a2",
+    "semantic_hash": "c0d26ee5a250f423a130ecde569127a2"
+  },
+  "src/faturama/infrastructure/repositories/statement_repository.py": {
+    "mtime": 1782754840.2182608,
+    "ast_hash": "e09ce56ee62238f702b3da3f6a714be4",
+    "semantic_hash": "e09ce56ee62238f702b3da3f6a714be4"
+  },
+  "src/faturama/infrastructure/repositories/summary_repository.py": {
+    "mtime": 1783119414.9365675,
+    "ast_hash": "6ae90cf83cd66918dfc6b0467d36fd93",
+    "semantic_hash": "6ae90cf83cd66918dfc6b0467d36fd93"
+  },
+  "src/faturama/infrastructure/repositories/transaction_repository.py": {
+    "mtime": 1782756170.7163808,
+    "ast_hash": "76d4e7c56b19621f1f6ebf387de1014d",
+    "semantic_hash": "76d4e7c56b19621f1f6ebf387de1014d"
+  },
+  "src/faturama/infrastructure/repositories/upload_grant_repository.py": {
+    "mtime": 1782946968.4316795,
+    "ast_hash": "3ee9c082572bd800f85d1e11e224f81d",
+    "semantic_hash": "3ee9c082572bd800f85d1e11e224f81d"
+  },
+  "src/faturama/interface/worker/__init__.py": {
+    "mtime": 1782665794.9108186,
+    "ast_hash": "98f4a413e201252f6067740d725efc00",
+    "semantic_hash": "98f4a413e201252f6067740d725efc00"
+  },
+  "src/faturama/interface/worker/entrypoint.py": {
+    "mtime": 1782694171.8057992,
+    "ast_hash": "b5d71788908394800d8611819db6bfc9",
+    "semantic_hash": "b5d71788908394800d8611819db6bfc9"
+  },
+  "src/faturama/interface/worker/runner.py": {
+    "mtime": 1782694260.2980304,
+    "ast_hash": "962dc9f8e209c3253a051f16748353ad",
+    "semantic_hash": "962dc9f8e209c3253a051f16748353ad"
+  },
+  "src/faturama/observability/logging.py": {
+    "mtime": 1782694260.2139764,
+    "ast_hash": "bbeb3c532fa6435d0044240c165c4a68",
+    "semantic_hash": "bbeb3c532fa6435d0044240c165c4a68"
+  },
+  "src/faturama/observability/metrics.py": {
+    "mtime": 1782666043.768531,
+    "ast_hash": "daf06508a8b5e5e880335605de256915",
+    "semantic_hash": "daf06508a8b5e5e880335605de256915"
+  },
+  "src/faturama/shared/pydantic_compat.py": {
+    "mtime": 1782586715.9887495,
+    "ast_hash": "b292efb1bda2de1d4d527dc93b89fb57",
+    "semantic_hash": "b292efb1bda2de1d4d527dc93b89fb57"
+  },
+  "tests/async_helpers.py": {
+    "mtime": 1782666282.7349806,
+    "ast_hash": "e270d58a7d499d1bd362a245a1124f6c",
+    "semantic_hash": "e270d58a7d499d1bd362a245a1124f6c"
+  },
+  "tests/conftest.py": {
+    "mtime": 1782756125.4843068,
+    "ast_hash": "da01697536c2b78a3cba779d17b9b7f6",
+    "semantic_hash": "da01697536c2b78a3cba779d17b9b7f6"
+  },
+  "tests/contract/fixtures/processing_message.json": {
+    "mtime": 1782694171.8904088,
+    "ast_hash": "492fc65d7f4c167bc452a963b99a0786",
+    "semantic_hash": "492fc65d7f4c167bc452a963b99a0786"
+  },
+  "tests/contract/test_processing_message_contract.py": {
+    "mtime": 1782694171.974416,
+    "ast_hash": "0441a5acbf8883c48bda8932c7496e54",
+    "semantic_hash": "0441a5acbf8883c48bda8932c7496e54"
+  },
+  "tests/contract/test_processing_status_read_model.py": {
+    "mtime": 1782947059.3461223,
+    "ast_hash": "e17004a3dd44b8a87f4004f21d3827b4",
+    "semantic_hash": "e17004a3dd44b8a87f4004f21d3827b4"
+  },
+  "tests/contract/test_signed_upload_contract.py": {
+    "mtime": 1782947070.6808593,
+    "ast_hash": "8cc65ca483ae921c0e69ab54a36620b6",
+    "semantic_hash": "8cc65ca483ae921c0e69ab54a36620b6"
+  },
+  "tests/e2e/test_async_concurrency_burst.py": {
+    "mtime": 1782694172.473686,
+    "ast_hash": "17ff512e7a6d750156345acb826eafe1",
+    "semantic_hash": "17ff512e7a6d750156345acb826eafe1"
+  },
+  "tests/e2e/test_async_pipeline_regression.py": {
+    "mtime": 1782947181.4830782,
+    "ast_hash": "ea791f0dd2e829ca3109c610cca22da0",
+    "semantic_hash": "ea791f0dd2e829ca3109c610cca22da0"
+  },
+  "tests/e2e/test_async_sla.py": {
+    "mtime": 1782694172.5563443,
+    "ast_hash": "f2b63cbd7e5cb9d7a7b55c703c88dc8c",
+    "semantic_hash": "f2b63cbd7e5cb9d7a7b55c703c88dc8c"
+  },
+  "tests/e2e/test_event_driven_dispatch_e2e.py": {
+    "mtime": 1782947169.9404392,
+    "ast_hash": "74ec3c4f700d3cbe2167956f9a89a3d1",
+    "semantic_hash": "74ec3c4f700d3cbe2167956f9a89a3d1"
+  },
+  "tests/e2e/test_invoice_pipeline_e2e.py": {
+    "mtime": 1783119815.4379861,
+    "ast_hash": "71ebadf64baef5362d5fd0a53da5f123",
+    "semantic_hash": "71ebadf64baef5362d5fd0a53da5f123"
+  },
+  "tests/e2e/test_local_runtime_contract.py": {
+    "mtime": 1782694172.3069766,
+    "ast_hash": "559c0865322b6fa6779967806743a4ef",
+    "semantic_hash": "559c0865322b6fa6779967806743a4ef"
+  },
+  "tests/e2e/test_operational_diagnostics.py": {
+    "mtime": 1782947192.2681763,
+    "ast_hash": "b44a435ee8ee5ca0af552899a4c84aa2",
+    "semantic_hash": "b44a435ee8ee5ca0af552899a4c84aa2"
+  },
+  "tests/integration/fixtures/s3_event.json": {
+    "mtime": 1782694172.0579722,
+    "ast_hash": "c1a301768e3feb76abf8a872a523b790",
+    "semantic_hash": "c1a301768e3feb76abf8a872a523b790"
+  },
+  "tests/integration/test_artifact_manifest_persistence.py": {
+    "mtime": 1782947081.2304878,
+    "ast_hash": "74459399b9dcc205467860b250e65154",
+    "semantic_hash": "74459399b9dcc205467860b250e65154"
+  },
+  "tests/integration/test_async_dispatch.py": {
+    "mtime": 1782947128.0134284,
+    "ast_hash": "10ecbd8c727bad8da0e739a8f68bb798",
+    "semantic_hash": "10ecbd8c727bad8da0e739a8f68bb798"
+  },
+  "tests/integration/test_async_review_resume.py": {
+    "mtime": 1782947046.8715863,
+    "ast_hash": "a8fcc4793a807c60244d607e4e91afe6",
+    "semantic_hash": "a8fcc4793a807c60244d607e4e91afe6"
+  },
+  "tests/integration/test_invoice_ingestion.py": {
+    "mtime": 1782947148.563628,
+    "ast_hash": "8c07af794367d2207ad9b50a4120cf9c",
+    "semantic_hash": "8c07af794367d2207ad9b50a4120cf9c"
+  },
+  "tests/integration/test_issuer_layout_registry.py": {
+    "mtime": 1782587636.144561,
+    "ast_hash": "18d12ab009e6b0bbbc2b2bc18ee86a9c",
+    "semantic_hash": "18d12ab009e6b0bbbc2b2bc18ee86a9c"
+  },
+  "tests/integration/test_langgraph_workflow.py": {
+    "mtime": 1782947159.0828235,
+    "ast_hash": "9205d96facf9b2297eb01f468944ac36",
+    "semantic_hash": "9205d96facf9b2297eb01f468944ac36"
+  },
+  "tests/integration/test_monthly_queries.py": {
+    "mtime": 1783119823.222775,
+    "ast_hash": "d9dbc19761a6f52d44cc4845e1fbeb1b",
+    "semantic_hash": "d9dbc19761a6f52d44cc4845e1fbeb1b"
+  },
+  "tests/integration/test_opendataloader_extractor.py": {
+    "mtime": 1782604882.5318153,
+    "ast_hash": "612ec0c87f38a2641e3dcae923da4841",
+    "semantic_hash": "612ec0c87f38a2641e3dcae923da4841"
+  },
+  "tests/integration/test_postgres_bootstrap.py": {
+    "mtime": 1782756168.2289176,
+    "ast_hash": "d3afa37d2d56fcb7bc74fd80557f4843",
+    "semantic_hash": "d3afa37d2d56fcb7bc74fd80557f4843"
+  },
+  "tests/integration/test_processing_performance.py": {
+    "mtime": 1782587686.0117924,
+    "ast_hash": "280de0ebc3627977eb2cc35e4206ca16",
+    "semantic_hash": "280de0ebc3627977eb2cc35e4206ca16"
+  },
+  "tests/integration/test_query_performance.py": {
+    "mtime": 1783119831.7273188,
+    "ast_hash": "713c3f7b5c78b396fb3423c3d6d73325",
+    "semantic_hash": "713c3f7b5c78b396fb3423c3d6d73325"
+  },
+  "tests/integration/test_review_required_status_flow.py": {
+    "mtime": 1782947101.9866185,
+    "ast_hash": "1fc19c3500d9b7dad20046af5da4edce",
+    "semantic_hash": "1fc19c3500d9b7dad20046af5da4edce"
+  },
+  "tests/integration/test_review_workflow.py": {
+    "mtime": 1783119839.8624244,
+    "ast_hash": "bfc412c602890e63686fbd33a56f36e7",
+    "semantic_hash": "bfc412c602890e63686fbd33a56f36e7"
+  },
+  "tests/integration/test_settings.py": {
+    "mtime": 1782756196.5984962,
+    "ast_hash": "425338dc5709dae5c17f43d174751eca",
+    "semantic_hash": "425338dc5709dae5c17f43d174751eca"
+  },
+  "tests/integration/test_source_event_deduplication.py": {
+    "mtime": 1782666250.3569648,
+    "ast_hash": "a9add697766c47194fe51ed441659c95",
+    "semantic_hash": "a9add697766c47194fe51ed441659c95"
+  },
+  "tests/integration/test_source_event_ordering.py": {
+    "mtime": 1782666250.529602,
+    "ast_hash": "43bbad491b6c67a9ae4236be7c80ea00",
+    "semantic_hash": "43bbad491b6c67a9ae4236be7c80ea00"
+  },
+  "tests/integration/test_status_propagation_latency.py": {
+    "mtime": 1782947138.3544874,
+    "ast_hash": "c995db01809f4e87f5f32679e747ebbe",
+    "semantic_hash": "c995db01809f4e87f5f32679e747ebbe"
+  },
+  "tests/integration/test_worker_failure_isolation.py": {
+    "mtime": 1782694172.7215152,
+    "ast_hash": "8e330cf8559ba4487b76760776bf542d",
+    "semantic_hash": "8e330cf8559ba4487b76760776bf542d"
+  },
+  "tests/unit/test_ambiguity_resolution.py": {
+    "mtime": 1782605010.7465875,
+    "ast_hash": "95a4f0a736692bcc1855aef1c691ee03",
+    "semantic_hash": "95a4f0a736692bcc1855aef1c691ee03"
+  },
+  "tests/unit/test_confidence_policy.py": {
+    "mtime": 1782587637.0659475,
+    "ast_hash": "4aa72f15dac819e8d07d0a5e017db35e",
+    "semantic_hash": "4aa72f15dac819e8d07d0a5e017db35e"
+  },
+  "tests/unit/test_date_parser.py": {
+    "mtime": 1782587637.62902,
+    "ast_hash": "e691bebb3c97ea14f084a6efbfe5f354",
+    "semantic_hash": "e691bebb3c97ea14f084a6efbfe5f354"
+  },
+  "tests/unit/test_decision_recording.py": {
+    "mtime": 1782947091.3414283,
+    "ast_hash": "63f660d40c1e2b56887d7329e0ea61ac",
+    "semantic_hash": "63f660d40c1e2b56887d7329e0ea61ac"
+  },
+  "tests/unit/test_duplicate_detection.py": {
+    "mtime": 1782587637.816138,
+    "ast_hash": "02a7d81abca228de7994823890b23e7f",
+    "semantic_hash": "02a7d81abca228de7994823890b23e7f"
+  },
+  "tests/unit/test_future_projection.py": {
+    "mtime": 1782587636.8762856,
+    "ast_hash": "d35db6116db8c0cc68c258fdcda65da6",
+    "semantic_hash": "d35db6116db8c0cc68c258fdcda65da6"
+  },
+  "tests/unit/test_header_extraction.py": {
+    "mtime": 1782587636.326896,
+    "ast_hash": "35c7b4c68e2155ec76009853d8906e5d",
+    "semantic_hash": "35c7b4c68e2155ec76009853d8906e5d"
+  },
+  "tests/unit/test_merchant_normalization.py": {
+    "mtime": 1782587637.4415116,
+    "ast_hash": "796e55436dea75307fa8ed35ce795582",
+    "semantic_hash": "796e55436dea75307fa8ed35ce795582"
+  },
+  "tests/unit/test_monthly_summary.py": {
+    "mtime": 1782587636.6916373,
+    "ast_hash": "10980db4a26a3ebf06bb281592308a3e",
+    "semantic_hash": "10980db4a26a3ebf06bb281592308a3e"
+  },
+  "tests/unit/test_processing_idempotency.py": {
+    "mtime": 1782666248.925963,
+    "ast_hash": "863c349375ec336a1783af92a6f42f77",
+    "semantic_hash": "863c349375ec336a1783af92a6f42f77"
+  },
+  "tests/unit/test_transaction_candidate_filter.py": {
+    "mtime": 1782587636.5051744,
+    "ast_hash": "4c15d9b4bf3e2f6d9c8d4d1fba1f9f53",
+    "semantic_hash": "4c15d9b4bf3e2f6d9c8d4d1fba1f9f53"
+  },
+  ".agents/rules/graphify.md": {
+    "mtime": 1783463665.199052,
+    "ast_hash": "f1e53ecc9194573d3c28fc116c743a2e",
+    "semantic_hash": "f1e53ecc9194573d3c28fc116c743a2e"
+  },
+  ".agents/skills/speckit-agent-context-update/SKILL.md": {
+    "mtime": 1782531220.6428049,
+    "ast_hash": "72928dcbb13ab3fe26730bcc282a6383",
+    "semantic_hash": "72928dcbb13ab3fe26730bcc282a6383"
+  },
+  ".agents/skills/speckit-analyze/SKILL.md": {
+    "mtime": 1782531220.5735488,
+    "ast_hash": "b42e6df9ac400c06c947534176aaaadc",
+    "semantic_hash": "b42e6df9ac400c06c947534176aaaadc"
+  },
+  ".agents/skills/speckit-checklist/SKILL.md": {
+    "mtime": 1782531220.5932071,
+    "ast_hash": "8d0fe845a79fd801ed92d7d78c4e5728",
+    "semantic_hash": "8d0fe845a79fd801ed92d7d78c4e5728"
+  },
+  ".agents/skills/speckit-clarify/SKILL.md": {
+    "mtime": 1782531220.5793154,
+    "ast_hash": "1a72a984a8442eaf2575a4ac0e166086",
+    "semantic_hash": "1a72a984a8442eaf2575a4ac0e166086"
+  },
+  ".agents/skills/speckit-constitution/SKILL.md": {
+    "mtime": 1782531220.5822701,
+    "ast_hash": "eca6c1b1f77da3388ffe6ffdb2d2ed47",
+    "semantic_hash": "eca6c1b1f77da3388ffe6ffdb2d2ed47"
+  },
+  ".agents/skills/speckit-converge/SKILL.md": {
+    "mtime": 1782531220.5877223,
+    "ast_hash": "c7e1b5d707275d39d9aa982cb6595307",
+    "semantic_hash": "c7e1b5d707275d39d9aa982cb6595307"
+  },
+  ".agents/skills/speckit-implement/SKILL.md": {
+    "mtime": 1782531220.585181,
+    "ast_hash": "89b15c3857ddeb96bfe2fe98361fb576",
+    "semantic_hash": "89b15c3857ddeb96bfe2fe98361fb576"
+  },
+  ".agents/skills/speckit-plan/SKILL.md": {
+    "mtime": 1782531220.5898097,
+    "ast_hash": "272eddf93466f27f08a28278c2752897",
+    "semantic_hash": "272eddf93466f27f08a28278c2752897"
+  },
+  ".agents/skills/speckit-specify/SKILL.md": {
+    "mtime": 1782531220.59666,
+    "ast_hash": "a64a4e128bb06a8aef3d3ea9ddbc3616",
+    "semantic_hash": "a64a4e128bb06a8aef3d3ea9ddbc3616"
+  },
+  ".agents/skills/speckit-tasks/SKILL.md": {
+    "mtime": 1782531220.5994565,
+    "ast_hash": "ab4bf76264db767a2433440f791b295e",
+    "semantic_hash": "ab4bf76264db767a2433440f791b295e"
+  },
+  ".agents/skills/speckit-taskstoissues/SKILL.md": {
+    "mtime": 1782531220.6014848,
+    "ast_hash": "d8d21825c97e027202d68f9777e3f004",
+    "semantic_hash": "d8d21825c97e027202d68f9777e3f004"
+  },
+  ".agents/workflows/graphify.md": {
+    "mtime": 1783463665.199181,
+    "ast_hash": "0bc020d491fca99550c1ea3de0a5f862",
+    "semantic_hash": "0bc020d491fca99550c1ea3de0a5f862"
+  },
+  ".specify/extensions.yml": {
+    "mtime": 1782531220.6446364,
+    "ast_hash": "41da053e53301452b823a35e2ff15dd1",
+    "semantic_hash": "41da053e53301452b823a35e2ff15dd1"
+  },
+  ".specify/extensions/agent-context/README.md": {
+    "mtime": 1782001363.4467306,
+    "ast_hash": "1aa8a439be548ec0da2e3387a4925e4f",
+    "semantic_hash": "1aa8a439be548ec0da2e3387a4925e4f"
+  },
+  ".specify/extensions/agent-context/agent-context-config.yml": {
+    "mtime": 1782946525.7636774,
+    "ast_hash": "ca78f9c1b7c4f89b13e1ab7e7b0f4112",
+    "semantic_hash": "ca78f9c1b7c4f89b13e1ab7e7b0f4112"
+  },
+  ".specify/extensions/agent-context/commands/speckit.agent-context.update.md": {
+    "mtime": 1782001363.4484754,
+    "ast_hash": "7eecbfbef236c6af3e4003b32c6ffd2a",
+    "semantic_hash": "7eecbfbef236c6af3e4003b32c6ffd2a"
+  },
+  ".specify/extensions/agent-context/extension.yml": {
+    "mtime": 1782001363.447801,
+    "ast_hash": "c09cdcdf8b86381d5955182b5eac0caf",
+    "semantic_hash": "c09cdcdf8b86381d5955182b5eac0caf"
+  },
+  ".specify/memory/constitution.md": {
+    "mtime": 1782531352.1602747,
+    "ast_hash": "21a4f30d31d4bb630ccd815bd626b91a",
+    "semantic_hash": "21a4f30d31d4bb630ccd815bd626b91a"
+  },
+  ".specify/templates/checklist-template.md": {
+    "mtime": 1782946525.7486424,
+    "ast_hash": "87c4b390cebe71d15364bcd4690a102f",
+    "semantic_hash": "87c4b390cebe71d15364bcd4690a102f"
+  },
+  ".specify/templates/constitution-template.md": {
+    "mtime": 1782946525.747951,
+    "ast_hash": "dcefb6b60e7cb3db2e966977b6f02f18",
+    "semantic_hash": "dcefb6b60e7cb3db2e966977b6f02f18"
+  },
+  ".specify/templates/plan-template.md": {
+    "mtime": 1782946525.7511232,
+    "ast_hash": "a32b024d46f365191b4fd540f10912c2",
+    "semantic_hash": "a32b024d46f365191b4fd540f10912c2"
+  },
+  ".specify/templates/spec-template.md": {
+    "mtime": 1782946525.7501905,
+    "ast_hash": "45ac8538bc1220324c9f0d610145b53f",
+    "semantic_hash": "45ac8538bc1220324c9f0d610145b53f"
+  },
+  ".specify/templates/tasks-template.md": {
+    "mtime": 1782946525.7494657,
+    "ast_hash": "b8ed482dd2103953e4f871e0ed12d4bd",
+    "semantic_hash": "b8ed482dd2103953e4f871e0ed12d4bd"
+  },
+  ".specify/workflows/speckit/workflow.yml": {
+    "mtime": 1782001363.4527712,
+    "ast_hash": "eba6943b2a2f6407162ae12e0218bdac",
+    "semantic_hash": "eba6943b2a2f6407162ae12e0218bdac"
+  },
+  "AGENTS.md": {
+    "mtime": 1782753886.017473,
+    "ast_hash": "4b1479703ee50fcd64e9f69fb35b2dd6",
+    "semantic_hash": "4b1479703ee50fcd64e9f69fb35b2dd6"
+  },
+  "GEMINI.md": {
+    "mtime": 1782946525.733234,
+    "ast_hash": "af2a4aa2afc255f108b61414df63a311",
+    "semantic_hash": "af2a4aa2afc255f108b61414df63a311"
+  },
+  "README.md": {
+    "mtime": 1783119761.1143017,
+    "ast_hash": "ffdc2b48cc4fe70d7ab760ef40c14cc2",
+    "semantic_hash": "ffdc2b48cc4fe70d7ab760ef40c14cc2"
+  },
+  "docker-compose.yml": {
+    "mtime": 1783123457.5866408,
+    "ast_hash": "846276a790ba99fe9440d77047c0aa38",
+    "semantic_hash": "846276a790ba99fe9440d77047c0aa38"
+  },
+  "docs/database-schema.md": {
+    "mtime": 1783120320.204048,
+    "ast_hash": "2b67a61581b20f6f50e6815864ce0bb3",
+    "semantic_hash": "2b67a61581b20f6f50e6815864ce0bb3"
+  },
+  "docs/runbooks/event-driven-file-processing.md": {
+    "mtime": 1782668318.7506416,
+    "ast_hash": "f8e572c23b59e7a1d56f06916512132b",
+    "semantic_hash": "f8e572c23b59e7a1d56f06916512132b"
+  },
+  "docs/runbooks/invoice-processing.md": {
+    "mtime": 1782947424.7019777,
+    "ast_hash": "06e7f4628895d2f037c0ef4ed935ccea",
+    "semantic_hash": "06e7f4628895d2f037c0ef4ed935ccea"
+  },
+  "docs/runbooks/performance-validation.md": {
+    "mtime": 1782605078.1784525,
+    "ast_hash": "1fcdaafd2c7c0b8800403c7f6d629632",
+    "semantic_hash": "1fcdaafd2c7c0b8800403c7f6d629632"
+  },
+  "refinamento-faturama/confidence_policy.md": {
+    "mtime": 1782530409.6635027,
+    "ast_hash": "90054e40cf209e76300c5c972a0ba5f1",
+    "semantic_hash": "90054e40cf209e76300c5c972a0ba5f1"
+  },
+  "refinamento-faturama/data_model_refinement.md": {
+    "mtime": 1782530178.1410308,
+    "ast_hash": "a7002db786b32dcd98e1d56b32f60afe",
+    "semantic_hash": "a7002db786b32dcd98e1d56b32f60afe"
+  },
+  "refinamento-faturama/matching_rules.md": {
+    "mtime": 1782530296.7114258,
+    "ast_hash": "dfbd767f6027df3f64b810a21ecfaffa",
+    "semantic_hash": "dfbd767f6027df3f64b810a21ecfaffa"
+  },
+  "refinamento-faturama/query_contracts.md": {
+    "mtime": 1782530511.710545,
+    "ast_hash": "184ceaffd0dc87e21392b9477c3b9d16",
+    "semantic_hash": "184ceaffd0dc87e21392b9477c3b9d16"
+  },
+  "refinamento-faturama/spec.md": {
+    "mtime": 1782529838.666858,
+    "ast_hash": "4d295912be9bd7d73225200321d294be",
+    "semantic_hash": "4d295912be9bd7d73225200321d294be"
+  },
+  "refinamento-faturama/workflow_refinement.md": {
+    "mtime": 1782530077.2986646,
+    "ast_hash": "e0b1de827d19c09f950f50fd915092de",
+    "semantic_hash": "e0b1de827d19c09f950f50fd915092de"
+  },
+  "specs/001-invoice-extractor/checklists/requirements.md": {
+    "mtime": 1782608298.696622,
+    "ast_hash": "fcba59b4ebc4a205bb5dcd6aec414790",
+    "semantic_hash": "fcba59b4ebc4a205bb5dcd6aec414790"
+  },
+  "specs/001-invoice-extractor/contracts/cli.md": {
+    "mtime": 1782562405.4577634,
+    "ast_hash": "2d2a667f63b3f821eaa594591853cb7f",
+    "semantic_hash": "2d2a667f63b3f821eaa594591853cb7f"
+  },
+  "specs/001-invoice-extractor/contracts/read-model.md": {
+    "mtime": 1782562405.5470939,
+    "ast_hash": "1c1ad0bb0ba283c1304933648774bf2c",
+    "semantic_hash": "1c1ad0bb0ba283c1304933648774bf2c"
+  },
+  "specs/001-invoice-extractor/data-model.md": {
+    "mtime": 1782562405.367029,
+    "ast_hash": "58451eb3ee17caa617d4d516f0e8cdb8",
+    "semantic_hash": "58451eb3ee17caa617d4d516f0e8cdb8"
+  },
+  "specs/001-invoice-extractor/plan.md": {
+    "mtime": 1782562405.193058,
+    "ast_hash": "cbe5bf17d60622ecc9a1a57be2c7e1bb",
+    "semantic_hash": "cbe5bf17d60622ecc9a1a57be2c7e1bb"
+  },
+  "specs/001-invoice-extractor/quickstart.md": {
+    "mtime": 1782588002.8638237,
+    "ast_hash": "f13f8becba420c3da4d61e1720d4fe3d",
+    "semantic_hash": "f13f8becba420c3da4d61e1720d4fe3d"
+  },
+  "specs/001-invoice-extractor/research.md": {
+    "mtime": 1782562405.28007,
+    "ast_hash": "8665adec929a46d1a2c5bb2f0368b618",
+    "semantic_hash": "8665adec929a46d1a2c5bb2f0368b618"
+  },
+  "specs/001-invoice-extractor/spec.md": {
+    "mtime": 1782562251.3451896,
+    "ast_hash": "b6f4e4db276ec95c62ce7a03ec963931",
+    "semantic_hash": "b6f4e4db276ec95c62ce7a03ec963931"
+  },
+  "specs/001-invoice-extractor/tasks.md": {
+    "mtime": 1782588003.03744,
+    "ast_hash": "ff1a2750de2778b9ecfa3edcea07f16a",
+    "semantic_hash": "ff1a2750de2778b9ecfa3edcea07f16a"
+  },
+  "specs/003-align-runtime-architecture/checklists/requirements.md": {
+    "mtime": 1782609741.0892198,
+    "ast_hash": "98dae36f2ba4185011d2dcf15b14d00c",
+    "semantic_hash": "98dae36f2ba4185011d2dcf15b14d00c"
+  },
+  "specs/003-align-runtime-architecture/contracts/cli.md": {
+    "mtime": 1782601449.911273,
+    "ast_hash": "e5ff5b351bbbda2d20b0851a4095df38",
+    "semantic_hash": "e5ff5b351bbbda2d20b0851a4095df38"
+  },
+  "specs/003-align-runtime-architecture/contracts/workflow.md": {
+    "mtime": 1782601450.0136,
+    "ast_hash": "f05cb18229c5eab4d034f9983d01847d",
+    "semantic_hash": "f05cb18229c5eab4d034f9983d01847d"
+  },
+  "specs/003-align-runtime-architecture/data-model.md": {
+    "mtime": 1782601449.735397,
+    "ast_hash": "f77c5fcbdbe722289641b79ae9c78558",
+    "semantic_hash": "f77c5fcbdbe722289641b79ae9c78558"
+  },
+  "specs/003-align-runtime-architecture/plan.md": {
+    "mtime": 1782609740.0370443,
+    "ast_hash": "a2e6d5bea67af3216f9b11f53d9dafbf",
+    "semantic_hash": "a2e6d5bea67af3216f9b11f53d9dafbf"
+  },
+  "specs/003-align-runtime-architecture/quickstart.md": {
+    "mtime": 1782609740.744272,
+    "ast_hash": "3b81da16934096e48c98c277fc7400a3",
+    "semantic_hash": "3b81da16934096e48c98c277fc7400a3"
+  },
+  "specs/003-align-runtime-architecture/research.md": {
+    "mtime": 1782609740.3892393,
+    "ast_hash": "23ead93fdfbefdfdd1206bf2f35b2a21",
+    "semantic_hash": "23ead93fdfbefdfdd1206bf2f35b2a21"
+  },
+  "specs/003-align-runtime-architecture/spec.md": {
+    "mtime": 1782609739.6689067,
+    "ast_hash": "eaf8ac7f7fcafc7435aa3845570d0f75",
+    "semantic_hash": "eaf8ac7f7fcafc7435aa3845570d0f75"
+  },
+  "specs/003-align-runtime-architecture/tasks.md": {
+    "mtime": 1782609741.4386775,
+    "ast_hash": "f128b21df021735c07be85c47fcf6c8c",
+    "semantic_hash": "f128b21df021735c07be85c47fcf6c8c"
+  },
+  "specs/004-event-driven-file-processing/checklists/requirements.md": {
+    "mtime": 1782661747.5576522,
+    "ast_hash": "b6a595898a22be7b08a7f22fe586ce7d",
+    "semantic_hash": "b6a595898a22be7b08a7f22fe586ce7d"
+  },
+  "specs/004-event-driven-file-processing/contracts/orchestration.md": {
+    "mtime": 1782664519.1889777,
+    "ast_hash": "6e1d74039904cb05c63ba244ed711c64",
+    "semantic_hash": "6e1d74039904cb05c63ba244ed711c64"
+  },
+  "specs/004-event-driven-file-processing/contracts/processing-message.md": {
+    "mtime": 1782664519.0117373,
+    "ast_hash": "d4727f30e16bbccc7a219f03c680c136",
+    "semantic_hash": "d4727f30e16bbccc7a219f03c680c136"
+  },
+  "specs/004-event-driven-file-processing/contracts/runtime-config.md": {
+    "mtime": 1782667166.1867533,
+    "ast_hash": "b58ece3c523aa6f0dcdb15cc672f8ab2",
+    "semantic_hash": "b58ece3c523aa6f0dcdb15cc672f8ab2"
+  },
+  "specs/004-event-driven-file-processing/contracts/signed-upload.md": {
+    "mtime": 1782664053.446524,
+    "ast_hash": "f6b278640596dbb31a8db686b175bea5",
+    "semantic_hash": "f6b278640596dbb31a8db686b175bea5"
+  },
+  "specs/004-event-driven-file-processing/contracts/status-read-model.md": {
+    "mtime": 1782664519.5393283,
+    "ast_hash": "3a8142ae692ec436b51841c03cf3ded3",
+    "semantic_hash": "3a8142ae692ec436b51841c03cf3ded3"
+  },
+  "specs/004-event-driven-file-processing/data-model.md": {
+    "mtime": 1782664518.8324142,
+    "ast_hash": "7b8e6d9cfe9f51699e2bfeac9e041573",
+    "semantic_hash": "7b8e6d9cfe9f51699e2bfeac9e041573"
+  },
+  "specs/004-event-driven-file-processing/plan.md": {
+    "mtime": 1782665296.6702857,
+    "ast_hash": "67c047fcb737f1da0bbed8fcd55457ad",
+    "semantic_hash": "67c047fcb737f1da0bbed8fcd55457ad"
+  },
+  "specs/004-event-driven-file-processing/quickstart.md": {
+    "mtime": 1782668318.5725205,
+    "ast_hash": "335a936affd55f44d28af4047a78e041",
+    "semantic_hash": "335a936affd55f44d28af4047a78e041"
+  },
+  "specs/004-event-driven-file-processing/research.md": {
+    "mtime": 1782664518.6559644,
+    "ast_hash": "1917da12a72258319b4de2f1d28bef72",
+    "semantic_hash": "1917da12a72258319b4de2f1d28bef72"
+  },
+  "specs/004-event-driven-file-processing/spec.md": {
+    "mtime": 1782665280.345731,
+    "ast_hash": "a4adaf3f3db67125df552ff80a4980f6",
+    "semantic_hash": "a4adaf3f3db67125df552ff80a4980f6"
+  },
+  "specs/004-event-driven-file-processing/tasks.md": {
+    "mtime": 1782666587.151407,
+    "ast_hash": "075b536eb93f68659bacca0cbe1e4842",
+    "semantic_hash": "075b536eb93f68659bacca0cbe1e4842"
+  },
+  "specs/005-s3-eventbridge-ecs/checklists/requirements.md": {
+    "mtime": 1782693076.9384582,
+    "ast_hash": "0d6ae95f6e3cbb6e10e28a35045230ea",
+    "semantic_hash": "0d6ae95f6e3cbb6e10e28a35045230ea"
+  },
+  "specs/005-s3-eventbridge-ecs/contracts/orchestration.md": {
+    "mtime": 1782695486.0377402,
+    "ast_hash": "5c729e39b7b4015c56d1343fb446dd3f",
+    "semantic_hash": "5c729e39b7b4015c56d1343fb446dd3f"
+  },
+  "specs/005-s3-eventbridge-ecs/contracts/processing-message.md": {
+    "mtime": 1782693484.487911,
+    "ast_hash": "c268aacc2132c3ff6c3e5536e46f5463",
+    "semantic_hash": "c268aacc2132c3ff6c3e5536e46f5463"
+  },
+  "specs/005-s3-eventbridge-ecs/contracts/runtime-config.md": {
+    "mtime": 1782695485.9542913,
+    "ast_hash": "3e6fca18222175d1e634068c7bbe114d",
+    "semantic_hash": "3e6fca18222175d1e634068c7bbe114d"
+  },
+  "specs/005-s3-eventbridge-ecs/data-model.md": {
+    "mtime": 1782693484.2694352,
+    "ast_hash": "a806f2c912d31b7d0e93e1e0a9c19e1c",
+    "semantic_hash": "a806f2c912d31b7d0e93e1e0a9c19e1c"
+  },
+  "specs/005-s3-eventbridge-ecs/plan.md": {
+    "mtime": 1782693484.1039631,
+    "ast_hash": "27796a2c560df0d1d188b4d76f0a4173",
+    "semantic_hash": "27796a2c560df0d1d188b4d76f0a4173"
+  },
+  "specs/005-s3-eventbridge-ecs/quickstart.md": {
+    "mtime": 1782695485.8699298,
+    "ast_hash": "ffe867648cd2f310d89e4bd65c789c1a",
+    "semantic_hash": "ffe867648cd2f310d89e4bd65c789c1a"
+  },
+  "specs/005-s3-eventbridge-ecs/research.md": {
+    "mtime": 1782693503.4506545,
+    "ast_hash": "fcddbcfba9be546205ebe7a575a3be08",
+    "semantic_hash": "fcddbcfba9be546205ebe7a575a3be08"
+  },
+  "specs/005-s3-eventbridge-ecs/spec.md": {
+    "mtime": 1782693076.8553987,
+    "ast_hash": "7a045dbf1f25ef2e1ed7cd5bf2d1bcbc",
+    "semantic_hash": "7a045dbf1f25ef2e1ed7cd5bf2d1bcbc"
+  },
+  "specs/005-s3-eventbridge-ecs/tasks.md": {
+    "mtime": 1782695153.3108974,
+    "ast_hash": "6f75460c11944e852fbff53576b3533e",
+    "semantic_hash": "6f75460c11944e852fbff53576b3533e"
+  },
+  "specs/006-postgres-only-persistence/checklists/requirements.md": {
+    "mtime": 1782753159.3897884,
+    "ast_hash": "031a047452bb2a55ee76c1f710e72485",
+    "semantic_hash": "031a047452bb2a55ee76c1f710e72485"
+  },
+  "specs/006-postgres-only-persistence/contracts/bootstrap-composition.md": {
+    "mtime": 1782754356.2117898,
+    "ast_hash": "2cffc9c1c878d4c58642b070f5e37052",
+    "semantic_hash": "2cffc9c1c878d4c58642b070f5e37052"
+  },
+  "specs/006-postgres-only-persistence/contracts/persistence-ports.md": {
+    "mtime": 1782753855.6020434,
+    "ast_hash": "e41b1d4f98c5fbda3030adb533746e16",
+    "semantic_hash": "e41b1d4f98c5fbda3030adb533746e16"
+  },
+  "specs/006-postgres-only-persistence/contracts/runtime-config.md": {
+    "mtime": 1782753855.612437,
+    "ast_hash": "b96f53fcf391ce3b8fbf12a3ac79241f",
+    "semantic_hash": "b96f53fcf391ce3b8fbf12a3ac79241f"
+  },
+  "specs/006-postgres-only-persistence/data-model.md": {
+    "mtime": 1782753818.020503,
+    "ast_hash": "d393252e54cbe6369276ba1099166f99",
+    "semantic_hash": "d393252e54cbe6369276ba1099166f99"
+  },
+  "specs/006-postgres-only-persistence/plan.md": {
+    "mtime": 1782754349.5501435,
+    "ast_hash": "6e96a55d5dd1c7bd8c81fac768ce3594",
+    "semantic_hash": "6e96a55d5dd1c7bd8c81fac768ce3594"
+  },
+  "specs/006-postgres-only-persistence/quickstart.md": {
+    "mtime": 1782753878.961149,
+    "ast_hash": "5a3cacda7b03e19786d9e209cd82fae0",
+    "semantic_hash": "5a3cacda7b03e19786d9e209cd82fae0"
+  },
+  "specs/006-postgres-only-persistence/research.md": {
+    "mtime": 1782753778.6041064,
+    "ast_hash": "8f76df8de4da2cf2b8e1ef0e2a39fed7",
+    "semantic_hash": "8f76df8de4da2cf2b8e1ef0e2a39fed7"
+  },
+  "specs/006-postgres-only-persistence/spec.md": {
+    "mtime": 1782754340.338596,
+    "ast_hash": "856e3af25f235f15fba51c100460be38",
+    "semantic_hash": "856e3af25f235f15fba51c100460be38"
+  },
+  "specs/006-postgres-only-persistence/tasks.md": {
+    "mtime": 1782947441.2163324,
+    "ast_hash": "ecd90a9464b656e4e12e4018d1563fa9",
+    "semantic_hash": "ecd90a9464b656e4e12e4018d1563fa9"
+  },
+  "tests/e2e/fixtures/invoice-2026-04.pdf": {
+    "mtime": 1782666247.6806786,
+    "ast_hash": "1d61a1591d3b1136879cb5882dc3a0a3",
+    "semantic_hash": "1d61a1591d3b1136879cb5882dc3a0a3"
+  }
+}

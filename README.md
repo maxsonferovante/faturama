@@ -199,6 +199,29 @@ Isso significa:
 - quando o EventBridge recebe um evento manualmente, a versao atual do MiniStack usada em `ministackorg/ministack:full` ainda nao executa target ECS do EventBridge;
 - por isso o fluxo `S3 -> EventBridge -> ECS` fica pronto para AWS real, mas nao fecha o e2e completo nesse emulador especifico.
 
+## Visualização e Grafo de Conhecimento (Graphify)
+
+O projeto utiliza o `Graphify` para extrair e mapear a arquitetura, dependências e fluxos do codebase em um grafo de conhecimento interativo.
+
+### Geração e Atualização do Grafo
+Para executar o pipeline completo do Graphify e gerar os artefatos de visualização e relatórios:
+
+```bash
+graphify .
+```
+
+Os artefatos gerados são salvos no diretório `graphify-out/`:
+- `graph.html`: Visualizador interativo de dependências (abra diretamente no navegador).
+- `GRAPH_REPORT.md`: Relatório descritivo contendo os principais hubs (God Nodes), conexões não-óbvias identificadas e sugestões de queries.
+- `graph.json`: Grafo bruto em formato JSON utilizado por agentes e ferramentas.
+
+### Consultando a Arquitetura
+É possível interagir e fazer perguntas sobre a estrutura do codebase baseando-se no mapeamento de dependências:
+
+```bash
+graphify query "Como funciona o fluxo do process_invoice()?"
+```
+
 ## Validacao
 
 ```bash
